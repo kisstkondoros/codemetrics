@@ -1,0 +1,14 @@
+default:
+  compile
+
+compile:
+  - clean:sourceArtifacts
+  - shell:compileSource
+
+test:
+  - compile
+  - shell:tests
+
+smoke:
+  - compile
+  - shell:smoke

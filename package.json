@@ -1,0 +1,47 @@
+{
+  "name": "vscode-codemetrics",
+  "private": true,
+  "description": "Shows the complexity information for TypeScript class members.",
+  "author": "Tamas Kiss",
+  "publisher": "Tamas Kiss",
+  "license": "MIT",
+  "version": "0.0.1",
+  "displayName": "CodeMetrics",
+  "icon": "images/logo.png",
+  "engines": {
+    "vscode": "0.10.x"
+  },
+  "keywords": [
+    "vscode",
+    "code",
+    "packagesmetrics",
+    "typescript"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension",
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "watch": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "clean": "grunt clean:sourceArtifacts",
+    "compile": "grunt compile",
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.7",
+    "vscode": " ^0.11.7",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "load-grunt-config": "^0.19.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-shell": "^1.2.1"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^2.1.0"
+  }
+}

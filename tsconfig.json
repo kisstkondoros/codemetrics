@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "outDir": "out",
+    "sourceMap": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "gruntfile.js",
+    "grunt",
+    "out",
+    "node_modules",
+    ".vscode",
+    ".vscode-test"
+  ]
+}
