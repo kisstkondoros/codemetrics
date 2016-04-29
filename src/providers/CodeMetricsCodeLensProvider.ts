@@ -31,7 +31,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider{
   
   makeEmptyCommand(codeLensItem:CodeMetricsCodeLens) {
     codeLensItem.command = {
-      title: codeLensItem.complexity+"",
+      title: codeLensItem.toString(),
       command: undefined,
       arguments: undefined
     };
