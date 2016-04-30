@@ -1,6 +1,6 @@
 import {CodeLensProvider, TextDocument, CodeLens, CancellationToken} from 'vscode';
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
-import {AppConfiguration} from '../models/AppConfiguration';
+import {AppConfiguration, CodeMetricsConfiguration} from '../models/AppConfiguration';
 import {CodeMetricsParser} from '../common/CodeMetricsParser';
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {
@@ -21,6 +21,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
     return CodeMetricsParser.getMetrics(this.appConfig, document, token);
   }
+
   resolveCodeLens(codeLens: CodeLens, token: CancellationToken): CodeLens | Thenable<CodeLens> {
     if (codeLens instanceof CodeMetricsCodeLens) {
       codeLens.command = {
@@ -38,16 +39,22 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
     allRelevant = allRelevant.concat(codelens.children)
 
     let complexitySum: number = allRelevant.map(item => item.complexity).reduce((item1, item2) => item1 + item2);
-    let instruction: string = "";
-    if (complexitySum > 25) {
-      instruction = "Bloody hell...";
-    } else if (complexitySum > 10) {
-      instruction = "You must be kidding";
-    } else if (complexitySum > 5) {
-      instruction = "It's time to do something...";
-    } else if (complexitySum > 0) {
-      instruction = "Everything is cool!";
+    let instruction: string = '';
+    let settings: CodeMetricsConfiguration = this.appConfig.codeMetricsSettings;
+    if (complexitySum > settings.ComplexityLevelExtreme) {
+      instruction = settings.ComplexityLevelExtremeDescription;
+    } else if (complexitySum > settings.ComplexityLevelHigh) {
+      instruction = settings.ComplexityLevelHighDescription;
+    } else if (complexitySum > settings.ComplexityLevelNormal) {
+      instruction = settings.ComplexityLevelNormalDescription;
+    } else if (complexitySum > settings.ComplexityLevelLow) {
+      instruction = settings.ComplexityLevelLowDescription;
     }
-    return "Complexity is " + complexitySum + " " + instruction;
+    let template = (settings.ComplexityTemplate + '');
+    if (!settings.ComplexityTemplate || template.trim().length == 0) {
+      template = 'Complexity is {0} {1}';
+    }
+
+    return template.replace('{0}', complexitySum+'').replace('{1}', instruction)
   }
 }

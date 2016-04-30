@@ -1,25 +1,41 @@
 import {workspace} from 'vscode';
 
 export class AppConfiguration {
-  constructor() { }
+  private cachedSettings: CodeMetricsConfiguration;
+  constructor() {
+    workspace.onDidChangeConfiguration(e => {
+      this.cachedSettings = null;
+    });
+  }
   get extensionName() {
-    return "codemetrics";
+    return 'codemetrics';
   }
 
-  get codeMetricsSettings(): CodeMetricsConfigurtion {
-    var settings = workspace.getConfiguration(this.extensionName);
-    var config = new CodeMetricsConfigurtion();
-    for (var property in config) {
-      if (settings.has(property)) {
-        config[property] = settings.get(property);
+  get codeMetricsSettings(): CodeMetricsConfiguration {
+    if (!this.cachedSettings) {
+      var settings = workspace.getConfiguration(this.extensionName);
+      this.cachedSettings = new CodeMetricsConfiguration();
+      for (var property in this.cachedSettings) {
+        if (settings.has(property)) {
+          this.cachedSettings[property] = settings.get(property);
+        }
       }
     }
-    return config;
+    return this.cachedSettings;
   }
 
 }
 
-export class CodeMetricsConfigurtion {
+export class CodeMetricsConfiguration {
+  ComplexityLevelExtreme = 25;
+  ComplexityLevelHigh = 10;
+  ComplexityLevelNormal = 5;
+  ComplexityLevelLow = 0;
+  ComplexityLevelExtremeDescription = 'Bloody hell...';
+  ComplexityLevelHighDescription = 'You must be kidding';
+  ComplexityLevelNormalDescription = 'It\'s time to do something...';
+  ComplexityLevelLowDescription = 'Everything is cool!';
+  ComplexityTemplate = 'Complexity is {0} {1}';
   AnyKeyword = 1;
   AnyKeywordDescription = 'Any keyword';
   ArrayBindingPattern = 0;

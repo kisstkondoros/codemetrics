@@ -1,10 +1,10 @@
-/// <reference path="../../typings/node.d.ts" />
+/// <reference path='../../typings/node.d.ts' />
 
 import {CodeLens, TextDocument, Range, CancellationToken} from 'vscode';
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
-import {CodeMetricsConfigurtion, AppConfiguration} from '../models/AppConfiguration';
-import {readFileSync} from "fs";
-import * as ts from "typescript";
+import {CodeMetricsConfiguration, AppConfiguration} from '../models/AppConfiguration';
+import {readFileSync} from 'fs';
+import * as ts from 'typescript';
 
 export class CodeMetricsParserImpl {
     public getMetrics(config: AppConfiguration, document: TextDocument, token: CancellationToken): CodeMetricsCodeLens[] {
@@ -53,8 +53,8 @@ export class TreeWalker {
     visitor: Visitor;
     parents: CodeMetricsCodeLens[] = [];
     token: CancellationToken;
-    configuration: CodeMetricsConfigurtion;
-    constructor(configuration: CodeMetricsConfigurtion, visitor: Visitor, token: CancellationToken) {
+    configuration: CodeMetricsConfiguration;
+    constructor(configuration: CodeMetricsConfiguration, visitor: Visitor, token: CancellationToken) {
         this.visitor = visitor;
         this.token = token;
         this.configuration = configuration;
