@@ -4,11 +4,11 @@ Computes the complexity of typescript class members.
 
 ## It looks like this
 
-![First sample, demonstrating a constructor with overall complexity of 21](./images/sample1.png)
+![First sample, demonstrating a constructor with overall complexity of 21](https://raw.githubusercontent.com/kisstkondoros/codemetrics/master/images/Sample1.png)
 
-![Second sample, demonstrating a constructor with overall complexity of 1](./images/sample2.png)
+![Second sample, demonstrating a constructor with overall complexity of 1](https://raw.githubusercontent.com/kisstkondoros/codemetrics/master/images/Sample2.png)
 
-![Third sample, demonstrating a method with overall complexity of 5](./images/sample3.png)
+![Third sample, demonstrating a method with overall complexity of 5](https://raw.githubusercontent.com/kisstkondoros/codemetrics/master/images/Sample3.png)
 
 ## Install
 
@@ -17,7 +17,7 @@ Computes the complexity of typescript class members.
 ## Customization
 In the workspace settings one can override the defaults
 (for a complete list check AppConfiguration.ts)
-```json
+```javascript
 {
   // highest complexity level will be set when it exeeds 15
   "codemetrics.ComplexityLevelExtreme" : 15,
