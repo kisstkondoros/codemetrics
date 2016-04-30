@@ -31,7 +31,8 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
-
+- 0.0.2
+  - Typescript added as real dependency
 - 0.0.1
   - Initial project setup
 

@@ -5,7 +5,7 @@
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
@@ -37,7 +37,6 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "typescript": "^1.8.7",
     "vscode": " ^0.11.7",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
@@ -46,6 +45,7 @@
     "grunt-shell": "^1.2.1"
   },
   "dependencies": {
+    "typescript": "^1.8.7",
     "vscode-languageclient": "^2.1.0"
   }
 }
