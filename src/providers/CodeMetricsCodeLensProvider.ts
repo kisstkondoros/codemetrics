@@ -1,12 +1,13 @@
 import {CodeLensProvider, TextDocument, CodeLens, CancellationToken} from 'vscode';
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
+import {AppConfiguration} from '../models/AppConfiguration';
 import {CodeMetricsParser} from '../common/CodeMetricsParser';
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {
 
-  private appConfig: any;
+  private appConfig: AppConfiguration;
 
-  constructor(appConfig) {
+  constructor(appConfig:AppConfiguration) {
     this.appConfig = appConfig;
   }
 
@@ -18,7 +19,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   };
 
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
-    return CodeMetricsParser.getMetrics(document, token);
+    return CodeMetricsParser.getMetrics(this.appConfig, document, token);
   }
   resolveCodeLens(codeLens: CodeLens, token: CancellationToken): CodeLens | Thenable<CodeLens> {
     if (codeLens instanceof CodeMetricsCodeLens) {

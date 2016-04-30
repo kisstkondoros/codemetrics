@@ -6,7 +6,7 @@ import {CodeMetricsParser} from './common/CodeMetricsParser';
 import {CodeMetricsCodeLens} from './models/CodeMetricsCodeLens';
 
 export function activate(context) {
-  const config = new AppConfiguration();
+  const config:AppConfiguration = new AppConfiguration();
   const disposables = [];
   const providers = [
     new CodeMetricsCodeLensProvider(config)
