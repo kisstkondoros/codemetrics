@@ -3,7 +3,7 @@
   "private": true,
   "description": "Shows the complexity information for TypeScript class members.",
   "author": "Tamas Kiss",
-  "publisher": "Tamas Kiss",
+  "publisher": "kisstkondoros",
   "license": "MIT",
   "version": "0.0.1",
   "displayName": "CodeMetrics",
