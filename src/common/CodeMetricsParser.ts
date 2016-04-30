@@ -1,17 +1,17 @@
 /// <reference path="../../typings/node.d.ts" />
 
-import {CodeLens, TextDocument, Range} from 'vscode';
+import {CodeLens, TextDocument, Range, CancellationToken} from 'vscode';
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
 import {readFileSync} from "fs";
 import * as ts from "typescript";
 
 export class CodeMetricsParserImpl {
-    public getMetrics(document: TextDocument): CodeMetricsCodeLens[] {
+    public getMetrics(document: TextDocument, token: CancellationToken): CodeMetricsCodeLens[] {
 
         let fileName = document.fileName;
-        let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, readFileSync(fileName).toString(), ts.ScriptTarget.ES6, true);
+        let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, document.getText(), ts.ScriptTarget.ES6, true);
         let metricsVisitor: MetricsVisitor = new MetricsVisitor(document, sourceFile);
-        new TreeWalker(metricsVisitor).walk(sourceFile);
+        new TreeWalker(metricsVisitor, token).walk(sourceFile);
 
         return metricsVisitor.getFilteredLens()
     }
@@ -38,11 +38,13 @@ class MetricsVisitor implements Visitor {
             this.document.positionAt(node.getEnd())
         );
         let result: CodeMetricsCodeLens = new CodeMetricsCodeLens(range, line + 1, character + 1, complexity, description, visible);
-        this.resultingCodeLens.push(result);
+        if (visible){
+            this.resultingCodeLens.push(result);
+        }
         return result;
     }
     getFilteredLens(): CodeMetricsCodeLens[] {
-        return this.resultingCodeLens.filter(lens => lens.visible);
+        return this.resultingCodeLens;
     }
 }
 
@@ -50,21 +52,23 @@ export class TreeWalker {
 
     visitor: Visitor;
     parents: CodeMetricsCodeLens[] = [];
+    token: CancellationToken;
 
-    constructor(visitor) {
+    constructor(visitor: Visitor, token: CancellationToken) {
         this.visitor = visitor;
+        this.token = token;
     }
 
     protected visitNode(node: ts.Node) {
         let generatedLens: CodeMetricsCodeLens = this.getLens(node);
-        
-        let generatedLensCounts = generatedLens && generatedLens.complexity>0;
-        
+
+        let generatedLensCounts = generatedLens && generatedLens.complexity > 0;
+
         if (generatedLensCounts) {
             this.parents.forEach((parent) => parent.children.push(generatedLens));
             this.parents.push(generatedLens);
         }
-        
+
         this.walkChildren(node);
         if (generatedLensCounts) {
             this.parents.pop();
@@ -87,7 +91,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.ArrowFunction:
-                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, 0, '');
+                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, 1, 'Arrow function');
                 break;
 
             case ts.SyntaxKind.BinaryExpression:
@@ -187,7 +191,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.FunctionExpression:
-                generatedLens = this.visitor.visit(<ts.FunctionExpression>node, 0, '');
+                generatedLens = this.visitor.visit(<ts.FunctionExpression>node, 1, 'Function expression');
                 break;
 
             case ts.SyntaxKind.FunctionType:
@@ -374,6 +378,10 @@ export class TreeWalker {
     }
 
     protected walkChildren(node: ts.Node) {
-        ts.forEachChild(node, (child) => this.visitNode(child));
+        ts.forEachChild(node, (child) => {
+            if (!this.token.isCancellationRequested) {
+                this.visitNode(child);
+            }
+        });
     }
 }

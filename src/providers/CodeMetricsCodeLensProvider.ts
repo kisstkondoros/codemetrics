@@ -2,9 +2,9 @@ import {CodeLensProvider, TextDocument, CodeLens, CancellationToken} from 'vscod
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
 import {CodeMetricsParser} from '../common/CodeMetricsParser';
 
-export class CodeMetricsCodeLensProvider implements CodeLensProvider{
+export class CodeMetricsCodeLensProvider implements CodeLensProvider {
 
-  private appConfig:any;
+  private appConfig: any;
 
   constructor(appConfig) {
     this.appConfig = appConfig;
@@ -17,25 +17,18 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider{
     }
   };
 
-  provideCodeLenses(document:TextDocument, token: CancellationToken) {
-    return CodeMetricsParser.getMetrics(document);
+  provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
+    return CodeMetricsParser.getMetrics(document, token);
   }
-
-  resolveCodeLens(codeLensItem:CodeLens, token: CancellationToken):CodeLens {
-    if (codeLensItem instanceof CodeMetricsCodeLens) {
-        this.makeEmptyCommand(<CodeMetricsCodeLens>codeLensItem);
+  resolveCodeLens(codeLens: CodeLens, token: CancellationToken): CodeLens | Thenable<CodeLens> {
+    if (codeLens instanceof CodeMetricsCodeLens) {
+      codeLens.command = {
+        title: (<CodeMetricsCodeLens>codeLens).toString(),
+        command: undefined,
+        arguments: undefined
+      };
+      return codeLens;
     }
-    return;
+    return null;
   }
-  
-  
-  makeEmptyCommand(codeLensItem:CodeMetricsCodeLens) {
-    codeLensItem.command = {
-      title: codeLensItem.toString(),
-      command: undefined,
-      arguments: undefined
-    };
-    return codeLensItem;
-  }
-
 }
