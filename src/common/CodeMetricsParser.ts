@@ -96,7 +96,13 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.BinaryExpression:
-                generatedLens = this.visitor.visit(<ts.BinaryExpression>node, this.configuration.BinaryExpression, this.configuration.BinaryExpressionDescription);
+                let binaryExpression = <ts.BinaryExpression>node;
+                if (binaryExpression.operatorToken.kind == ts.SyntaxKind.AmpersandAmpersandToken ||
+                binaryExpression.operatorToken.kind == ts.SyntaxKind.AmpersandToken ||
+                    binaryExpression.operatorToken.kind == ts.SyntaxKind.BarBarToken ||
+                    binaryExpression.operatorToken.kind == ts.SyntaxKind.BarToken) {
+                    generatedLens = this.visitor.visit(node, this.configuration.BinaryExpression, this.configuration.BinaryExpressionDescription);
+                }
                 break;
 
             case ts.SyntaxKind.BindingElement:
