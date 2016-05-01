@@ -25,36 +25,12 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   resolveCodeLens(codeLens: CodeLens, token: CancellationToken): CodeLens | Thenable<CodeLens> {
     if (codeLens instanceof CodeMetricsCodeLens) {
       codeLens.command = {
-        title: this.getDescriptonForCodeLens(codeLens),
-        command: undefined,
-        arguments: undefined
+        title: codeLens.toString(this.appConfig),
+        command: "ShowCodeMetricsCodeLensInfo",
+        arguments: [codeLens]
       };
       return codeLens;
     }
     return null;
-  }
-
-  public getDescriptonForCodeLens(codelens: CodeMetricsCodeLens): string {
-    let allRelevant: CodeMetricsCodeLens[] = [codelens];
-    allRelevant = allRelevant.concat(codelens.children)
-
-    let complexitySum: number = allRelevant.map(item => item.complexity).reduce((item1, item2) => item1 + item2);
-    let instruction: string = '';
-    let settings: CodeMetricsConfiguration = this.appConfig.codeMetricsSettings;
-    if (complexitySum > settings.ComplexityLevelExtreme) {
-      instruction = settings.ComplexityLevelExtremeDescription;
-    } else if (complexitySum > settings.ComplexityLevelHigh) {
-      instruction = settings.ComplexityLevelHighDescription;
-    } else if (complexitySum > settings.ComplexityLevelNormal) {
-      instruction = settings.ComplexityLevelNormalDescription;
-    } else if (complexitySum > settings.ComplexityLevelLow) {
-      instruction = settings.ComplexityLevelLowDescription;
-    }
-    let template = (settings.ComplexityTemplate + '');
-    if (!settings.ComplexityTemplate || template.trim().length == 0) {
-      template = 'Complexity is {0} {1}';
-    }
-
-    return template.replace('{0}', complexitySum+'').replace('{1}', instruction)
   }
 }

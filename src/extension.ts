@@ -8,6 +8,7 @@ import {CodeMetricsCodeLens} from './models/CodeMetricsCodeLens';
 export function activate(context) {
   const config:AppConfiguration = new AppConfiguration();
   const disposables = [];
+  let channel = vscode.window.createOutputChannel("CodeMetrics");
   const providers = [
     new CodeMetricsCodeLensProvider(config)
   ];
@@ -19,6 +20,11 @@ export function activate(context) {
       )
     );
   })
+  disposables.push(commands.registerCommand("ShowCodeMetricsCodeLensInfo", (codelens:CodeMetricsCodeLens)=>{
+    channel.show();
+    channel.clear();
+    channel.append(codelens.getExplanation(config));
+  }))
 
 
   context.subscriptions.push(...disposables);
