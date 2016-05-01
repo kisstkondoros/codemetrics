@@ -31,6 +31,10 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
+- 0.3.1
+  - Fixed NPE in navigation command
+- 0.3.0
+  - Use script target defined in tsconfig
 - 0.2.0
   - Code Metrics info command changed to display a QuickPick menu
 - 0.1.0
