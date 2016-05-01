@@ -7,9 +7,9 @@ import {readFileSync} from 'fs';
 import * as ts from 'typescript';
 
 export class CodeMetricsParserImpl {
-    public getMetrics(config: AppConfiguration, document: TextDocument, token: CancellationToken): CodeMetricsCodeLens[] {
+    public getMetrics(config: AppConfiguration, document: TextDocument, target:ts.ScriptTarget, token: CancellationToken): CodeMetricsCodeLens[] {
         let fileName = document.fileName;
-        let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, document.getText(), ts.ScriptTarget.ES6, true);
+        let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, document.getText(), target, true);
         let metricsVisitor: MetricsVisitor = new MetricsVisitor(document, sourceFile);
         new TreeWalker(config.codeMetricsSettings, metricsVisitor, token).walk(sourceFile);
 
@@ -69,7 +69,6 @@ export class TreeWalker {
             this.parents.forEach((parent) => parent.children.push(generatedLens));
             this.parents.push(generatedLens);
         }
-
         this.walkChildren(node);
         if (generatedLensCounts) {
             this.parents.pop();
