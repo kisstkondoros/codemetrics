@@ -8,7 +8,6 @@ import {CodeMetricsCodeLens} from './models/CodeMetricsCodeLens';
 export function activate(context) {
   const config:AppConfiguration = new AppConfiguration();
   const disposables = [];
-  let channel = vscode.window.createOutputChannel("CodeMetrics");
   const providers = [
     new CodeMetricsCodeLensProvider(config)
   ];
@@ -20,10 +19,15 @@ export function activate(context) {
       )
     );
   })
+
   disposables.push(commands.registerCommand("ShowCodeMetricsCodeLensInfo", (codelens:CodeMetricsCodeLens)=>{
-    channel.show();
-    channel.clear();
-    channel.append(codelens.getExplanation(config));
+    var items=codelens.children.map(item=>item.getExplanation(config));
+    vscode.window.showQuickPick(items).then(selected=>{
+      var selectedCodeLens:CodeMetricsCodeLens = codelens.children[items.indexOf(selected)];
+      var cursorPosition = selectedCodeLens.range.start;
+      vscode.window.activeTextEditor.selection = new vscode.Selection(selectedCodeLens.range.start,selectedCodeLens.range.start);
+    });
+
   }))
 
 

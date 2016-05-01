@@ -44,8 +44,6 @@ export class CodeMetricsCodeLens extends CodeLens {
 
   public getExplanation(appConfig:AppConfiguration): string {
     let allRelevant: CodeMetricsCodeLens[] = [this];
-    allRelevant = allRelevant.concat(this.children)
-
-    return allRelevant.map(item => "+"+item.complexity + " for " + item.description + " in Ln " + item.line + ", Col "+ item.column + "\n").reduce((item1, item2) => item1 + item2);
+    return allRelevant.map(item => "+"+item.complexity + " for " + item.description + " in Ln " + item.line + ", Col "+ item.column).reduce((item1, item2) => item1 + item2);
   }
 }
