@@ -5,7 +5,7 @@
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {

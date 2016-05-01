@@ -31,6 +31,8 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
+- 0.1.0
+  - Added command to be able to show code lens details
 - 0.0.2
   - Typescript added as real dependency
 - 0.0.1
