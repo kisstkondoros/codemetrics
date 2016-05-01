@@ -31,6 +31,8 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
+- 0.2.0
+  - Code Metrics info command changed to display a QuickPick menu
 - 0.1.0
   - Added command to be able to show code lens details
 - 0.0.2
