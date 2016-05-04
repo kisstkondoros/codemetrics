@@ -19,13 +19,15 @@
     "vscode",
     "code",
     "metrics",
-    "typescript"
+    "typescript",
+    "javascript"
   ],
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:typescript"
+    "onLanguage:typescript",
+    "onLanguage:javascript"
   ],
   "main": "./out/extension",
   "scripts": {

@@ -4,6 +4,7 @@ import {AppConfiguration, CodeMetricsConfiguration} from '../models/AppConfigura
 import {CodeMetricsParser} from '../common/CodeMetricsParser';
 import * as ts from 'typescript';
 import {readFileSync} from 'fs';
+import * as path from 'path';
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {
 
@@ -14,15 +15,20 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   }
 
   get selector() {
-    return {
+    var tsDocSelector = {
       language: 'typescript',
       scheme: 'file'
-    }
+    };
+    var jsDocSelector = {
+      language: 'javascript',
+      scheme: 'file'
+    };
+    return [tsDocSelector, jsDocSelector];
   };
 
-  private getScriptTarget(target: string): ts.ScriptTarget {
+  private getScriptTarget(target: string, isJS: boolean): ts.ScriptTarget {
     const keys = Object.keys(ts.ScriptTarget);
-    let result: ts.ScriptTarget = ts.ScriptTarget.ES3;
+    let result: ts.ScriptTarget = isJS ? ts.ScriptTarget.ES5 : ts.ScriptTarget.ES3;
     if (target) {
       target = target.toLowerCase();
       for (const key of keys) {
@@ -35,15 +41,30 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
     return result;
   }
 
-  provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
-    var tsconfig = ts.readConfigFile("tsconfig.json", (path) => {
-      let fullPath = workspace.rootPath+"/"+path;
+  private loadConfig(isJS: boolean) {
+    var fileName = isJS ? "jsconfig.json" : "tsconfig.json";
+    var config = ts.readConfigFile(fileName, (path) => {
+      let fullPath = workspace.rootPath + "/" + path;
       return readFileSync(fullPath, 'UTF-8');
     });
+    return config;
+  }
+
+  provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
     var target = ts.ScriptTarget.ES3;
-    if (tsconfig.config && tsconfig.config.compilerOptions) {
-      target = this.getScriptTarget(tsconfig.config.compilerOptions.target);
+    var isJS = false;
+
+    if (document.fileName) {
+      var parsedPath = path.parse(document.fileName);
+      var extension = parsedPath.ext;
+      isJS = extension && extension.toLowerCase() == ".js";
     }
+
+    var projectConfig: any = this.loadConfig(isJS);
+    if (projectConfig.config && projectConfig.config.compilerOptions) {
+      target = this.getScriptTarget(projectConfig.config.compilerOptions.target, isJS);
+    }
+
     return CodeMetricsParser.getMetrics(this.appConfig, document, target, token);
   }
 
