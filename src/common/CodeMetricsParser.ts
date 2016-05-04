@@ -69,6 +69,7 @@ export class TreeWalker {
             this.parents.forEach((parent) => parent.children.push(generatedLens));
             this.parents.push(generatedLens);
         }
+
         this.walkChildren(node);
         if (generatedLensCounts) {
             this.parents.pop();
@@ -197,7 +198,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.FunctionExpression:
-                generatedLens = this.visitor.visit(<ts.FunctionExpression>node, this.configuration.FunctionExpression, this.configuration.FunctionExpressionDescription);
+                generatedLens = this.visitor.visit(<ts.FunctionExpression>node, this.configuration.FunctionExpression, this.configuration.FunctionExpressionDescription, true);
                 break;
 
             case ts.SyntaxKind.FunctionType:

@@ -94,7 +94,7 @@ export class CodeMetricsConfiguration {
   FunctionDeclarationDescription = 'Function declaration';
   FunctionExpression = 1;
   FunctionExpressionDescription = 'Function expression';
-  FunctionType = 0;
+  FunctionType = 1;
   FunctionTypeDescription = 'Function type';
   GetAccessor = 0;
   GetAccessorDescription = 'Get accessor';
