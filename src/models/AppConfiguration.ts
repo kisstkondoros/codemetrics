@@ -122,7 +122,7 @@ export class CodeMetricsConfiguration {
   MethodDeclarationDescription = 'Method declaration';
   MethodSignature = 0;
   MethodSignatureDescription = 'Method signature';
-  ModuleDeclaration = 1;
+  ModuleDeclaration = 0;
   ModuleDeclarationDescription = 'Module declaration';
   NamedImports = 0;
   NamedImportsDescription = 'Named imports';

@@ -7,7 +7,7 @@ import {readFileSync} from 'fs';
 import * as ts from 'typescript';
 
 export class CodeMetricsParserImpl {
-    public getMetrics(config: AppConfiguration, document: TextDocument, target:ts.ScriptTarget, token: CancellationToken): CodeMetricsCodeLens[] {
+    public getMetrics(config: AppConfiguration, document: TextDocument, target: ts.ScriptTarget, token: CancellationToken): CodeMetricsCodeLens[] {
         let fileName = document.fileName;
         let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, document.getText(), target, true);
         let metricsVisitor: MetricsVisitor = new MetricsVisitor(document, sourceFile);
@@ -44,7 +44,7 @@ class MetricsVisitor implements Visitor {
         return result;
     }
     getFilteredLens(): CodeMetricsCodeLens[] {
-        return this.resultingCodeLens;
+        return this.resultingCodeLens.filter(item => item.visible);
     }
 }
 
@@ -97,7 +97,7 @@ export class TreeWalker {
             case ts.SyntaxKind.BinaryExpression:
                 let binaryExpression = <ts.BinaryExpression>node;
                 if (binaryExpression.operatorToken.kind == ts.SyntaxKind.AmpersandAmpersandToken ||
-                binaryExpression.operatorToken.kind == ts.SyntaxKind.AmpersandToken ||
+                    binaryExpression.operatorToken.kind == ts.SyntaxKind.AmpersandToken ||
                     binaryExpression.operatorToken.kind == ts.SyntaxKind.BarBarToken ||
                     binaryExpression.operatorToken.kind == ts.SyntaxKind.BarToken) {
                     generatedLens = this.visitor.visit(node, this.configuration.BinaryExpression, this.configuration.BinaryExpressionDescription);
@@ -258,7 +258,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.ModuleDeclaration:
-                generatedLens = this.visitor.visit(<ts.ModuleDeclaration>node, this.configuration.ModuleDeclaration, this.configuration.ModuleDeclarationDescription, true);
+                generatedLens = this.visitor.visit(<ts.ModuleDeclaration>node, this.configuration.ModuleDeclaration, this.configuration.ModuleDeclarationDescription);
                 break;
 
             case ts.SyntaxKind.NamedImports:
