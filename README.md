@@ -1,6 +1,6 @@
-# Code Metrics - VsCode Extension
+# Code Metrics - Visual Studio Code Extension
 
-Computes the complexity of typescript class members.
+Computes complexity in TypeScript / JavaScript files.
 
 ## It looks like this
 
@@ -12,7 +12,9 @@ Computes the complexity of typescript class members.
 
 ## Install
 
-[How to install vscode extentions](https://code.visualstudio.com/docs/editor/extension-gallery)
+[How to install Visual Studio Code extensions](https://code.visualstudio.com/docs/editor/extension-gallery)
+
+[Direct link to Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kisstkondoros.vscode-codemetrics)
 
 ## Customization
 In the workspace settings one can override the defaults
@@ -31,6 +33,10 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
+- 0.4.0
+  - Added JavaScript support
+  - Removed module declaration from the complexity calculation
+  - Function related complexity calculation revised
 - 0.3.1
   - Fixed NPE in navigation command
 - 0.3.0
@@ -40,7 +46,7 @@ In the workspace settings one can override the defaults
 - 0.1.0
   - Added command to be able to show code lens details
 - 0.0.2
-  - Typescript added as real dependency
+  - TypeScript added as real dependency
 - 0.0.1
   - Initial project setup
 

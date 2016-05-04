@@ -1,11 +1,11 @@
 {
   "name": "vscode-codemetrics",
   "private": true,
-  "description": "Shows the complexity information for TypeScript class members.",
+  "description": "Computes complexity in TypeScript / JavaScript files.",
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
