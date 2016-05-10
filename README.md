@@ -33,6 +33,8 @@ In the workspace settings one can override the defaults
   ```
 
 ### Change Log
+- 0.4.1
+  - Showing complexity for arrow functions as well
 - 0.4.0
   - Added JavaScript support
   - Removed module declaration from the complexity calculation
