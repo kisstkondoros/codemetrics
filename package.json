@@ -5,7 +5,7 @@
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
@@ -53,7 +53,634 @@
         "mac": "f5",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "CodeMetrics configuration",
+      "properties": {
+        "codemetrics.basics.ComplexityLevelExtreme": {
+          "default": 25,
+          "description": "Treshold to determine extreme high complexity level",
+          "type": "number"
+        },
+        "codemetrics.basics.ComplexityLevelHigh": {
+          "default": 10,
+          "description": "Treshold to determine high complexity level",
+          "type": "number"
+        },
+        "codemetrics.basics.ComplexityLevelNormal": {
+          "default": 5,
+          "description": "Treshold to determine normal complexity level",
+          "type": "number"
+        },
+        "codemetrics.basics.ComplexityLevelLow": {
+          "default": 0,
+          "description": "Treshold to determine low complexity level",
+          "type": "number"
+        },
+        "codemetrics.basics.ComplexityLevelExtremeDescription": {
+          "default": "Bloody hell...",
+          "description": "Code lens message for extreme high complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityLevelHighDescription": {
+          "default": "You must be kidding",
+          "description": "Code lens message for high complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityLevelNormalDescription": {
+          "default": "It\"s time to do something...",
+          "description": "Code lens message for normal complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityLevelLowDescription": {
+          "default": "Everything is cool!",
+          "description": "Code lens message for low complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityTemplate": {
+          "default": "Complexity is {0} {1}",
+          "description": "Code lens message template {0} stands for the actual value {1} is for the complexity level description",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.AnyKeyword": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.AnyKeywordDescription": {
+          "default": "Any keyword",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ArrayBindingPattern": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ArrayBindingPatternDescription": {
+          "default": "Array binding pattern",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ArrayLiteralExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ArrayLiteralExpressionDescription": {
+          "default": "Array literal expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ArrowFunction": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ArrowFunctionDescription": {
+          "default": "Arrow function",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.BinaryExpression": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.BinaryExpressionDescription": {
+          "default": "Binary expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.BindingElement": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.BindingElementDescription": {
+          "default": "Binding element",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.Block": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.BlockDescription": {
+          "default": "Block",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.BreakStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.BreakStatementDescription": {
+          "default": "Break statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.CallExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.CallExpressionDescription": {
+          "default": "Call expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.CallSignature": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.CallSignatureDescription": {
+          "default": "Call signature",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.CaseClause": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.CaseClauseDescription": {
+          "default": "Case clause",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ClassDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ClassDeclarationDescription": {
+          "default": "Class declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.CatchClause": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.CatchClauseDescription": {
+          "default": "Catch clause",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ConditionalExpression": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ConditionalExpressionDescription": {
+          "default": "Conditional expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.Constructor": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ConstructorDescription": {
+          "default": "Constructor",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ConstructorType": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ConstructorTypeDescription": {
+          "default": "Constructor type",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ContinueStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ContinueStatementDescription": {
+          "default": "Continue statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.DebuggerStatement": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.DebuggerStatementDescription": {
+          "default": "Debugger statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.DefaultClause": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.DefaultClauseDescription": {
+          "default": "Default case",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.DoStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.DoStatementDescription": {
+          "default": "Do statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ElementAccessExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ElementAccessExpressionDescription": {
+          "default": "Element access expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.EnumDeclaration": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.EnumDeclarationDescription": {
+          "default": "Enum declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ExportAssignment": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ExportAssignmentDescription": {
+          "default": "Export assignment",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ExpressionStatement": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ExpressionStatementDescription": {
+          "default": "Expression statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ForStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ForStatementDescription": {
+          "default": "For statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ForInStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ForInStatementDescription": {
+          "default": "For in statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ForOfStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ForOfStatementDescription": {
+          "default": "For of statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.FunctionDeclaration": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.FunctionDeclarationDescription": {
+          "default": "Function declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.FunctionExpression": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.FunctionExpressionDescription": {
+          "default": "Function expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.FunctionType": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.FunctionTypeDescription": {
+          "default": "Function type",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.GetAccessor": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.GetAccessorDescription": {
+          "default": "Get accessor",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.Identifier": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.IdentifierDescription": {
+          "default": "Identifier",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.IfWithElseStatement": {
+          "default": 2,
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.IfWithElseStatementDescription": {
+          "default": "If with else statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.IfStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.IfStatementDescription": {
+          "default": "If statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ImportDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ImportDeclarationDescription": {
+          "default": "Import declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ImportEqualsDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ImportEqualsDeclarationDescription": {
+          "default": "Import equals declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.IndexSignature": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.IndexSignatureDescription": {
+          "default": "Index signature",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.InterfaceDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.InterfaceDeclarationDescription": {
+          "default": "Interface declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.JsxElement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.JsxElementDescription": {
+          "default": "Jsx element",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.JsxSelfClosingElement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.JsxSelfClosingElementDescription": {
+          "default": "Jsx self closingElement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.LabeledStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.LabeledStatementDescription": {
+          "default": "Labeled statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.MethodDeclaration": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.MethodDeclarationDescription": {
+          "default": "Method declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.MethodSignature": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.MethodSignatureDescription": {
+          "default": "Method signature",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ModuleDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ModuleDeclarationDescription": {
+          "default": "Module declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.NamedImports": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.NamedImportsDescription": {
+          "default": "Named imports",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.NamespaceImport": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.NamespaceImportDescription": {
+          "default": "Namespace import",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.NewExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.NewExpressionDescription": {
+          "default": "New expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ObjectBindingPattern": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ObjectBindingPatternDescription": {
+          "default": "",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ObjectLiteralExpression": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ObjectLiteralExpressionDescription": {
+          "default": "Object literal expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.Parameter": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ParameterDescription": {
+          "default": "Parameter",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PostfixUnaryExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PostfixUnaryExpressionDescription": {
+          "default": "Postfix unary expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PrefixUnaryExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PrefixUnaryExpressionDescription": {
+          "default": "Prefix unary expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PropertyAccessExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PropertyAccessExpressionDescription": {
+          "default": "Property access expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PropertyAssignment": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PropertyAssignmentDescription": {
+          "default": "Property assignment",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PropertyDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PropertyDeclarationDescription": {
+          "default": "Property declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.PropertySignature": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.PropertySignatureDescription": {
+          "default": "Property signature",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.RegularExpressionLiteral": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.RegularExpressionLiteralDescription": {
+          "default": "Regular expression literal",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ReturnStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ReturnStatementDescription": {
+          "default": "Return statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.SetAccessor": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.SetAccessorDescription": {
+          "default": "Set accessor",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.SourceFile": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.SourceFileDescription": {
+          "default": "Source file",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.StringLiteral": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.StringLiteralDescription": {
+          "default": "String literal",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.SwitchStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.SwitchStatementDescription": {
+          "default": "Switch statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.TemplateExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.TemplateExpressionDescription": {
+          "default": "Template expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.ThrowStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.ThrowStatementDescription": {
+          "default": "Throw statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.TryStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.TryStatementDescription": {
+          "default": "Try statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.TypeAssertionExpression": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.TypeAssertionExpressionDescription": {
+          "default": "Type assertion expression",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.TypeLiteral": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.TypeLiteralDescription": {
+          "default": "Type literal",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.TypeReference": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.TypeReferenceDescription": {
+          "default": "Type reference",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.VariableDeclaration": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.VariableDeclarationDescription": {
+          "default": "Variable declaration",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.VariableStatement": {
+          "default": 0,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.VariableStatementDescription": {
+          "default": "Variable statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.WhileStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.WhileStatementDescription": {
+          "default": "While statement",
+          "type": "string"
+        },
+        "codemetrics.nodeconfiguration.WithStatement": {
+          "default": 1,
+          "type": "number"
+        },
+        "codemetrics.nodeconfiguration.WithStatementDescription": {
+          "default": "With statement",
+          "type": "string"
+        }
+      }
+    }
   },
   "main": "./out/extension",
   "scripts": {

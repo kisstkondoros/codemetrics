@@ -22,13 +22,13 @@ In the workspace settings one can override the defaults
 ```javascript
 {
   // highest complexity level will be set when it exeeds 15
-  "codemetrics.ComplexityLevelExtreme" : 15,
+  "codemetrics.basics.ComplexityLevelExtreme" : 15,
 
   // Description for the highest complexity level
-  "codemetrics.ComplexityLevelExtremeDescription" : "OMG split this up!",
+  "codemetrics.basics.ComplexityLevelExtremeDescription" : "OMG split this up!",
 
   // someone uses 'any', it must be punished
-  "codemetrics.AnyKeyword": 100
+  "codemetrics.nodeconfiguration.AnyKeyword": 100
 }
 ```
 
@@ -45,6 +45,8 @@ They can be overriden in the keybindings.json (File -> Preferences -> Keyboard S
 ```
 
 ### Change Log
+- 1.0.0
+  - Configuration properties has been renamed and listed in extension manifest
 - 0.5.0
   - Commands to alter code metrics behaviour added (toggle code metrics and toggle code lenses for arrow functions)
 - 0.4.1

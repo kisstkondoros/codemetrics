@@ -18,9 +18,16 @@ export class AppConfiguration {
     if (!this.cachedSettings) {
       var settings = workspace.getConfiguration(this.extensionName);
       this.cachedSettings = new CodeMetricsConfiguration();
-      for (var property in this.cachedSettings) {
+      for (var propertyName in this.cachedSettings) {
+        var property = "nodeconfiguration."+propertyName;
         if (settings.has(property)) {
-          this.cachedSettings[property] = settings.get(property);
+          this.cachedSettings[propertyName] = settings.get(property);
+          continue;
+        }
+        property = "basics."+propertyName;
+        if (settings.has(property)) {
+          this.cachedSettings[propertyName] = settings.get(property);
+          continue;
         }
       }
     }
