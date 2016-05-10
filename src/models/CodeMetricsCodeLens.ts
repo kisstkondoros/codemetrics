@@ -18,11 +18,15 @@ export class CodeMetricsCodeLens extends CodeLens {
     this.description = description;
   }
 
-  public toString(appConfig:AppConfiguration): string {
+  public getSumComplexity(): number {
     let allRelevant: CodeMetricsCodeLens[] = [this];
     allRelevant = allRelevant.concat(this.children)
 
-    let complexitySum: number = allRelevant.map(item => item.complexity).reduce((item1, item2) => item1 + item2);
+    return allRelevant.map(item => item.complexity).reduce((item1, item2) => item1 + item2);
+  }
+
+  public toString(appConfig: AppConfiguration): string {
+    let complexitySum: number = this.getSumComplexity();
     let instruction: string = '';
     let settings: CodeMetricsConfiguration = appConfig.codeMetricsSettings;
     if (complexitySum > settings.ComplexityLevelExtreme) {
@@ -39,11 +43,11 @@ export class CodeMetricsCodeLens extends CodeLens {
       template = 'Complexity is {0} {1}';
     }
 
-    return template.replace('{0}', complexitySum+'').replace('{1}', instruction)
+    return template.replace('{0}', complexitySum + '').replace('{1}', instruction)
   }
 
-  public getExplanation(appConfig:AppConfiguration): string {
+  public getExplanation(appConfig: AppConfiguration): string {
     let allRelevant: CodeMetricsCodeLens[] = [this];
-    return allRelevant.map(item => "+"+item.complexity + " for " + item.description + " in Ln " + item.line + ", Col "+ item.column).reduce((item1, item2) => item1 + item2);
+    return allRelevant.map(item => "+" + item.complexity + " for " + item.description + " in Ln " + item.line + ", Col " + item.column).reduce((item1, item2) => item1 + item2);
   }
 }

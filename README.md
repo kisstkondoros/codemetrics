@@ -24,6 +24,9 @@ In the workspace settings one can override the defaults
   // highest complexity level will be set when it exeeds 15
   "codemetrics.basics.ComplexityLevelExtreme" : 15,
 
+  // Hides code lenses with complexity lesser than the given value
+  "codemetrics.basics.CodeLensHiddenUnder" : 5,
+
   // Description for the highest complexity level
   "codemetrics.basics.ComplexityLevelExtremeDescription" : "OMG split this up!",
 
@@ -47,6 +50,7 @@ They can be overriden in the keybindings.json (File -> Preferences -> Keyboard S
 ### Change Log
 - 1.0.0
   - Configuration properties has been renamed and listed in extension manifest
+  - New property CodeLensHiddenUnder introduced to be able to hide uninteresting code lenses
 - 0.5.0
   - Commands to alter code metrics behaviour added (toggle code metrics and toggle code lenses for arrow functions)
 - 0.4.1

@@ -78,6 +78,11 @@
           "description": "Treshold to determine low complexity level",
           "type": "number"
         },
+        "codemetrics.basics.CodeLensHiddenUnder": {
+          "default": 3,
+          "description": "Treshold to show code lens for code metrics",
+          "type": "number"
+        },
         "codemetrics.basics.ComplexityLevelExtremeDescription": {
           "default": "Bloody hell...",
           "description": "Code lens message for extreme high complexity level",

@@ -13,7 +13,7 @@ export class CodeMetricsParserImpl {
         let metricsVisitor: MetricsVisitor = new MetricsVisitor(document, sourceFile);
         new TreeWalker(config, metricsVisitor, token).walk(sourceFile);
 
-        return metricsVisitor.getFilteredLens()
+        return metricsVisitor.getFilteredLens(config.codeMetricsSettings.CodeLensHiddenUnder);
     }
 }
 export let CodeMetricsParser: CodeMetricsParserImpl = new CodeMetricsParserImpl();
@@ -43,8 +43,8 @@ class MetricsVisitor implements Visitor {
         }
         return result;
     }
-    getFilteredLens(): CodeMetricsCodeLens[] {
-        return this.resultingCodeLens.filter(item => item.visible);
+    getFilteredLens(codeLensHiddenUnder:number): CodeMetricsCodeLens[] {
+        return this.resultingCodeLens.filter(item => item.visible && item.getSumComplexity() >= codeLensHiddenUnder);
     }
 }
 

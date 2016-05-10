@@ -41,6 +41,7 @@ export class CodeMetricsConfiguration {
   ComplexityLevelHigh = 10;
   ComplexityLevelNormal = 5;
   ComplexityLevelLow = 0;
+  CodeLensHiddenUnder = 3;
   ComplexityLevelExtremeDescription = 'Bloody hell...';
   ComplexityLevelHighDescription = 'You must be kidding';
   ComplexityLevelNormalDescription = 'It\'s time to do something...';
