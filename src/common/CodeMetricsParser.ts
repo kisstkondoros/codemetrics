@@ -92,7 +92,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.ArrowFunction:
-                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, this.configuration.ArrowFunction, this.configuration.ArrowFunctionDescription);
+                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, this.configuration.ArrowFunction, this.configuration.ArrowFunctionDescription, true);
                 break;
 
             case ts.SyntaxKind.BinaryExpression:
