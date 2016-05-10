@@ -11,6 +11,9 @@ export class AppConfiguration {
     return 'codemetrics';
   }
 
+  public codeMetricsForArrowFunctionsToggled:boolean;
+  public codeMetricsDisplayed:boolean = true;
+
   get codeMetricsSettings(): CodeMetricsConfiguration {
     if (!this.cachedSettings) {
       var settings = workspace.getConfiguration(this.extensionName);

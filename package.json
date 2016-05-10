@@ -5,7 +5,7 @@
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
@@ -29,6 +29,32 @@
     "onLanguage:typescript",
     "onLanguage:javascript"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codemetrics.toggleCodeMetricsForArrowFunctions",
+        "title": "Toggle code lenses for arrow functions"
+      },
+      {
+        "command": "codemetrics.toggleCodeMetricsDisplayed",
+        "title": "Toggle code metrics"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "codemetrics.toggleCodeMetricsForArrowFunctions",
+        "key": "f4",
+        "mac": "f4",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codemetrics.toggleCodeMetricsDisplayed",
+        "key": "f5",
+        "mac": "f5",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
   "main": "./out/extension",
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",

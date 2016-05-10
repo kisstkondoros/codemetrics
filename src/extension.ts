@@ -18,9 +18,30 @@ export function activate(context) {
         provider
       )
     );
-  })
+  });
 
-  disposables.push(commands.registerCommand("ShowCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
+  const triggerCodeLensComputation = () => {
+    var end = vscode.window.activeTextEditor.selection.end;
+    vscode.window.activeTextEditor.edit((editbuilder) => {
+      editbuilder.insert(end, " ");
+    }).then(() => {
+      vscode.window.activeTextEditor.edit((editbuilder) => {
+        editbuilder.delete(new vscode.Range(end, new vscode.Position(end.line, end.character + 1)));
+      })
+    });
+  };
+
+  disposables.push(commands.registerCommand("codemetrics.toggleCodeMetricsForArrowFunctions", () => {
+    config.codeMetricsForArrowFunctionsToggled = !config.codeMetricsForArrowFunctionsToggled;
+    triggerCodeLensComputation();
+  }));
+
+  disposables.push(commands.registerCommand("codemetrics.toggleCodeMetricsDisplayed", () => {
+    config.codeMetricsDisplayed = !config.codeMetricsDisplayed;
+    triggerCodeLensComputation();
+  }));
+
+  disposables.push(commands.registerCommand("codemetrics.showCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
     var items = codelens.children.map(item => item.getExplanation(config));
     vscode.window.showQuickPick(items).then(selected => {
       if (selected) {

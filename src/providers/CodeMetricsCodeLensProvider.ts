@@ -51,28 +51,32 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   }
 
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
-    var target = ts.ScriptTarget.ES3;
-    var isJS = false;
+    var result:CodeLens[] = [];
+    if (this.appConfig.codeMetricsDisplayed){
+      var target = ts.ScriptTarget.ES3;
+      var isJS = false;
 
-    if (document.fileName) {
-      var parsedPath = path.parse(document.fileName);
-      var extension = parsedPath.ext;
-      isJS = extension && extension.toLowerCase() == ".js";
+      if (document.fileName) {
+        var parsedPath = path.parse(document.fileName);
+        var extension = parsedPath.ext;
+        isJS = extension && extension.toLowerCase() == ".js";
+      }
+
+      var projectConfig: any = this.loadConfig(isJS);
+      if (projectConfig.config && projectConfig.config.compilerOptions) {
+        target = this.getScriptTarget(projectConfig.config.compilerOptions.target, isJS);
+      }
+
+      result = CodeMetricsParser.getMetrics(this.appConfig, document, target, token);
     }
-
-    var projectConfig: any = this.loadConfig(isJS);
-    if (projectConfig.config && projectConfig.config.compilerOptions) {
-      target = this.getScriptTarget(projectConfig.config.compilerOptions.target, isJS);
-    }
-
-    return CodeMetricsParser.getMetrics(this.appConfig, document, target, token);
+    return result;
   }
 
   resolveCodeLens(codeLens: CodeLens, token: CancellationToken): CodeLens | Thenable<CodeLens> {
     if (codeLens instanceof CodeMetricsCodeLens) {
       codeLens.command = {
         title: codeLens.toString(this.appConfig),
-        command: "ShowCodeMetricsCodeLensInfo",
+        command: "codemetrics.showCodeMetricsCodeLensInfo",
         arguments: [codeLens]
       };
       return codeLens;

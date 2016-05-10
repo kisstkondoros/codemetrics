@@ -11,7 +11,7 @@ export class CodeMetricsParserImpl {
         let fileName = document.fileName;
         let sourceFile: ts.SourceFile = ts.createSourceFile(fileName, document.getText(), target, true);
         let metricsVisitor: MetricsVisitor = new MetricsVisitor(document, sourceFile);
-        new TreeWalker(config.codeMetricsSettings, metricsVisitor, token).walk(sourceFile);
+        new TreeWalker(config, metricsVisitor, token).walk(sourceFile);
 
         return metricsVisitor.getFilteredLens()
     }
@@ -54,10 +54,13 @@ export class TreeWalker {
     parents: CodeMetricsCodeLens[] = [];
     token: CancellationToken;
     configuration: CodeMetricsConfiguration;
-    constructor(configuration: CodeMetricsConfiguration, visitor: Visitor, token: CancellationToken) {
+    appConfiguration: AppConfiguration;
+
+    constructor(appConfiguration: AppConfiguration, visitor: Visitor, token: CancellationToken) {
         this.visitor = visitor;
         this.token = token;
-        this.configuration = configuration;
+        this.configuration = appConfiguration.codeMetricsSettings;
+        this.appConfiguration = appConfiguration;
     }
 
     protected visitNode(node: ts.Node) {
@@ -92,7 +95,7 @@ export class TreeWalker {
                 break;
 
             case ts.SyntaxKind.ArrowFunction:
-                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, this.configuration.ArrowFunction, this.configuration.ArrowFunctionDescription, true);
+                generatedLens = this.visitor.visit(<ts.FunctionLikeDeclaration>node, this.configuration.ArrowFunction, this.configuration.ArrowFunctionDescription, this.appConfiguration.codeMetricsForArrowFunctionsToggled);
                 break;
 
             case ts.SyntaxKind.BinaryExpression:

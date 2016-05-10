@@ -30,9 +30,23 @@ In the workspace settings one can override the defaults
   // someone uses 'any', it must be punished
   "codemetrics.AnyKeyword": 100
 }
-  ```
+```
+
+## Commands
+- Toggle code lenses for arrow functions - default key binding F4
+- Toggle code metrics - default key binding F5
+
+They can be overriden in the keybindings.json (File -> Preferences -> Keyboard Shortcuts)
+```javascript
+{ "key": "f4",                    "command": "codemetrics.toggleCodeMetricsForArrowFunctions",
+                                     "when": "editorTextFocus" },
+{ "key": "f5",                    "command": "codemetrics.toggleCodeMetricsDisplayed",
+                                     "when": "editorTextFocus" }
+```
 
 ### Change Log
+- 0.5.0
+  - Commands to alter code metrics behaviour added (toggle code metrics and toggle code lenses for arrow functions)
 - 0.4.1
   - Showing complexity for arrow functions as well
 - 0.4.0
