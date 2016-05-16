@@ -36,10 +36,10 @@ In the workspace settings one can override the defaults
 ```
 
 ## Commands
-- Toggle code lenses for arrow functions - default key binding F4
-- Toggle code metrics - default key binding F5
+- Toggle code lenses for arrow functions
+- Toggle code metrics
 
-They can be overriden in the keybindings.json (File -> Preferences -> Keyboard Shortcuts)
+They can be bound in the keybindings.json (File -> Preferences -> Keyboard Shortcuts)
 ```javascript
 { "key": "f4",                    "command": "codemetrics.toggleCodeMetricsForArrowFunctions",
                                      "when": "editorTextFocus" },
@@ -48,6 +48,10 @@ They can be overriden in the keybindings.json (File -> Preferences -> Keyboard S
 ```
 
 ### Change Log
+- 1.0.1
+  - Default keyboard bindings removed
+  - CodeLens cache invalidation side effect eliminated (dirty file)
+  - Path concatenation replaced with path.join
 - 1.0.0
   - Configuration properties has been renamed and listed in extension manifest
   - New property CodeLensHiddenUnder introduced to be able to hide uninteresting code lenses
