@@ -43,16 +43,16 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
 
   private loadConfig(isJS: boolean) {
     var fileName = isJS ? "jsconfig.json" : "tsconfig.json";
-    var config = ts.readConfigFile(fileName, (path) => {
-      let fullPath = workspace.rootPath + "/" + path;
+    var config = ts.readConfigFile(fileName, (filePath) => {
+      let fullPath = path.join(workspace.rootPath, filePath);
       return readFileSync(fullPath, 'UTF-8');
     });
     return config;
   }
 
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
-    var result:CodeLens[] = [];
-    if (this.appConfig.codeMetricsDisplayed){
+    var result: CodeLens[] = [];
+    if (this.appConfig.codeMetricsDisplayed) {
       var target = ts.ScriptTarget.ES3;
       var isJS = false;
 
