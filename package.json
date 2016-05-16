@@ -40,20 +40,6 @@
         "title": "Toggle code metrics"
       }
     ],
-    "keybindings": [
-      {
-        "command": "codemetrics.toggleCodeMetricsForArrowFunctions",
-        "key": "f4",
-        "mac": "f4",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "codemetrics.toggleCodeMetricsDisplayed",
-        "key": "f5",
-        "mac": "f5",
-        "when": "editorTextFocus"
-      }
-    ],
     "configuration": {
       "type": "object",
       "title": "CodeMetrics configuration",
