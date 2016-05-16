@@ -25,9 +25,7 @@ export function activate(context) {
     vscode.window.activeTextEditor.edit((editbuilder) => {
       editbuilder.insert(end, " ");
     }).then(() => {
-      vscode.window.activeTextEditor.edit((editbuilder) => {
-        editbuilder.delete(new vscode.Range(end, new vscode.Position(end.line, end.character + 1)));
-      })
+      commands.executeCommand("undo");
     });
   };
 
