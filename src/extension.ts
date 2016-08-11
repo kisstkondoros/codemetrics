@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import {Disposable, DocumentSelector, languages, commands} from 'vscode';
 import {CodeMetricsCodeLensProvider} from './providers/CodeMetricsCodeLensProvider';
 import {AppConfiguration} from './models/AppConfiguration';
-import {CodeMetricsParser} from './common/CodeMetricsParser';
 import {CodeMetricsCodeLens} from './models/CodeMetricsCodeLens';
 
 export function activate(context) {
@@ -40,13 +39,14 @@ export function activate(context) {
   }));
 
   disposables.push(commands.registerCommand("codemetrics.showCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
-    var items = codelens.children.map(item => item.getExplanation(config));
-    vscode.window.showQuickPick(items).then(selected => {
+    var items = codelens.getChildren().filter(item => item.complexity > 0);
+    var explanations = items.map(item => item.toLogString(""));
+    vscode.window.showQuickPick(explanations).then(selected => {
       if (selected) {
-        var selectedCodeLens: CodeMetricsCodeLens = codelens.children[items.indexOf(selected)];
+        var selectedCodeLens = items[explanations.indexOf(selected)];
         if (selectedCodeLens) {
-          var cursorPosition = selectedCodeLens.range.start;
-          vscode.window.activeTextEditor.selection = new vscode.Selection(selectedCodeLens.range.start, selectedCodeLens.range.start);
+          var characterPosition = vscode.window.activeTextEditor.document.positionAt(selectedCodeLens.start);
+          vscode.window.activeTextEditor.selection = new vscode.Selection(characterPosition, characterPosition);
         }
       }
     });

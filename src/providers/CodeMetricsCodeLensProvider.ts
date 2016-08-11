@@ -1,7 +1,9 @@
 import {CodeLensProvider, TextDocument, CodeLens, CancellationToken, workspace} from 'vscode';
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
-import {AppConfiguration, CodeMetricsConfiguration} from '../models/AppConfiguration';
-import {CodeMetricsParser} from '../common/CodeMetricsParser';
+import {IMetricsModel} from 'tsmetrics-core';
+import {AppConfiguration} from '../models/AppConfiguration';
+import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
+import {MetricsParser} from 'tsmetrics-core/MetricsParser';
 import * as ts from 'typescript';
 import {readFileSync} from 'fs';
 import * as path from 'path';
@@ -67,7 +69,17 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
         target = this.getScriptTarget(projectConfig.config.compilerOptions.target, isJS);
       }
 
-      result = CodeMetricsParser.getMetrics(this.appConfig, document, target, token);
+      var settings = this.appConfig.codeMetricsSettings;
+      var metrics = MetricsParser.getMetrics(document.fileName, settings, target).metrics;
+      var collect = function (model: IMetricsModel) {
+        if (model.visible && model.getSumComplexity() > settings.CodeLensHiddenUnder) {
+          result.push(new CodeMetricsCodeLens(model, document));
+        }
+        model.children.forEach(element => {
+          collect(element);
+        });
+      }
+      collect(metrics);
     }
     return result;
   }
