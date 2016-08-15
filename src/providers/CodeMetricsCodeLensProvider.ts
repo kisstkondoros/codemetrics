@@ -70,7 +70,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
       }
 
       var settings = this.appConfig.codeMetricsSettings;
-      var metrics = MetricsParser.getMetrics(document.fileName, settings, target).metrics;
+      var metrics = MetricsParser.getMetricsFromText(document.fileName,document.getText(), settings, target).metrics;
       var collect = function (model: IMetricsModel) {
         if (model.visible && model.getSumComplexity() > settings.CodeLensHiddenUnder) {
           result.push(new CodeMetricsCodeLens(model, document));
