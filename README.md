@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.1.1
+  - Fix issue with non up to date source file processing
 - 1.1.0
   - Parse logic refactored to be a separate npm module [tsmetrics-core](https://www.npmjs.com/package/tsmetrics-core) allowing to create a gulp plugin as well [gulp-tsmetrics](https://www.npmjs.com/package/gulp-tsmetrics)
   - QuickPick now works with a simplified and more meaningful list, which shows only one level of the hierarchy at once
