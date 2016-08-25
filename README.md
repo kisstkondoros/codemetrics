@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.1.2
+  - Fix dependency issue with 'fs'
 - 1.1.1
   - Fix issue with non up to date source file processing
 - 1.1.0
