@@ -691,7 +691,7 @@
     "grunt-shell": "^1.2.1"
   },
   "dependencies": {
-    "tsmetrics-core": "^0.3.0",
+    "tsmetrics-core": "^0.3.1",
     "typescript": "^1.8.7",
     "vscode-languageclient": "^2.1.0"
   }
