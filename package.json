@@ -80,7 +80,7 @@
           "type": "string"
         },
         "codemetrics.basics.ComplexityLevelNormalDescription": {
-          "default": "It\"s time to do something...",
+          "default": "It's time to do something...",
           "description": "Code lens message for normal complexity level",
           "type": "string"
         },
