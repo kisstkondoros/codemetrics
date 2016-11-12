@@ -40,7 +40,7 @@ export function activate(context) {
 
   disposables.push(commands.registerCommand("codemetrics.showCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
     var items = codelens.getChildren().filter(item => item.complexity > 0);
-    var explanations = items.map(item => item.toLogString(""));
+    var explanations = items.map(item => item.toLogString("").trim() + " - " + item.description);
     vscode.window.showQuickPick(explanations).then(selected => {
       if (selected) {
         var selectedCodeLens = items[explanations.indexOf(selected)];

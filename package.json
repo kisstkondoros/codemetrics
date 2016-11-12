@@ -683,15 +683,15 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "vscode": " ^0.11.7",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
-    "load-grunt-config": "^0.19.1",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-shell": "^1.2.1"
+    "grunt-shell": "^1.2.1",
+    "load-grunt-config": "^0.19.1",
+    "vscode": " ^0.11.7"
   },
   "dependencies": {
-    "tsmetrics-core": "^0.3.1",
+    "tsmetrics-core": "^0.3.2",
     "typescript": "^1.8.7",
     "vscode-languageclient": "^2.1.0"
   }
