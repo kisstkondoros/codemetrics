@@ -20,6 +20,9 @@ export function activate(context) {
   });
 
   const triggerCodeLensComputation = () => {
+    if (!vscode.window.activeTextEditor){
+      return;
+    }
     var end = vscode.window.activeTextEditor.selection.end;
     vscode.window.activeTextEditor.edit((editbuilder) => {
       editbuilder.insert(end, " ");
