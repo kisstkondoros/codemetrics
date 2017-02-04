@@ -48,6 +48,15 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.1.6
+  - Fix possible NPE in 'triggerCodeLensComputation'
+  - Remove language restriction from 'activationEvents'
+- 1.1.5
+  - Udpate logo
+- 1.1.4
+  - Change textual representation in quick pick
+- 1.1.3
+  - Fix typo in codemetrics.basics.ComplexityLevelNormalDescription
 - 1.1.2
   - Fix dependency issue with 'fs'
 - 1.1.1
