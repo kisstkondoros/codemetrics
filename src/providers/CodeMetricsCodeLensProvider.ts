@@ -25,7 +25,15 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
       language: 'javascript',
       scheme: 'file'
     };
-    return [tsDocSelector, jsDocSelector];
+    var jsxDocSelector = {
+      language: 'javascriptreact',
+      scheme: 'file'
+    };
+    var tsxDocSelector = {
+      language: 'typescriptreact',
+      scheme: 'file'
+    };
+    return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector];
   };
 
   private getScriptTarget(target: string, isJS: boolean): ts.ScriptTarget {
@@ -70,7 +78,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
       }
 
       var settings = this.appConfig.codeMetricsSettings;
-      var metrics = MetricsParser.getMetricsFromText(document.fileName,document.getText(), settings, target).metrics;
+      var metrics = MetricsParser.getMetricsFromText(document.fileName, document.getText(), settings, target).metrics;
       var collect = function (model: IMetricsModel) {
         if (model.visible && model.getSumComplexity() > settings.CodeLensHiddenUnder) {
           result.push(new CodeMetricsCodeLens(model, document));
