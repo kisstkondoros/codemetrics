@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.2.0
+  - Add JSX and TSX support, special thanks to [Aron Adler](https://github.com/Arrow7000)
 - 1.1.6
   - Fix possible NPE in 'triggerCodeLensComputation'
   - Remove language restriction from 'activationEvents'
