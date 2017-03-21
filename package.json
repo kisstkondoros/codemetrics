@@ -351,7 +351,7 @@
         },
         "codemetrics.nodeconfiguration.IfWithElseStatement": {
           "default": 2,
-          "type": "string"
+          "type": "number"
         },
         "codemetrics.nodeconfiguration.IfWithElseStatementDescription": {
           "default": "If with else statement",
