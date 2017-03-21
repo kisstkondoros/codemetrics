@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.2.1
+  - Change type of IfWithElseStatement property to number
 - 1.2.0
   - Add JSX and TSX support, special thanks to [Aron Adler](https://github.com/Arrow7000)
 - 1.1.6
