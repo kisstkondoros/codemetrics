@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.2.2
+  - Fix behaviour of CodeLensHiddenUnder
 - 1.2.1
   - Change type of IfWithElseStatement property to number
 - 1.2.0
