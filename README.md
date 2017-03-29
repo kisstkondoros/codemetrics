@@ -48,6 +48,14 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.3.0
+  - Add new properties to selectively disable codemetrics for different languages
+    - "codemetrics.basics.EnabledForTSX"
+    - "codemetrics.basics.EnabledForJSX"
+    - "codemetrics.basics.EnabledForTS"
+    - "codemetrics.basics.EnabledForJS"
+  - Introduce file size limit
+    - "codemetrics.basics.FileSizeLimitMB" default is 0.5 MB
 - 1.2.2
   - Fix behaviour of CodeLensHiddenUnder
 - 1.2.1
