@@ -43,6 +43,11 @@
       "type": "object",
       "title": "CodeMetrics configuration",
       "properties": {
+        "codemetrics.basics.FileSizeLimitMB": {
+          "default": 0.5,
+          "description": "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
+          "type": "number"
+        },
         "codemetrics.basics.EnabledForJS": {
           "default": true,
           "description": "A flag which indicates whether codemetrics are enabled for JS",

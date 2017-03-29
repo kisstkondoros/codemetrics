@@ -5,7 +5,7 @@ import {AppConfiguration} from '../models/AppConfiguration';
 import {VSCodeMetricsConfiguration} from '../models/VSCodeMetricsConfiguration';
 import {MetricsParser} from 'tsmetrics-core/MetricsParser';
 import * as ts from 'typescript';
-import {readFileSync} from 'fs';
+import {readFileSync, statSync} from 'fs';
 import * as path from 'path';
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {
@@ -67,9 +67,26 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
     if (languageId == 'javascriptreact' && !this.appConfig.codeMetricsSettings.EnabledForJSX) return true;
     return false;
   }
+
+  private isAboveFileSizeLimit(fileName: string) {
+    if (this.appConfig.codeMetricsSettings.FileSizeLimitMB < 0) {
+      return false;
+    }
+
+    try {
+      let fileSizeInBytes = statSync(fileName).size;
+      let configuredLimit = this.appConfig.codeMetricsSettings.FileSizeLimitMB * 1024 * 1024;
+      return fileSizeInBytes > configuredLimit;
+    } catch (error) {
+      return false;
+    }
+  }
+
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
     var result: CodeLens[] = [];
+    if (this.isAboveFileSizeLimit(document.fileName)) return;
     if (this.isLanguageDisabled(document.languageId)) return;
+
     if (this.appConfig.codeMetricsDisplayed) {
       var target = ts.ScriptTarget.ES3;
       var isJS = false;

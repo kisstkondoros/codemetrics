@@ -4,4 +4,6 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
   EnabledForJSX = true;
   EnabledForTS = true;
   EnabledForTSX = true;
+
+  FileSizeLimitMB = 0.5;
 }
