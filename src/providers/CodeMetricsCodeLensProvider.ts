@@ -2,7 +2,7 @@ import {CodeLensProvider, TextDocument, CodeLens, CancellationToken, workspace} 
 import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
 import {IMetricsModel} from 'tsmetrics-core';
 import {AppConfiguration} from '../models/AppConfiguration';
-import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
+import {VSCodeMetricsConfiguration} from '../models/VSCodeMetricsConfiguration';
 import {MetricsParser} from 'tsmetrics-core/MetricsParser';
 import * as ts from 'typescript';
 import {readFileSync} from 'fs';
@@ -60,8 +60,16 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
     return config;
   }
 
+  private isLanguageDisabled(languageId: string): boolean {
+    if (languageId == 'typescript' && !this.appConfig.codeMetricsSettings.EnabledForTS) return true;
+    if (languageId == 'typescriptreact' && !this.appConfig.codeMetricsSettings.EnabledForTSX) return true;
+    if (languageId == 'javascript' && !this.appConfig.codeMetricsSettings.EnabledForJS) return true;
+    if (languageId == 'javascriptreact' && !this.appConfig.codeMetricsSettings.EnabledForJSX) return true;
+    return false;
+  }
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
     var result: CodeLens[] = [];
+    if (this.isLanguageDisabled(document.languageId)) return;
     if (this.appConfig.codeMetricsDisplayed) {
       var target = ts.ScriptTarget.ES3;
       var isJS = false;

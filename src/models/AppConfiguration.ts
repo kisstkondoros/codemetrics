@@ -1,8 +1,8 @@
 import {workspace} from 'vscode';
-import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
+import {VSCodeMetricsConfiguration} from './VSCodeMetricsConfiguration';
 
 export class AppConfiguration {
-  private cachedSettings: MetricsConfiguration;
+  private cachedSettings: VSCodeMetricsConfiguration;
   constructor() {
     workspace.onDidChangeConfiguration(e => {
       this.cachedSettings = null;
@@ -15,10 +15,10 @@ export class AppConfiguration {
   public codeMetricsForArrowFunctionsToggled: boolean;
   public codeMetricsDisplayed: boolean = true;
 
-  get codeMetricsSettings(): MetricsConfiguration {
+  get codeMetricsSettings(): VSCodeMetricsConfiguration {
     if (!this.cachedSettings) {
       var settings = workspace.getConfiguration(this.extensionName);
-      this.cachedSettings = new MetricsConfiguration();
+      this.cachedSettings = new VSCodeMetricsConfiguration();
       for (var propertyName in this.cachedSettings) {
         var property = "nodeconfiguration." + propertyName;
         if (settings.has(property)) {

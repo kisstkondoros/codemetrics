@@ -43,6 +43,26 @@
       "type": "object",
       "title": "CodeMetrics configuration",
       "properties": {
+        "codemetrics.basics.EnabledForJS": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for JS",
+          "type": "boolean"
+        },
+        "codemetrics.basics.EnabledForJSX": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for JSX",
+          "type": "boolean"
+        },
+        "codemetrics.basics.EnabledForTS": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for TS",
+          "type": "boolean"
+        },
+        "codemetrics.basics.EnabledForTSX": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for TSX",
+          "type": "boolean"
+        },
         "codemetrics.basics.ComplexityLevelExtreme": {
           "default": 25,
           "description": "Treshold to determine extreme high complexity level",
