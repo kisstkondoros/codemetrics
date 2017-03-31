@@ -43,6 +43,41 @@
       "type": "object",
       "title": "CodeMetrics configuration",
       "properties": {
+        "codemetrics.basics.MetricsForClassDeclarationsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for class declarations",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForConstructorsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for constructors",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForEnumDeclarationsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for enum declarations",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForFunctionDeclarationsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for function declarations",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForFunctionExpressionsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for function expressions",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForMethodDeclarationsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for methods declarations",
+          "type": "boolean"
+        },
+        "codemetrics.basics.MetricsForArrowFunctionsToggled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are enabled for arrow functions (can also be toggled via a command)",
+          "type": "boolean"
+        },
         "codemetrics.basics.FileSizeLimitMB": {
           "default": 0.5,
           "description": "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
@@ -715,7 +750,7 @@
     "vscode": " ^0.11.7"
   },
   "dependencies": {
-    "tsmetrics-core": "^0.3.2",
+    "tsmetrics-core": "^0.3.3",
     "typescript": "^1.8.7",
     "vscode-languageclient": "^2.1.0"
   }
