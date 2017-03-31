@@ -48,8 +48,17 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.4.1
+  - Update changelog
 - 1.4.0
   - Expose code lens location related configuration properties
+    - "codemetrics.basics.MetricsForClassDeclarationsToggled"
+    - "codemetrics.basics.MetricsForConstructorsToggled"
+    - "codemetrics.basics.MetricsForEnumDeclarationsToggled"
+    - "codemetrics.basics.MetricsForFunctionDeclarationsToggled"
+    - "codemetrics.basics.MetricsForFunctionExpressionsToggled"
+    - "codemetrics.basics.MetricsForMethodDeclarationsToggled"
+    - "codemetrics.basics.MetricsForArrowFunctionsToggled"
 - 1.3.0
   - Add new properties to selectively disable codemetrics for different languages
     - "codemetrics.basics.EnabledForTSX"
