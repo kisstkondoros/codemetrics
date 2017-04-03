@@ -1,12 +1,12 @@
-import {CodeLens, Range, TextDocument} from 'vscode';
+import {CodeLens, Range} from 'vscode';
 import {IMetricsModel} from 'tsmetrics-core';
 import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
 import {AppConfiguration} from '../models/AppConfiguration';
 
 export class CodeMetricsCodeLens extends CodeLens {
   private model: IMetricsModel;
-  constructor(model: IMetricsModel, document: TextDocument) {
-    super(new Range(document.positionAt(model.start), document.positionAt(model.end)));
+  constructor(model: IMetricsModel, range: Range) {
+    super(range);
     this.model = model;
   }
 
