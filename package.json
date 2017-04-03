@@ -9,7 +9,7 @@
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "0.10.x"
+    "vscode": "^1.10.x"
   },
   "repository": {
     "type": "git",
@@ -732,7 +732,7 @@
       }
     }
   },
-  "main": "./out/src/extension",
+  "main": "./out/extension",
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
     "watch": "node ./node_modules/vscode/bin/compile -watch -p ./",
@@ -747,11 +747,12 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-shell": "^1.2.1",
     "load-grunt-config": "^0.19.1",
-    "vscode": " ^0.11.7"
+    "vscode": " ^1.1.0",
+    "@types/node": "^7.0.0"
   },
   "dependencies": {
     "tsmetrics-core": "^0.3.3",
-    "typescript": "^1.8.7",
+    "typescript": "^2.2.2",
     "vscode-languageclient": "^2.1.0"
   }
 }
