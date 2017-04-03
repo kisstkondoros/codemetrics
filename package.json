@@ -43,6 +43,16 @@
       "type": "object",
       "title": "CodeMetrics configuration",
       "properties": {
+        "codemetrics.basics.DecorationModeEnabled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are shown as inline decoration",
+          "type": "boolean"
+        },
+        "codemetrics.basics.CodeLensEnabled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are shown as code lens",
+          "type": "boolean"
+        },
         "codemetrics.basics.MetricsForClassDeclarationsToggled": {
           "default": true,
           "description": "A flag which indicates whether code metrics are enabled for class declarations",

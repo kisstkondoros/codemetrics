@@ -4,24 +4,20 @@ import { CodeMetricsCodeLensProvider } from './codeLensprovider/CodeMetricsCodeL
 import { AppConfiguration } from './models/AppConfiguration';
 import { CodeMetricsCodeLens } from './models/CodeMetricsCodeLens';
 import { MetricsUtil } from './metrics/MetricsUtil';
-
-import { IMetricsModel } from 'tsmetrics-core';
+import { EditorDecoration } from './editordecoration/EditorDecoration';
 
 export function activate(context: vscode.ExtensionContext) {
   const config: AppConfiguration = new AppConfiguration();
   const metricsUtil: MetricsUtil = new MetricsUtil(config);
   const disposables = [];
-  const providers = [
-    new CodeMetricsCodeLensProvider(metricsUtil)
-  ];
-  providers.forEach(provider => {
-    disposables.push(
-      languages.registerCodeLensProvider(
-        metricsUtil.selector,
-        provider
-      )
-    );
-  });
+
+  disposables.push(
+    languages.registerCodeLensProvider(
+      metricsUtil.selector,
+      new CodeMetricsCodeLensProvider(metricsUtil)
+    )
+  );
+  disposables.push(new EditorDecoration(context, metricsUtil));
 
   const triggerCodeLensComputation = () => {
     if (!vscode.window.activeTextEditor) {

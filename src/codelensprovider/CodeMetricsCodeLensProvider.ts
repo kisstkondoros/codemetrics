@@ -1,8 +1,8 @@
-import {CodeLensProvider, TextDocument, CodeLens, CancellationToken, workspace} from 'vscode';
-import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
-import {IMetricsModel} from 'tsmetrics-core';
-import {VSCodeMetricsConfiguration} from '../models/VSCodeMetricsConfiguration';
-import {MetricsUtil} from "../metrics/MetricsUtil";
+import { CodeLensProvider, TextDocument, CodeLens, CancellationToken, workspace } from 'vscode';
+import { CodeMetricsCodeLens } from '../models/CodeMetricsCodeLens';
+import { IMetricsModel } from 'tsmetrics-core';
+import { VSCodeMetricsConfiguration } from '../models/VSCodeMetricsConfiguration';
+import { MetricsUtil } from "../metrics/MetricsUtil";
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   private metricsUtil: MetricsUtil;
@@ -12,6 +12,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
   }
 
   provideCodeLenses(document: TextDocument, token: CancellationToken): CodeLens[] {
+    if (!this.metricsUtil.appConfig.codeMetricsSettings.CodeLensEnabled) return;
     return this.metricsUtil.getMetrics(document).map(model => new CodeMetricsCodeLens(model, this.metricsUtil.toRange(model, document)));
   }
 
