@@ -744,8 +744,7 @@
   },
   "main": "./out/extension",
   "scripts": {
-    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "watch": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "vscode:prepublish": "tsc -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "clean": "grunt clean:sourceArtifacts",
     "compile": "grunt compile",
