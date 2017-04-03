@@ -48,6 +48,15 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.5.0
+  - Upgrade vsdcode and typescript dependency
+  - Remove unused typings
+  - Extract code metrics related util class
+  - Move CodeMetricsCodeLensProvider to codelensprovider folder
+  - Add text decoration based on code metrics
+    - Appearance can be configured with the following properties: 
+      - "codemetrics.basics.DecorationModeEnabled"
+      - "codemetrics.basics.CodeLensEnabled"
 - 1.4.1
   - Update changelog
 - 1.4.0
