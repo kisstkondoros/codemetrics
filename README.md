@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.6.0
+  - Execute code metrics computation in language server
 - 1.5.0
   - Upgrade vsdcode and typescript dependency
   - Remove unused typings
