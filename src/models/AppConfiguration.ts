@@ -1,5 +1,5 @@
-import {workspace} from 'vscode';
-import {VSCodeMetricsConfiguration} from './VSCodeMetricsConfiguration';
+import { workspace } from 'vscode';
+import { VSCodeMetricsConfiguration } from '../metrics/common/VSCodeMetricsConfiguration';
 
 export class AppConfiguration {
   private cachedSettings: VSCodeMetricsConfiguration;

@@ -8,7 +8,7 @@ import { EditorDecoration } from './editordecoration/EditorDecoration';
 
 export function activate(context: vscode.ExtensionContext) {
   const config: AppConfiguration = new AppConfiguration();
-  const metricsUtil: MetricsUtil = new MetricsUtil(config);
+  const metricsUtil: MetricsUtil = new MetricsUtil(config, context);
   const disposables = [];
 
   disposables.push(

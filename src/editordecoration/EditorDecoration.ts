@@ -72,28 +72,29 @@ export class EditorDecoration implements vscode.Disposable {
       editor.setDecorations(this.extreme, []);
       return;
     }
-    const metrics = this.metricsUtil.getMetrics(document);
+    this.metricsUtil.getMetrics(document).then((metrics) => {
 
-    const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
-      return {
-        hoverMessage: model.toString(this.metricsUtil.appConfig.codeMetricsSettings),
-        range: this.metricsUtil.toRangeFromOffset(model.start, document)
-      }
-    };
-    const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getSumComplexity(), model: p } });
-    const settings = this.metricsUtil.appConfig.codeMetricsSettings;
-    const lowLevelDecorations = complexityAndModel.filter(p => p.complexity < settings.ComplexityLevelNormal).map(p => toDecoration(p.model));
+      const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
+        return {
+          hoverMessage: model.toString(this.metricsUtil.appConfig.codeMetricsSettings),
+          range: this.metricsUtil.toRangeFromOffset(model.start, document)
+        }
+      };
+      const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getSumComplexity(), model: p } });
+      const settings = this.metricsUtil.appConfig.codeMetricsSettings;
+      const lowLevelDecorations = complexityAndModel.filter(p => p.complexity < settings.ComplexityLevelNormal).map(p => toDecoration(p.model));
 
-    const normalLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelNormal && p.complexity < settings.ComplexityLevelHigh).map(p => toDecoration(p.model));
+      const normalLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelNormal && p.complexity < settings.ComplexityLevelHigh).map(p => toDecoration(p.model));
 
-    const highLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelHigh && p.complexity < settings.ComplexityLevelExtreme).map(p => toDecoration(p.model));
+      const highLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelHigh && p.complexity < settings.ComplexityLevelExtreme).map(p => toDecoration(p.model));
 
-    const extremeLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelExtreme).map(p => toDecoration(p.model));
+      const extremeLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelExtreme).map(p => toDecoration(p.model));
 
-    editor.setDecorations(this.low, lowLevelDecorations);
-    editor.setDecorations(this.normal, normalLevelDecorations);
-    editor.setDecorations(this.high, highLevelDecorations);
-    editor.setDecorations(this.extreme, extremeLevelDecorations);
+      editor.setDecorations(this.low, lowLevelDecorations);
+      editor.setDecorations(this.normal, normalLevelDecorations);
+      editor.setDecorations(this.high, highLevelDecorations);
+      editor.setDecorations(this.extreme, extremeLevelDecorations);
+    });
   }
 
   public dispose(): void {

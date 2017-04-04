@@ -1,20 +1,57 @@
-import {Range, TextDocument, workspace} from 'vscode';
 import * as ts from 'typescript';
 import * as path from 'path';
-import {readFileSync, statSync} from 'fs';
+import { Range, TextDocument, Disposable, ExtensionContext, workspace, window } from 'vscode';
+import { LanguageClient, LanguageClientOptions, ErrorAction, CloseAction, SettingMonitor, ServerOptions, TransportKind } from 'vscode-languageclient';
+import { Message } from 'vscode-jsonrpc';
 
-import {MetricsParser} from 'tsmetrics-core/MetricsParser';
-import {IMetricsModel} from 'tsmetrics-core';
+import { IMetricsModel } from 'tsmetrics-core';
+import { MetricsModel } from 'tsmetrics-core/MetricsModel';
 
-import {CodeMetricsCodeLens} from '../models/CodeMetricsCodeLens';
-import {AppConfiguration} from '../models/AppConfiguration';
+import { MetricsRequestType, RequestData } from './common/protocol';
+import { CodeMetricsCodeLens } from '../models/CodeMetricsCodeLens';
+import { AppConfiguration } from '../models/AppConfiguration';
 
 export class MetricsUtil {
   public appConfig: AppConfiguration;
-  constructor(appConfig: AppConfiguration) {
+  private client: LanguageClient;
+  constructor(appConfig: AppConfiguration, context: ExtensionContext) {
     this.appConfig = appConfig;
+    let serverModule = context.asAbsolutePath(path.join('out', 'metrics', 'server', 'server.js'));
+
+    let debugOptions = { execArgv: ["--nolazy", "--debug=6004"] };
+
+    let serverOptions: ServerOptions = {
+      run: { module: serverModule, transport: TransportKind.ipc },
+      debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions }
+    }
+    var output = window.createOutputChannel("CodeMetrics");
+
+    let error: (error, message, count) => ErrorAction = (error: Error, message: Message, count: number) => {
+      output.appendLine(message.jsonrpc);
+      return undefined;
+    };
+
+    let clientOptions: LanguageClientOptions = {
+      documentSelector: this.selector.map(p => p.language),
+      errorHandler: {
+        error: error,
+
+        closed: () => {
+          return undefined;
+        }
+      },
+      synchronize: {
+        configurationSection: 'codemetrics',
+      }
+    }
+
+    this.client = new LanguageClient('CodeMetrics client', serverOptions, clientOptions);
+    let disposable = this.client.start();
+
+    context.subscriptions.push(disposable);
   }
-  get selector() {
+
+  get selector(): { language: string; scheme: string; }[] {
     var tsDocSelector = {
       language: 'typescript',
       scheme: 'file'
@@ -34,48 +71,24 @@ export class MetricsUtil {
     return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector];
   }
 
-  private isLanguageDisabled(languageId: string): boolean {
-    if (languageId == 'typescript' && !this.appConfig.codeMetricsSettings.EnabledForTS) return true;
-    if (languageId == 'typescriptreact' && !this.appConfig.codeMetricsSettings.EnabledForTSX) return true;
-    if (languageId == 'javascript' && !this.appConfig.codeMetricsSettings.EnabledForJS) return true;
-    if (languageId == 'javascriptreact' && !this.appConfig.codeMetricsSettings.EnabledForJSX) return true;
-    return false;
-  }
-
-  private isAboveFileSizeLimit(fileName: string) {
-    if (this.appConfig.codeMetricsSettings.FileSizeLimitMB < 0) {
-      return false;
-    }
-
-    try {
-      let fileSizeInBytes = statSync(fileName).size;
-      let configuredLimit = this.appConfig.codeMetricsSettings.FileSizeLimitMB * 1024 * 1024;
-      return fileSizeInBytes > configuredLimit;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  public getMetrics(document: TextDocument): IMetricsModel[] {
-    var target = ts.ScriptTarget.Latest;
-    var result: IMetricsModel[] = [];
-    var settings = this.appConfig.codeMetricsSettings;
-    if (this.isAboveFileSizeLimit(document.fileName)) return [];
-    if (this.isLanguageDisabled(document.languageId)) return [];
-    if (!this.appConfig.codeMetricsDisplayed) return [];
-
-    var metrics = MetricsParser.getMetricsFromText(document.fileName, document.getText(), settings, <any>target).metrics;
-    var collect = (model: IMetricsModel) => {
-      if (model.visible && model.getSumComplexity() >= this.appConfig.codeMetricsSettings.CodeLensHiddenUnder) {
-        result.push(model);
-      }
-      model.children.forEach(element => {
-        collect(element);
-      });
-    }
-    collect(metrics);
-
-    return result;
+  public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {
+    const requestData: RequestData = { uri: document.uri.toString(), configuration: this.appConfig.codeMetricsSettings };
+    return this.client.sendRequest(MetricsRequestType, requestData).then(metrics => metrics.map(m => {
+      return this.convert(m);
+    }));
+  };
+  private convert(m: IMetricsModel): IMetricsModel {
+    let model = new MetricsModel(0, 0, "", 0, 0, 0, "");
+    model.line = m.line;
+    model.column = m.column;
+    model.complexity = m.complexity;
+    model.visible = m.visible;
+    model.children = m.children.map(c => this.convert(c));
+    model.description = m.description;
+    model.start = m.start;
+    model.end = m.end;
+    model.text = m.text;
+    return model;
   }
 
   public format(model: CodeMetricsCodeLens): string {
