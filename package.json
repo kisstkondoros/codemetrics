@@ -115,27 +115,27 @@
         },
         "codemetrics.basics.ComplexityLevelExtreme": {
           "default": 25,
-          "description": "Treshold to determine extreme high complexity level",
+          "description": "Threshold to determine extreme high complexity level",
           "type": "number"
         },
         "codemetrics.basics.ComplexityLevelHigh": {
           "default": 10,
-          "description": "Treshold to determine high complexity level",
+          "description": "Threshold to determine high complexity level",
           "type": "number"
         },
         "codemetrics.basics.ComplexityLevelNormal": {
           "default": 5,
-          "description": "Treshold to determine normal complexity level",
+          "description": "Threshold to determine normal complexity level",
           "type": "number"
         },
         "codemetrics.basics.ComplexityLevelLow": {
           "default": 0,
-          "description": "Treshold to determine low complexity level",
+          "description": "Threshold to determine low complexity level",
           "type": "number"
         },
         "codemetrics.basics.CodeLensHiddenUnder": {
           "default": 3,
-          "description": "Treshold to show code lens for code metrics",
+          "description": "Threshold to show code lens for code metrics",
           "type": "number"
         },
         "codemetrics.basics.ComplexityLevelExtremeDescription": {
