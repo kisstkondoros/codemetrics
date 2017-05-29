@@ -93,6 +93,11 @@
           "description": "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
           "type": "number"
         },
+        "codemetrics.basics.EnabledForLua": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for Lua",
+          "type": "boolean"
+        },
         "codemetrics.basics.EnabledForJS": {
           "default": true,
           "description": "A flag which indicates whether codemetrics are enabled for JS",
@@ -162,6 +167,154 @@
           "default": "Complexity is {0} {1}",
           "description": "Code lens message template {0} stands for the actual value {1} is for the complexity level description",
           "type": "string"
+        },
+        "codemetrics.luaconfiguration.LabelStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.BreakStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.GotoStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.ReturnStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.IfStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.IfClause": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.ElseifClause": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.ElseClause": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.WhileStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.DoStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.RepeatStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.LocalStatement": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.AssignmentStatement": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.CallStatement": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.FunctionDeclaration": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.ForNumericStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.ForGenericStatement": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.Chunk": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.Identifier": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.StringLiteral": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.NumericLiteral": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.BooleanLiteral": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.NilLiteral": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.VarargLiteral": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.TableKey": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.TableKeyString": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.TableValue": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.TableConstructorExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.LogicalExpression": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.BinaryExpression": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.UnaryExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.MemberExpression": {
+          "type": "number",
+          "default": 1
+        },
+        "codemetrics.luaconfiguration.IndexExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.CallExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.TableCallExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.StringCallExpression": {
+          "type": "number",
+          "default": 0
+        },
+        "codemetrics.luaconfiguration.Comment": {
+          "type": "number",
+          "default": 0
         },
         "codemetrics.nodeconfiguration.AnyKeyword": {
           "default": 1,
@@ -760,6 +913,7 @@
     "@types/node": "^7.0.0"
   },
   "dependencies": {
+    "luaparse": "^0.2.1",
     "tsmetrics-core": "^0.3.3",
     "typescript": "^2.2.2",
     "vscode-languageclient": "^2.4.2-next.13",

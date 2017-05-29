@@ -31,6 +31,13 @@ export class AppConfiguration {
           continue;
         }
       }
+      for (var propertyName in this.cachedSettings.LuaStatementMetricsConfiguration) {
+        property = "luaconfiguration." + propertyName;
+        if (settings.has(property)) {
+          this.cachedSettings.LuaStatementMetricsConfiguration[propertyName] = settings.get(property);
+          continue;
+        }
+      }
     }
     this.cachedSettings.MetricsForArrowFunctionsToggled = this.codeMetricsForArrowFunctionsToggled;
     return this.cachedSettings;

@@ -1,5 +1,7 @@
-import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
+import { MetricsConfiguration } from 'tsmetrics-core/MetricsConfiguration';
+import { LuaStatementMetricsConfiguration } from './LuaStatementMetricsConfiguration';
 export class VSCodeMetricsConfiguration extends MetricsConfiguration {
+  EnabledForLua = true;
   EnabledForJS = true;
   EnabledForJSX = true;
   EnabledForTS = true;
@@ -8,4 +10,5 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
   CodeLensEnabled = true;
 
   FileSizeLimitMB = 0.5;
+  LuaStatementMetricsConfiguration = new LuaStatementMetricsConfiguration();
 }

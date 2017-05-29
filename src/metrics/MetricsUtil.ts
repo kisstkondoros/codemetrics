@@ -68,7 +68,11 @@ export class MetricsUtil {
       language: 'typescriptreact',
       scheme: 'file'
     };
-    return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector];
+    var luaDocSelector = {
+      language: 'lua',
+      scheme: 'file'
+    };
+    return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector, luaDocSelector];
   }
 
   public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {

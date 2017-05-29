@@ -8,7 +8,8 @@ import { VSCodeMetricsConfiguration } from '../common/VSCodeMetricsConfiguration
 import { readFileSync, statSync } from 'fs';
 
 import { MetricsParser } from 'tsmetrics-core/MetricsParser';
-import { IMetricsModel } from 'tsmetrics-core';
+import { IMetricsModel, IMetricsParseResult } from 'tsmetrics-core';
+import { LuaMetrics } from './LuaMetrics'
 
 let connection: IConnection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
 
@@ -28,7 +29,6 @@ connection.onInitialize((params): InitializeResult => {
 });
 
 connection.onRequest(MetricsRequestType, (RequestData) => {
-  console.log("Document requested" + RequestData.uri);
   let document = documents.get(RequestData.uri);
   const metrics: MetricsUtil = new MetricsUtil(RequestData.configuration);
   return metrics.getMetrics(document);
@@ -43,6 +43,7 @@ class MetricsUtil {
     if (languageId == 'typescriptreact' && !this.appConfig.EnabledForTSX) return true;
     if (languageId == 'javascript' && !this.appConfig.EnabledForJS) return true;
     if (languageId == 'javascriptreact' && !this.appConfig.EnabledForJSX) return true;
+    if (languageId == 'lua' && !this.appConfig.EnabledForLua) return true;
     return false;
   }
 
@@ -62,10 +63,17 @@ class MetricsUtil {
   public getMetrics(document: TextDocument): IMetricsModel[] {
     var target = ts.ScriptTarget.Latest;
     var result: IMetricsModel[] = [];
+    var metrics: IMetricsParseResult = undefined;
     if (this.isAboveFileSizeLimit(document.uri)) return [];
     if (this.isLanguageDisabled(document.languageId)) return [];
-
-    var metrics = MetricsParser.getMetricsFromText(document.uri, document.getText(), this.appConfig, <any>target).metrics;
+    if (this.isLua(document.languageId)) {
+      metrics = {
+        file: document.uri,
+        metrics: new LuaMetrics().getMetricsFromLuaSource(this.appConfig.LuaStatementMetricsConfiguration, document.getText())
+      }
+    } else {
+      metrics = MetricsParser.getMetricsFromText(document.uri, document.getText(), this.appConfig, <any>target);
+    }
     var collect = (model: IMetricsModel) => {
       if (model.visible && model.getSumComplexity() >= this.appConfig.CodeLensHiddenUnder) {
         result.push(model);
@@ -74,10 +82,15 @@ class MetricsUtil {
         collect(element);
       });
     }
-    collect(metrics);
+    collect(metrics.metrics);
 
     return result;
   }
+
+  private isLua(languageId: string) {
+    return languageId == 'lua';
+  }
+
 }
 
 connection.listen();
