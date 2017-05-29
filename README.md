@@ -49,6 +49,7 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 - 1.7.0
+  - Add experimental diagnostics support
   - Add experimental support for Lua
 - 1.6.1
   - Fix spelling error of 'threshold' in configuration

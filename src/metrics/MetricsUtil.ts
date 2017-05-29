@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as path from 'path';
-import { Range, TextDocument, Disposable, ExtensionContext, workspace, window } from 'vscode';
+import { Range, TextDocument, Disposable, ExtensionContext, workspace, window, ProviderResult, Command, Diagnostic, CodeActionContext } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ErrorAction, CloseAction, SettingMonitor, ServerOptions, TransportKind } from 'vscode-languageclient';
 import { Message } from 'vscode-jsonrpc';
 
@@ -33,6 +33,7 @@ export class MetricsUtil {
 
     let clientOptions: LanguageClientOptions = {
       documentSelector: this.selector.map(p => p.language),
+      diagnosticCollectionName: 'codemetrics',
       errorHandler: {
         error: error,
 

@@ -1,7 +1,7 @@
 'use strict';
 import * as ts from 'typescript';
 import { workspace } from 'vscode';
-import { InitializeResult, IPCMessageReader, IPCMessageWriter, IConnection, createConnection, Range, TextDocuments, TextDocument } from 'vscode-languageserver';
+import { Diagnostic, DiagnosticSeverity, InitializeResult, IPCMessageReader, IPCMessageWriter, IConnection, createConnection, Range, TextDocuments, TextDocument } from 'vscode-languageserver';
 import { MetricsRequestType, RequestData } from '../common/protocol';
 import { VSCodeMetricsConfiguration } from '../common/VSCodeMetricsConfiguration';
 
@@ -83,7 +83,17 @@ class MetricsUtil {
       });
     }
     collect(metrics.metrics);
+    let diagnostics: Diagnostic[] = result.map(model => {
+      return {
+        range: Range.create(document.positionAt(model.start), document.positionAt(model.end)),
+        message: model.toString(this.appConfig),
+        source: "codemetrics",
+        severity: DiagnosticSeverity.Hint,
+        code: "42"
+      }
+    });
 
+    connection.sendDiagnostics({ uri: document.uri, diagnostics: diagnostics });
     return result;
   }
 
