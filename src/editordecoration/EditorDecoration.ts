@@ -42,27 +42,22 @@ export class EditorDecoration implements vscode.Disposable {
     this.metricsUtil = metricsUtil;
 
     this.didChangeTextDocument = vscode.workspace.onDidChangeTextDocument(e => {
-      setTimeout(() => this.update(e.document), 500);
+      setTimeout(() => this.update(), 500);
     });
     this.didOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(e => {
-      setTimeout(() => this.update(e.document), 500);
+      setTimeout(() => this.update(), 500);
     });
-    if (vscode.window.activeTextEditor) {
-      this.update(vscode.window.activeTextEditor.document);
-    }
+    this.update();
   }
 
-  private update(document: vscode.TextDocument) {
-    if (!document) return;
+  private update() {
+    const editor = vscode.window.activeTextEditor;
 
-    const editor = vscode.window.activeTextEditor
-      && vscode.window.activeTextEditor.document
-      && vscode.window.activeTextEditor.document.uri == document.uri
-      && vscode.window.activeTextEditor;
-
-    if (!editor) {
+    if (!editor || !editor.document) {
       return;
     }
+    const document = editor.document;
+
     const languageDisabled = this.metricsUtil.selector.filter(s => s.language == document.languageId).length == 0;
     const decorationDisabled = !this.metricsUtil.appConfig.codeMetricsSettings.DecorationModeEnabled;
     if (decorationDisabled || languageDisabled) {
