@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.7.2
+  - Make it possible to enable / disable diagnostics
 - 1.7.1
   - Always use activeTextEditor in change callbacks
 - 1.7.0

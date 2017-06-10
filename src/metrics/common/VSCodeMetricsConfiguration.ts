@@ -8,6 +8,7 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
   EnabledForTSX = true;
   DecorationModeEnabled = true;
   CodeLensEnabled = true;
+  DiagnosticsEnabled = true;
 
   FileSizeLimitMB = 0.5;
   LuaStatementMetricsConfiguration = new LuaStatementMetricsConfiguration();

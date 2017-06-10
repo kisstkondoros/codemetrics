@@ -93,7 +93,11 @@ class MetricsUtil {
       }
     });
 
-    connection.sendDiagnostics({ uri: document.uri, diagnostics: diagnostics });
+    if (this.appConfig.DiagnosticsEnabled) {
+      connection.sendDiagnostics({ uri: document.uri, diagnostics: diagnostics });
+    } else {
+      connection.sendDiagnostics({ uri: document.uri, diagnostics: [] });
+    }
     return result;
   }
 
