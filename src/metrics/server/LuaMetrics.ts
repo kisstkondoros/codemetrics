@@ -1,4 +1,4 @@
-import { IMetricsModel } from 'tsmetrics-core';
+import { IMetricsModel, CollectorType } from 'tsmetrics-core';
 import { MetricsModel } from 'tsmetrics-core/MetricsModel';
 import { LuaStatementMetricsConfiguration } from '../common/LuaStatementMetricsConfiguration'
 import * as parser from 'luaparse';
@@ -6,7 +6,7 @@ import * as parser from 'luaparse';
 export class LuaMetrics {
 
   public getMetricsFromLuaSource(settings: LuaStatementMetricsConfiguration, source: string): IMetricsModel {
-    const root = new MetricsModel(0, 0, "root", 0, 0, 0, "root", false, false);
+    const root = new MetricsModel(0, 0, "root", 0, 0, 0, "root", false, false, "SUM");
     try {
       const ast = parser.parse(source, { locations: true, ranges: true });
       if (Array.isArray(ast.body)) {
@@ -31,7 +31,7 @@ export class LuaMetrics {
     const isNodeVisible = node.type == "FunctionDeclaration";
 
     if (node.range) {
-      const model = new MetricsModel(node.range[0], node.range[1], content, node.loc.start.line, node.loc.start.column, complexity, this.camelToSpaced(node.type), true, isNodeVisible);
+      const model = new MetricsModel(node.range[0], node.range[1], content, node.loc.start.line, node.loc.start.column, complexity, this.camelToSpaced(node.type), true, isNodeVisible, "SUM");
       parent.children.push(model);
 
       if (node.body) {

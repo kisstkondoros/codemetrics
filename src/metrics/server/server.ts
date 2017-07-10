@@ -75,7 +75,7 @@ class MetricsUtil {
       metrics = MetricsParser.getMetricsFromText(document.uri, document.getText(), this.appConfig, <any>target);
     }
     var collect = (model: IMetricsModel) => {
-      if (model.visible && model.getSumComplexity() >= this.appConfig.CodeLensHiddenUnder) {
+      if (model.visible && model.getCollectedComplexity() >= this.appConfig.CodeLensHiddenUnder) {
         result.push(model);
       }
       model.children.forEach(element => {

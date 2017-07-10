@@ -75,7 +75,7 @@ export class EditorDecoration implements vscode.Disposable {
           range: this.metricsUtil.toRangeFromOffset(model.start, document)
         }
       };
-      const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getSumComplexity(), model: p } });
+      const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getCollectedComplexity(), model: p } });
       const settings = this.metricsUtil.appConfig.codeMetricsSettings;
       const lowLevelDecorations = complexityAndModel.filter(p => p.complexity < settings.ComplexityLevelNormal).map(p => toDecoration(p.model));
 

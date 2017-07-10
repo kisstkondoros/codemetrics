@@ -83,16 +83,8 @@ export class MetricsUtil {
     }));
   };
   private convert(m: IMetricsModel): IMetricsModel {
-    let model = new MetricsModel(0, 0, "", 0, 0, 0, "");
-    model.line = m.line;
-    model.column = m.column;
-    model.complexity = m.complexity;
-    model.visible = m.visible;
+    let model = new MetricsModel(m.start, m.end, m.text, m.line, m.column, m.complexity, m.description, false, m.visible, m.collectorType);
     model.children = m.children.map(c => this.convert(c));
-    model.description = m.description;
-    model.start = m.start;
-    model.end = m.end;
-    model.text = m.text;
     return model;
   }
 

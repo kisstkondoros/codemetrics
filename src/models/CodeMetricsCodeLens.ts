@@ -10,8 +10,8 @@ export class CodeMetricsCodeLens extends CodeLens {
     this.model = model;
   }
 
-  public getSumComplexity(): number {
-    return this.model.getSumComplexity();
+  public getCollectedComplexity(): number {
+    return this.model.getCollectedComplexity();
   }
 
   public toString(appConfig: AppConfiguration): string {
