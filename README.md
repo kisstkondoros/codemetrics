@@ -48,6 +48,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.8.0
+  - Upgrade to tsmetrics-core@0.4.0
+  - Use new collector types from tsmetrics-core (show complexity maximum on class level)
 - 1.7.2
   - Make it possible to enable / disable diagnostics
 - 1.7.1
