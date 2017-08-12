@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.9.0
+  - Implement file exclusion by glob pattern
 - 1.8.0
   - Upgrade to tsmetrics-core@0.4.0
   - Use new collector types from tsmetrics-core (show complexity maximum on class level)

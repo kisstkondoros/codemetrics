@@ -1,6 +1,7 @@
 import { MetricsConfiguration } from 'tsmetrics-core/MetricsConfiguration';
 import { LuaStatementMetricsConfiguration } from './LuaStatementMetricsConfiguration';
 export class VSCodeMetricsConfiguration extends MetricsConfiguration {
+  Exclude = [];
   EnabledForLua = true;
   EnabledForJS = true;
   EnabledForJSX = true;

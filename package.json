@@ -43,6 +43,11 @@
       "type": "object",
       "title": "CodeMetrics configuration",
       "properties": {
+        "codemetrics.basics.Exclude": {
+          "description": "Array of exclusion patterns (in glob format)",
+          "type": "array",
+          "default": []
+        },
         "codemetrics.basics.DecorationModeEnabled": {
           "default": true,
           "description": "A flag which indicates whether code metrics are shown as inline decoration",
@@ -909,16 +914,18 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "@types/minimatch": "^2.0.29",
+    "@types/node": "^7.0.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-shell": "^1.2.1",
     "load-grunt-config": "^0.19.1",
-    "vscode": " ^1.1.0",
-    "@types/node": "^7.0.0"
+    "vscode": " ^1.1.0"
   },
   "dependencies": {
     "luaparse": "^0.2.1",
+    "minimatch": "^3.0.4",
     "tsmetrics-core": "^0.4.0",
     "typescript": "^2.2.2",
     "vscode-languageclient": "^2.4.2-next.13",

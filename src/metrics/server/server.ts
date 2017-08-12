@@ -1,5 +1,6 @@
 'use strict';
 import * as ts from 'typescript';
+import { Minimatch } from 'minimatch';
 import { workspace } from 'vscode';
 import { Diagnostic, DiagnosticSeverity, InitializeResult, IPCMessageReader, IPCMessageWriter, IConnection, createConnection, Range, TextDocuments, TextDocument } from 'vscode-languageserver';
 import { MetricsRequestType, RequestData } from '../common/protocol';
@@ -60,44 +61,52 @@ class MetricsUtil {
       return false;
     }
   }
-  public getMetrics(document: TextDocument): IMetricsModel[] {
-    var target = ts.ScriptTarget.Latest;
-    var result: IMetricsModel[] = [];
-    var metrics: IMetricsParseResult = undefined;
-    if (this.isAboveFileSizeLimit(document.uri)) return [];
-    if (this.isLanguageDisabled(document.languageId)) return [];
-    if (this.isLua(document.languageId)) {
-      metrics = {
-        file: document.uri,
-        metrics: new LuaMetrics().getMetricsFromLuaSource(this.appConfig.LuaStatementMetricsConfiguration, document.getText())
-      }
-    } else {
-      metrics = MetricsParser.getMetricsFromText(document.uri, document.getText(), this.appConfig, <any>target);
-    }
-    var collect = (model: IMetricsModel) => {
-      if (model.visible && model.getCollectedComplexity() >= this.appConfig.CodeLensHiddenUnder) {
-        result.push(model);
-      }
-      model.children.forEach(element => {
-        collect(element);
-      });
-    }
-    collect(metrics.metrics);
-    let diagnostics: Diagnostic[] = result.map(model => {
-      return {
-        range: Range.create(document.positionAt(model.start), document.positionAt(model.end)),
-        message: model.toString(this.appConfig),
-        source: "codemetrics",
-        severity: DiagnosticSeverity.Hint,
-        code: "42"
-      }
+  private isExcluded(fileName: string) {
+    const exclusionList = this.appConfig.Exclude || [];
+    return exclusionList.some(pattern => {
+      return new Minimatch(pattern).match(fileName);
     });
+  }
+  public getMetrics(document: TextDocument): IMetricsModel[] {
+    const target = ts.ScriptTarget.Latest;
+    const result: IMetricsModel[] = [];
+    let diagnostics: Diagnostic[] = [];
+    if (!this.isExcluded(document.uri) &&
+      !this.isAboveFileSizeLimit(document.uri) &&
+      !this.isLanguageDisabled(document.languageId)) {
+      var metrics: IMetricsParseResult = undefined;
+      if (this.isLua(document.languageId)) {
+        metrics = {
+          file: document.uri,
+          metrics: new LuaMetrics().getMetricsFromLuaSource(this.appConfig.LuaStatementMetricsConfiguration, document.getText())
+        }
+      } else {
+        metrics = MetricsParser.getMetricsFromText(document.uri, document.getText(), this.appConfig, <any>target);
+      }
+      var collect = (model: IMetricsModel) => {
+        if (model.visible && model.getCollectedComplexity() >= this.appConfig.CodeLensHiddenUnder) {
+          result.push(model);
+        }
+        model.children.forEach(element => {
+          collect(element);
+        });
+      }
+      collect(metrics.metrics);
 
-    if (this.appConfig.DiagnosticsEnabled) {
-      connection.sendDiagnostics({ uri: document.uri, diagnostics: diagnostics });
-    } else {
-      connection.sendDiagnostics({ uri: document.uri, diagnostics: [] });
+      if (this.appConfig.DiagnosticsEnabled) {
+        diagnostics = result.map(model => {
+          return {
+            range: Range.create(document.positionAt(model.start), document.positionAt(model.end)),
+            message: model.toString(this.appConfig),
+            source: "codemetrics",
+            severity: DiagnosticSeverity.Hint,
+            code: "42"
+          }
+        });
+      }
     }
+
+    connection.sendDiagnostics({ uri: document.uri, diagnostics: diagnostics });
     return result;
   }
 
