@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.9.1
+  - Set default of ObjectLiteralExpression to 0
 - 1.9.0
   - Implement file exclusion by glob pattern
 - 1.8.0

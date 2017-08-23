@@ -711,7 +711,7 @@
           "type": "string"
         },
         "codemetrics.nodeconfiguration.ObjectLiteralExpression": {
-          "default": 1,
+          "default": 0,
           "type": "number"
         },
         "codemetrics.nodeconfiguration.ObjectLiteralExpressionDescription": {
