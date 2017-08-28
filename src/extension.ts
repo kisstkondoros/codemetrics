@@ -33,6 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   disposables.push(commands.registerCommand("codemetrics.toggleCodeMetricsForArrowFunctions", () => {
     config.codeMetricsForArrowFunctionsToggled = !config.codeMetricsForArrowFunctionsToggled;
+    config.toggleCodeMetricsForArrowFunctionsExecuted = true;
     triggerCodeLensComputation();
   }));
 

@@ -11,8 +11,8 @@ export class AppConfiguration {
   get extensionName() {
     return 'codemetrics';
   }
-
-  public codeMetricsForArrowFunctionsToggled: boolean;
+  public toggleCodeMetricsForArrowFunctionsExecuted: boolean = false;
+  public codeMetricsForArrowFunctionsToggled: boolean = true;
   public codeMetricsDisplayed: boolean = true;
 
   get codeMetricsSettings(): VSCodeMetricsConfiguration {
@@ -39,7 +39,9 @@ export class AppConfiguration {
         }
       }
     }
-    this.cachedSettings.MetricsForArrowFunctionsToggled = this.codeMetricsForArrowFunctionsToggled;
+    if (this.toggleCodeMetricsForArrowFunctionsExecuted) {
+      this.cachedSettings.MetricsForArrowFunctionsToggled = this.codeMetricsForArrowFunctionsToggled;
+    }
     return this.cachedSettings;
   }
 
