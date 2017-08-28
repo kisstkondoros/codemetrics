@@ -48,6 +48,10 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.9.3
+  - Update readme
+- 1.9.2
+  - Fix behavior of command 'codemetrics.toggleCodeMetricsForArrowFunctions'
 - 1.9.1
   - Set default of ObjectLiteralExpression to 0
 - 1.9.0
