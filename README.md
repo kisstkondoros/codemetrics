@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.9.5
+  - Add .vscode-test to .vscodeignore
 - 1.9.4
   - Replace new line characters in quick pick menu with spaces
 - 1.9.3
