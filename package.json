@@ -59,7 +59,7 @@
           "type": "boolean"
         },
         "codemetrics.basics.DiagnosticsEnabled": {
-          "default": true,
+          "default": false,
           "description": "A flag which indicates whether code metrics are shown as diagnostics",
           "type": "boolean"
         },
