@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { Disposable, DocumentSelector, languages, commands } from 'vscode';
-import { CodeMetricsCodeLensProvider } from './codeLensprovider/CodeMetricsCodeLensProvider';
+import { CodeMetricsCodeLensProvider } from './codelensprovider/CodeMetricsCodeLensProvider';
 import { AppConfiguration } from './models/AppConfiguration';
 import { CodeMetricsCodeLens } from './models/CodeMetricsCodeLens';
 import { MetricsUtil } from './metrics/MetricsUtil';
