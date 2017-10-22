@@ -73,7 +73,15 @@ export class MetricsUtil {
       language: 'lua',
       scheme: 'file'
     };
-    return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector, luaDocSelector];
+    var vueDocSelector = {
+      language: 'vue',
+      scheme: 'file'
+    };
+    var htmlDocSelector = {
+      language: 'html',
+      scheme: 'file'
+    };
+    return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector, luaDocSelector, vueDocSelector, htmlDocSelector];
   }
 
   public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {

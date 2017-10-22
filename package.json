@@ -103,6 +103,16 @@
           "description": "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
           "type": "number"
         },
+        "codemetrics.basics.EnabledForVue": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for Vue",
+          "type": "boolean"
+        },
+        "codemetrics.basics.EnabledForHTML": {
+          "default": true,
+          "description": "A flag which indicates whether codemetrics are enabled for HTML",
+          "type": "boolean"
+        },
         "codemetrics.basics.EnabledForLua": {
           "default": true,
           "description": "A flag which indicates whether codemetrics are enabled for Lua",

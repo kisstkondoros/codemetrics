@@ -7,6 +7,8 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
   EnabledForJSX = true;
   EnabledForTS = true;
   EnabledForTSX = true;
+  EnabledForVue = true;
+  EnabledForHTML = true;
   DecorationModeEnabled = true;
   CodeLensEnabled = true;
   DiagnosticsEnabled = false;

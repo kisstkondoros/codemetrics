@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.10.0
+  - Add support for embedded scripts in vue and html files
 - 1.9.6
   - Disable diagnostic report for code metrics
 - 1.9.5
