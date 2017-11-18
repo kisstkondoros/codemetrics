@@ -936,8 +936,8 @@
   "dependencies": {
     "luaparse": "^0.2.1",
     "minimatch": "^3.0.4",
-    "tsmetrics-core": "^0.4.2",
-    "typescript": "^2.2.2",
+    "tsmetrics-core": "^0.4.3",
+    "typescript": "^2.6.1",
     "vscode-languageclient": "^2.4.2-next.13",
     "vscode-languageserver": "^2.4.0-next.11"
   }
