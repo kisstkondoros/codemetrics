@@ -9,7 +9,7 @@
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "^1.10.x"
+    "vscode": "^1.16.0"
   },
   "repository": {
     "type": "git",
@@ -915,30 +915,23 @@
       }
     }
   },
-  "main": "./out/extension",
+  "main": "./out/src/extension",
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "clean": "grunt clean:sourceArtifacts",
-    "compile": "grunt compile",
-    "test": "grunt test"
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
     "@types/minimatch": "^2.0.29",
     "@types/node": "^7.0.0",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-shell": "^1.2.1",
-    "load-grunt-config": "^0.19.1",
-    "vscode": " ^1.1.0"
+    "vscode": "^1.1.5"
   },
   "dependencies": {
     "luaparse": "^0.2.1",
     "minimatch": "^3.0.4",
     "tsmetrics-core": "^0.4.3",
     "typescript": "^2.6.1",
-    "vscode-languageclient": "^2.4.2-next.13",
-    "vscode-languageserver": "^2.4.0-next.11"
+    "vscode-languageclient": "^3.5.0",
+    "vscode-languageserver": "^3.5.0"
   }
 }

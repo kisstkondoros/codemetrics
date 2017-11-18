@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { MetricsUtil } from '../metrics/MetricsUtil';
-import { IMetricsModel } from 'tsmetrics-core'
+import { IMetricsModel } from 'tsmetrics-core';
 export class EditorDecoration implements vscode.Disposable {
   private low: vscode.TextEditorDecorationType;
   private normal: vscode.TextEditorDecorationType;

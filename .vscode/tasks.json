@@ -12,26 +12,17 @@
   "command": "npm",
   // the command is a shell script
   "isShellCommand": true,
-  "echoCommand": true,
-  "suppressTaskName": true,
+  // show the output window only if unrecognized errors occur.
+  "showOutput": "silent",
+  // we run the custom script "compile" as defined in package.json
   "args": [
-    "run",
-    "-s"
+      "run",
+      "compile",
+      "--loglevel",
+      "silent"
   ],
-  "tasks": [
-    {
-      "taskName": "compile",
-      "isBuildCommand": true,
-      "args": [
-        "compile"
-      ]
-    },
-    {
-      "taskName": "test",
-      "isTestCommand": true,
-      "args": [
-        "test"
-      ]
-    }
-  ]
+  // The tsc compiler is started in watching mode
+  "isBackground": true,
+  // use the standard tsc in watch mode problem matcher to find compile problems in the output.
+  "problemMatcher": "$tsc-watch"
 }

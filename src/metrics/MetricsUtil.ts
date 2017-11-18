@@ -16,14 +16,14 @@ export class MetricsUtil {
   private client: LanguageClient;
   constructor(appConfig: AppConfiguration, context: ExtensionContext) {
     this.appConfig = appConfig;
-    let serverModule = context.asAbsolutePath(path.join('out', 'metrics', 'server', 'server.js'));
+    let serverModule = context.asAbsolutePath(path.join('out', 'src', 'metrics', 'server', 'server.js'));
 
-    let debugOptions = { execArgv: ["--nolazy", "--debug=6004"] };
+    let debugOptions = { execArgv: ["--nolazy", "--inspect=6004"] };
 
     let serverOptions: ServerOptions = {
       run: { module: serverModule, transport: TransportKind.ipc },
       debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions }
-    }
+  }
     var output = window.createOutputChannel("CodeMetrics");
 
     let error: (error, message, count) => ErrorAction = (error: Error, message: Message, count: number) => {
@@ -86,9 +86,9 @@ export class MetricsUtil {
 
   public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {
     const requestData: RequestData = { uri: document.uri.toString(), configuration: this.appConfig.codeMetricsSettings };
-    return this.client.sendRequest(MetricsRequestType, requestData).then(metrics => metrics.map(m => {
+    return this.client.onReady().then(() => this.client.sendRequest(MetricsRequestType, requestData).then(metrics => metrics.map(m => {
       return this.convert(m);
-    }));
+    })));
   };
   private convert(m: IMetricsModel): IMetricsModel {
     let model = new MetricsModel(m.start, m.end, m.text, m.line, m.column, m.complexity, m.description, false, m.visible, m.collectorType);
