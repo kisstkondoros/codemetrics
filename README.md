@@ -48,6 +48,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.11.0
+  - Add new mode OverviewRuler
+  - Update tsmetrics-core and typescript dependencies
 - 1.10.0
   - Add support for embedded scripts in vue and html files
 - 1.9.6
