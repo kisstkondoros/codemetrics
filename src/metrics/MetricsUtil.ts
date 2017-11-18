@@ -23,7 +23,7 @@ export class MetricsUtil {
     let serverOptions: ServerOptions = {
       run: { module: serverModule, transport: TransportKind.ipc },
       debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions }
-  }
+    }
     var output = window.createOutputChannel("CodeMetrics");
 
     let error: (error, message, count) => ErrorAction = (error: Error, message: Message, count: number) => {
@@ -105,5 +105,12 @@ export class MetricsUtil {
   }
   public toRangeFromOffset(start: number, document: TextDocument): Range {
     return new Range(document.positionAt(start), document.positionAt(start));
+  }
+  public toLineRangeFromOffset(start: number, document: TextDocument): Range {
+    const pos = document.positionAt(start);
+    const line = pos.line
+    const character = pos.character
+    const lineRange = document.lineAt(line).range;
+    return new Range(pos.line, pos.character, lineRange.end.line, lineRange.end.character);
   }
 }

@@ -10,6 +10,7 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
   EnabledForVue = true;
   EnabledForHTML = true;
   DecorationModeEnabled = true;
+  OverviewRulerModeEnabled = true;
   CodeLensEnabled = true;
   DiagnosticsEnabled = false;
 

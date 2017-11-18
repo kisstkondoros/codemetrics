@@ -48,6 +48,11 @@
           "type": "array",
           "default": []
         },
+        "codemetrics.basics.OverviewRulerModeEnabled": {
+          "default": true,
+          "description": "A flag which indicates whether code metrics are shown on the overview ruler",
+          "type": "boolean"
+        },
         "codemetrics.basics.DecorationModeEnabled": {
           "default": true,
           "description": "A flag which indicates whether code metrics are shown as inline decoration",
