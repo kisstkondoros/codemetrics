@@ -55,8 +55,8 @@ export class EditorDecoration implements vscode.Disposable {
     }
     if (this.settingsChanged(settings)) {
       this.clearDecorators(editor);
+      this.updateDecorators(settings.DecorationModeEnabled, settings.OverviewRulerModeEnabled);
     }
-    this.updateDecorators(settings.DecorationModeEnabled, settings.OverviewRulerModeEnabled);
 
     this.metricsUtil.getMetrics(document).then((metrics) => {
 

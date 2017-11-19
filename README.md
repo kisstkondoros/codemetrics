@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.11.1
+  - Only create new decorations if the settings has changed
 - 1.11.0
   - Add new mode OverviewRuler
   - Update tsmetrics-core and typescript dependencies
