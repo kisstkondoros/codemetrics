@@ -53,17 +53,17 @@ export class EditorDecoration implements vscode.Disposable {
       this.clearDecorators(editor);
       return;
     }
-    if (this.settingsChanged(settings)) {
-      this.clearDecorators(editor);
-      this.updateDecorators(settings.DecorationModeEnabled, settings.OverviewRulerModeEnabled);
-    }
-
+    // for some reason the context is lost
+    var thisContext = this;
     this.metricsUtil.getMetrics(document).then((metrics) => {
-
+      if (thisContext.settingsChanged(settings) || this.low == null) {
+        thisContext.clearDecorators(editor);
+        thisContext.updateDecorators(settings.DecorationModeEnabled, settings.OverviewRulerModeEnabled);
+      }
       const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
         return {
           hoverMessage: model.toString(settings),
-          range: this.metricsUtil.toLineRangeFromOffset(model.start, document)
+          range: thisContext.metricsUtil.toLineRangeFromOffset(model.start, document)
         }
       };
       const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getCollectedComplexity(), model: p } });
@@ -76,10 +76,19 @@ export class EditorDecoration implements vscode.Disposable {
 
       const extremeLevelDecorations = complexityAndModel.filter(p => p.complexity >= settings.ComplexityLevelExtreme).map(p => toDecoration(p.model));
 
-      editor.setDecorations(this.low, lowLevelDecorations);
-      editor.setDecorations(this.normal, normalLevelDecorations);
-      editor.setDecorations(this.high, highLevelDecorations);
-      editor.setDecorations(this.extreme, extremeLevelDecorations);
+      editor.setDecorations(thisContext.low, lowLevelDecorations);
+      editor.setDecorations(thisContext.normal, normalLevelDecorations);
+      editor.setDecorations(thisContext.high, highLevelDecorations);
+      editor.setDecorations(thisContext.extreme, extremeLevelDecorations);
+    }, (e) => {
+      var exmsg = "";
+      if (e.message) {
+        exmsg += e.message;
+      }
+      if (e.stack) {
+        exmsg += ' | stack: ' + e.stack;
+      }
+      console.error(exmsg);
     });
   }
   private settingsChanged(settings: VSCodeMetricsConfiguration): boolean {
@@ -145,6 +154,10 @@ export class EditorDecoration implements vscode.Disposable {
     this.normal && this.normal.dispose();
     this.high && this.high.dispose();
     this.extreme && this.extreme.dispose();
+    this.low = null;
+    this.normal = null;
+    this.high = null;
+    this.extreme = null;
   }
 
   public dispose(): void {
