@@ -52,34 +52,27 @@ export class MetricsUtil {
     context.subscriptions.push(disposable);
   }
 
-  get selector(): { language: string; scheme: string; }[] {
+  get selector(): { language: string; }[] {
     var tsDocSelector = {
-      language: 'typescript',
-      scheme: 'file'
+      language: 'typescript'
     };
     var jsDocSelector = {
-      language: 'javascript',
-      scheme: 'file'
+      language: 'javascript'
     };
     var jsxDocSelector = {
-      language: 'javascriptreact',
-      scheme: 'file'
+      language: 'javascriptreact'
     };
     var tsxDocSelector = {
-      language: 'typescriptreact',
-      scheme: 'file'
+      language: 'typescriptreact'
     };
     var luaDocSelector = {
-      language: 'lua',
-      scheme: 'file'
+      language: 'lua'
     };
     var vueDocSelector = {
-      language: 'vue',
-      scheme: 'file'
+      language: 'vue'
     };
     var htmlDocSelector = {
-      language: 'html',
-      scheme: 'file'
+      language: 'html'
     };
     return [tsDocSelector, jsDocSelector, jsxDocSelector, tsxDocSelector, luaDocSelector, vueDocSelector, htmlDocSelector];
   }
