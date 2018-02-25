@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.12.0
+  - Add support for Visual Studio Live Share
 - 1.11.2
   - Improve decorator lifecycle management
 - 1.11.1
