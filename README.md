@@ -48,6 +48,10 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.13.0
+  - Update vscode version to 1.1.10
+  - Avoid indentation distortion by moving decorations to the end of the line
+  - Debounce EditorDecoration update requests properly
 - 1.12.0
   - Add support for Visual Studio Live Share
 - 1.11.2
