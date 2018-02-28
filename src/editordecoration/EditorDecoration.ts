@@ -182,6 +182,7 @@ export class EditorDecoration implements vscode.Disposable {
         if (!overviewRulerModeEnabled) {
             options.overviewRulerColor = null;
         }
+        options.rangeBehavior= vscode.DecorationRangeBehavior.ClosedClosed;
         return vscode.window.createTextEditorDecorationType(options);
     }
     disposeDecorators() {
