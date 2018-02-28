@@ -29,13 +29,22 @@ export class EditorDecoration implements vscode.Disposable {
     }
     this.metricsUtil = metricsUtil;
 
+    const debouncedUpdate = this.debounce(() => this.update(), 500);
     this.didChangeTextDocument = vscode.workspace.onDidChangeTextDocument(e => {
-      setTimeout(() => this.update(), 500);
+      debouncedUpdate();
     });
     this.didOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(e => {
-      setTimeout(() => this.update(), 500);
+      this.update();
     });
     this.update();
+  }
+
+  private debounce(func:()=>void, timeout): ()=>void {
+    let id;
+    return () => {
+      clearTimeout(id);
+      id = setTimeout(() => func(), timeout);
+    };
   }
 
   private update() {
