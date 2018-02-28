@@ -1,28 +1,28 @@
-import {CodeLens, Range} from 'vscode';
-import {IMetricsModel} from 'tsmetrics-core';
-import {MetricsConfiguration} from 'tsmetrics-core/MetricsConfiguration';
-import {AppConfiguration} from '../models/AppConfiguration';
+import { CodeLens, Range } from "vscode";
+import { IMetricsModel } from "tsmetrics-core";
+import { MetricsConfiguration } from "tsmetrics-core/MetricsConfiguration";
+import { AppConfiguration } from "../models/AppConfiguration";
 
 export class CodeMetricsCodeLens extends CodeLens {
-  private model: IMetricsModel;
-  constructor(model: IMetricsModel, range: Range) {
-    super(range);
-    this.model = model;
-  }
+    private model: IMetricsModel;
+    constructor(model: IMetricsModel, range: Range) {
+        super(range);
+        this.model = model;
+    }
 
-  public getCollectedComplexity(): number {
-    return this.model.getCollectedComplexity();
-  }
+    public getCollectedComplexity(): number {
+        return this.model.getCollectedComplexity();
+    }
 
-  public toString(appConfig: AppConfiguration): string {
-    return this.model.toString(appConfig.codeMetricsSettings);
-  }
+    public toString(appConfig: AppConfiguration): string {
+        return this.model.toString(appConfig.codeMetricsSettings);
+    }
 
-  public getExplanation(appConfig: AppConfiguration): string {
-    return this.model.getExplanation();
-  }
+    public getExplanation(appConfig: AppConfiguration): string {
+        return this.model.getExplanation();
+    }
 
-  public getChildren() {
-    return this.model.children;
-  }
+    public getChildren() {
+        return this.model.children;
+    }
 }
