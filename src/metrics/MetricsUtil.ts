@@ -99,11 +99,12 @@ export class MetricsUtil {
   public toRangeFromOffset(start: number, document: TextDocument): Range {
     return new Range(document.positionAt(start), document.positionAt(start));
   }
-  public toLineRangeFromOffset(start: number, document: TextDocument): Range {
+  public toDecorationRange(start: number, document: TextDocument): Range {
     const pos = document.positionAt(start);
     const line = pos.line
     const character = pos.character
-    const lineRange = document.lineAt(line).range;
-    return new Range(pos.line, pos.character, lineRange.end.line, lineRange.end.character);
+    const documentLine = document.lineAt(line);
+    const lineRange = documentLine.range;
+    return new Range(lineRange.end.line, lineRange.end.character, lineRange.end.line, lineRange.end.character);
   }
 }
