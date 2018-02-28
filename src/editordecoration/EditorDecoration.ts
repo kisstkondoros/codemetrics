@@ -72,7 +72,7 @@ export class EditorDecoration implements vscode.Disposable {
       const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
         return {
           hoverMessage: model.toString(settings),
-          range: thisContext.metricsUtil.toLineRangeFromOffset(model.start, document)
+          range: thisContext.metricsUtil.toDecorationRange(model.start, document)
         }
       };
       const complexityAndModel: ComplexityToModel[] = metrics.map(p => { return { complexity: p.getCollectedComplexity(), model: p } });
