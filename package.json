@@ -5,7 +5,7 @@
   "author": "Tamas Kiss",
   "publisher": "kisstkondoros",
   "license": "MIT",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "displayName": "CodeMetrics",
   "icon": "images/logo.png",
   "engines": {
@@ -15,9 +15,19 @@
     "type": "git",
     "url": "https://github.com/kisstkondoros/codemetrics.git"
   },
-  "keywords": ["vscode", "code", "metrics", "typescript", "javascript"],
-  "categories": ["Other"],
-  "activationEvents": ["*"],
+  "keywords": [
+    "vscode",
+    "code",
+    "metrics",
+    "typescript",
+    "javascript"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
   "contributes": {
     "commands": [
       {
@@ -90,14 +100,12 @@
         },
         "codemetrics.basics.MetricsForArrowFunctionsToggled": {
           "default": true,
-          "description":
-            "A flag which indicates whether code metrics are enabled for arrow functions (can also be toggled via a command)",
+          "description": "A flag which indicates whether code metrics are enabled for arrow functions (can also be toggled via a command)",
           "type": "boolean"
         },
         "codemetrics.basics.FileSizeLimitMB": {
           "default": 0.5,
-          "description":
-            "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
+          "description": "File size limit in megabytes, above this codemetrics are not going to be computed, use a negative number to allow any size",
           "type": "number"
         },
         "codemetrics.basics.EnabledForVue": {
@@ -182,8 +190,7 @@
         },
         "codemetrics.basics.ComplexityTemplate": {
           "default": "Complexity is {0} {1}",
-          "description":
-            "Code lens message template {0} stands for the actual value {1} is for the complexity level description",
+          "description": "Code lens message template {0} stands for the actual value {1} is for the complexity level description",
           "type": "string"
         },
         "codemetrics.luaconfiguration.LabelStatement": {
