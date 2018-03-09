@@ -14,6 +14,11 @@ export class VSCodeMetricsConfiguration extends MetricsConfiguration {
     CodeLensEnabled = true;
     DiagnosticsEnabled = false;
 
+    ComplexityColorLow = "#4bb14f";
+    ComplexityColorNormal = "#ffc208";
+    ComplexityColorHigh = "#f44034";
+    ComplexityColorExtreme = "ff0000";
+
     FileSizeLimitMB = 0.5;
     LuaStatementMetricsConfiguration = new LuaStatementMetricsConfiguration();
 }

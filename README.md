@@ -48,6 +48,13 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.14.0
+  - Make decoration colors configurable
+    - The following properties were introduced:
+        - codemetrics.basics.ComplexityColorLow
+        - codemetrics.basics.ComplexityColorNormal
+        - codemetrics.basics.ComplexityColorHigh
+        - codemetrics.basics.ComplexityColorExtreme
 - 1.13.0
   - Update vscode version to 1.1.10
   - Avoid indentation distortion by moving decorations to the end of the line

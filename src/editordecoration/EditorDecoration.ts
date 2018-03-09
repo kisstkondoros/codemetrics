@@ -11,22 +11,11 @@ export class EditorDecoration implements vscode.Disposable {
     private decorationModeEnabled: boolean = false;
     private overviewRulerModeEnabled: boolean = false;
 
-    private imagePaths: {
-        green: string;
-        orange: string;
-        red: string;
-        accent: string;
-    };
     private metricsUtil: MetricsUtil;
     private didChangeTextDocument: vscode.Disposable;
     private didOpenTextDocument: vscode.Disposable;
     constructor(context: vscode.ExtensionContext, metricsUtil: MetricsUtil) {
-        this.imagePaths = {
-            green: context.asAbsolutePath("images/green.png"),
-            orange: context.asAbsolutePath("images/orange.png"),
-            red: context.asAbsolutePath("images/red.png"),
-            accent: context.asAbsolutePath("images/accent.png")
-        };
+
         this.metricsUtil = metricsUtil;
 
         const debouncedUpdate = this.debounce(() => this.update(), 500);
@@ -68,7 +57,7 @@ export class EditorDecoration implements vscode.Disposable {
             metrics => {
                 if (thisContext.settingsChanged(settings) || this.low == null) {
                     thisContext.clearDecorators(editor);
-                    thisContext.updateDecorators(settings.DecorationModeEnabled, settings.OverviewRulerModeEnabled);
+                    thisContext.updateDecorators(settings);
                 }
                 const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
                     return {
@@ -137,52 +126,62 @@ export class EditorDecoration implements vscode.Disposable {
         this.disposeDecorators();
     }
 
-    private updateDecorators(decorationModeEnabled: boolean, overviewRulerModeEnabled: boolean) {
-        this.low = this.createDecorationType(decorationModeEnabled, overviewRulerModeEnabled, {
-            overviewRulerLane: vscode.OverviewRulerLane.Right,
-            overviewRulerColor: "#4bb14f",
-            before: {
-                contentIconPath: this.imagePaths.green,
-                margin: "5px"
-            }
-        });
-        this.normal = this.createDecorationType(decorationModeEnabled, overviewRulerModeEnabled, {
-            overviewRulerLane: vscode.OverviewRulerLane.Right,
-            overviewRulerColor: "#ffc208",
-            before: {
-                contentIconPath: this.imagePaths.orange,
-                margin: "5px"
-            }
-        });
-        this.high = this.createDecorationType(decorationModeEnabled, overviewRulerModeEnabled, {
-            overviewRulerLane: vscode.OverviewRulerLane.Right,
-            overviewRulerColor: "#f44034",
-            before: {
-                contentIconPath: this.imagePaths.red,
-                margin: "5px"
-            }
-        });
-        this.extreme = this.createDecorationType(decorationModeEnabled, overviewRulerModeEnabled, {
-            overviewRulerLane: vscode.OverviewRulerLane.Right,
-            overviewRulerColor: "#ff0000",
-            before: {
-                contentIconPath: this.imagePaths.accent,
-                margin: "5px"
-            }
-        });
+    private updateDecorators(settings: VSCodeMetricsConfiguration) {
+        const size: number = vscode.workspace.getConfiguration("editor").get("fontSize");
+
+        this.low = this.createDecorationType(
+            settings.DecorationModeEnabled,
+            settings.OverviewRulerModeEnabled,
+            settings.ComplexityColorLow,
+            size
+        );
+        this.normal = this.createDecorationType(
+            settings.DecorationModeEnabled,
+            settings.OverviewRulerModeEnabled,
+            settings.ComplexityColorNormal,
+            size
+        );
+        this.high = this.createDecorationType(
+            settings.DecorationModeEnabled,
+            settings.OverviewRulerModeEnabled,
+            settings.ComplexityColorHigh,
+            size
+        );
+        this.extreme = this.createDecorationType(
+            settings.DecorationModeEnabled,
+            settings.OverviewRulerModeEnabled,
+            settings.ComplexityColorExtreme,
+            size
+        );
     }
     createDecorationType(
         decorationModeEnabled: boolean,
         overviewRulerModeEnabled: boolean,
-        options: vscode.DecorationRenderOptions
+        color: string,
+        size: number
     ) {
+        const rectangleFactory = (size, color) =>
+            vscode.Uri.parse(
+                `data:image/svg+xml,` +
+                    encodeURIComponent(
+                        `<svg xmlns='http://www.w3.org/2000/svg' width='${size}px' height='${size}px' viewbox='0 0 ${size} ${size}'><rect width='${size}' height='${size}' style='fill:${color};stroke-width:1;stroke:#fff'/></svg>`
+                    )
+            );
+        const options: vscode.DecorationRenderOptions = {
+            overviewRulerLane: vscode.OverviewRulerLane.Right,
+            overviewRulerColor: color,
+            before: {
+                contentIconPath: rectangleFactory(size, color),
+                margin: `${size / 2}px`
+            }
+        };
         if (!decorationModeEnabled) {
             options.before = null;
         }
         if (!overviewRulerModeEnabled) {
             options.overviewRulerColor = null;
         }
-        options.rangeBehavior= vscode.DecorationRangeBehavior.ClosedClosed;
+        options.rangeBehavior = vscode.DecorationRangeBehavior.ClosedClosed;
         return vscode.window.createTextEditorDecorationType(options);
     }
     disposeDecorators() {
