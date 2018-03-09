@@ -143,6 +143,26 @@
           "description": "A flag which indicates whether codemetrics are enabled for TSX",
           "type": "boolean"
         },
+        "codemetrics.basics.ComplexityColorLow": {
+          "default": "#4bb14f",
+          "description": "Color for the low complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityColorNormal": {
+          "default": "#ffc208",
+          "description": "Color for the normal complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityColorHigh": {
+          "default": "#f44034",
+          "description": "Color for the high complexity level",
+          "type": "string"
+        },
+        "codemetrics.basics.ComplexityColorExtreme": {
+          "default": "ff0000",
+          "description": "Color for the extreme complexity level",
+          "type": "string"
+        },
         "codemetrics.basics.ComplexityLevelExtreme": {
           "default": 25,
           "description": "Threshold to determine extreme high complexity level",
