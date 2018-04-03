@@ -48,6 +48,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.15.0
+  - Update tsmetrics-core to v1.0.0
 - 1.14.0
   - Make decoration colors configurable
     - The following properties were introduced:

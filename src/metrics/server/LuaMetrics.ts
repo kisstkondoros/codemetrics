@@ -1,10 +1,9 @@
-import { IMetricsModel, CollectorType } from "tsmetrics-core";
-import { MetricsModel } from "tsmetrics-core/MetricsModel";
-import { LuaStatementMetricsConfiguration } from "../common/LuaStatementMetricsConfiguration";
+import { MetricsModel, IMetricsModel, CollectorType } from "tsmetrics-core";
+import { ILuaStatementMetricsConfiguration } from "../common/LuaStatementMetricsConfiguration";
 import * as parser from "luaparse";
 
 export class LuaMetrics {
-    public getMetricsFromLuaSource(settings: LuaStatementMetricsConfiguration, source: string): IMetricsModel {
+    public getMetricsFromLuaSource(settings: ILuaStatementMetricsConfiguration, source: string): IMetricsModel {
         const root = new MetricsModel(0, 0, "root", 0, 0, 0, "root", false, false, "SUM");
         try {
             const ast = parser.parse(source, { locations: true, ranges: true });

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { MetricsUtil } from "../metrics/MetricsUtil";
 import { IMetricsModel } from "tsmetrics-core";
-import { VSCodeMetricsConfiguration } from "../metrics/common/VSCodeMetricsConfiguration";
+import { IVSCodeMetricsConfiguration } from "../metrics/common/VSCodeMetricsConfiguration";
 
 export class EditorDecoration implements vscode.Disposable {
     private low: vscode.TextEditorDecorationType;
@@ -110,7 +110,7 @@ export class EditorDecoration implements vscode.Disposable {
             }
         );
     }
-    private settingsChanged(settings: VSCodeMetricsConfiguration): boolean {
+    private settingsChanged(settings: IVSCodeMetricsConfiguration): boolean {
         const changed =
             settings.DecorationModeEnabled != this.decorationModeEnabled ||
             settings.OverviewRulerModeEnabled != this.overviewRulerModeEnabled;
@@ -126,7 +126,7 @@ export class EditorDecoration implements vscode.Disposable {
         this.disposeDecorators();
     }
 
-    private updateDecorators(settings: VSCodeMetricsConfiguration) {
+    private updateDecorators(settings: IVSCodeMetricsConfiguration) {
         const size: number = vscode.workspace.getConfiguration("editor").get("fontSize");
 
         this.low = this.createDecorationType(

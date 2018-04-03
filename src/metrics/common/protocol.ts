@@ -1,9 +1,9 @@
 import { RequestType, Range } from "vscode-languageserver";
 import { IMetricsModel } from "tsmetrics-core";
-import { VSCodeMetricsConfiguration } from "./VSCodeMetricsConfiguration";
+import { IVSCodeMetricsConfiguration } from "./VSCodeMetricsConfiguration";
 
 export class RequestData {
-    configuration: VSCodeMetricsConfiguration;
+    configuration: IVSCodeMetricsConfiguration;
     uri: string;
 }
 
