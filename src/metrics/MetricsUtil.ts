@@ -23,8 +23,7 @@ import {
 } from "vscode-languageclient";
 import { Message } from "vscode-jsonrpc";
 
-import { IMetricsModel } from "tsmetrics-core";
-import { MetricsModel } from "tsmetrics-core/MetricsModel";
+import { MetricsModel, IMetricsModel } from "tsmetrics-core";
 
 import { MetricsRequestType, RequestData } from "./common/protocol";
 import { CodeMetricsCodeLens } from "../models/CodeMetricsCodeLens";

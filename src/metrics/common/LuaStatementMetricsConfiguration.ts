@@ -1,39 +1,44 @@
-export class LuaStatementMetricsConfiguration {
-    public LabelStatement: number = 1;
-    public BreakStatement: number = 1;
-    public GotoStatement: number = 1;
-    public ReturnStatement: number = 1;
-    public IfStatement: number = 1;
-    public IfClause: number = 1;
-    public ElseifClause: number = 1;
-    public ElseClause: number = 1;
-    public WhileStatement: number = 1;
-    public DoStatement: number = 1;
-    public RepeatStatement: number = 1;
-    public LocalStatement: number = 0;
-    public AssignmentStatement: number = 0;
-    public CallStatement: number = 0;
-    public FunctionDeclaration: number = 1;
-    public ForNumericStatement: number = 1;
-    public ForGenericStatement: number = 1;
-    public Chunk: number = 0;
-    public Identifier: number = 0;
-    public StringLiteral: number = 0;
-    public NumericLiteral: number = 0;
-    public BooleanLiteral: number = 0;
-    public NilLiteral: number = 0;
-    public VarargLiteral: number = 0;
-    public TableKey: number = 0;
-    public TableKeyString: number = 0;
-    public TableValue: number = 0;
-    public TableConstructorExpression: number = 0;
-    public LogicalExpression: number = 1;
-    public BinaryExpression: number = 1;
-    public UnaryExpression: number = 0;
-    public MemberExpression: number = 1;
-    public IndexExpression: number = 0;
-    public CallExpression: number = 0;
-    public TableCallExpression: number = 0;
-    public StringCallExpression: number = 0;
-    public Comment: number = 0;
-}
+const LuaStatementMetricsConfiguration = {
+    LabelStatement: 1,
+    BreakStatement: 1,
+    GotoStatement: 1,
+    ReturnStatement: 1,
+    IfStatement: 1,
+    IfClause: 1,
+    ElseifClause: 1,
+    ElseClause: 1,
+    WhileStatement: 1,
+    DoStatement: 1,
+    RepeatStatement: 1,
+    LocalStatement: 0,
+    AssignmentStatement: 0,
+    CallStatement: 0,
+    FunctionDeclaration: 1,
+    ForNumericStatement: 1,
+    ForGenericStatement: 1,
+    Chunk: 0,
+    Identifier: 0,
+    StringLiteral: 0,
+    NumericLiteral: 0,
+    BooleanLiteral: 0,
+    NilLiteral: 0,
+    VarargLiteral: 0,
+    TableKey: 0,
+    TableKeyString: 0,
+    TableValue: 0,
+    TableConstructorExpression: 0,
+    LogicalExpression: 1,
+    BinaryExpression: 1,
+    UnaryExpression: 0,
+    MemberExpression: 1,
+    IndexExpression: 0,
+    CallExpression: 0,
+    TableCallExpression: 0,
+    StringCallExpression: 0,
+    Comment: 0
+};
+
+export type ILuaStatementMetricsConfiguration = Partial<typeof LuaStatementMetricsConfiguration>;
+export const getInitialLuaStatementMetricsConfiguration = () => {
+    return { ...LuaStatementMetricsConfiguration };
+};

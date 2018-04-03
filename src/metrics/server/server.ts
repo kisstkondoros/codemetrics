@@ -15,13 +15,11 @@ import {
     TextDocument
 } from "vscode-languageserver";
 import { MetricsRequestType, RequestData } from "../common/protocol";
-import { VSCodeMetricsConfiguration } from "../common/VSCodeMetricsConfiguration";
+import { IVSCodeMetricsConfiguration } from "../common/VSCodeMetricsConfiguration";
 
 import { readFileSync, statSync } from "fs";
 
-import { MetricsParser } from "tsmetrics-core/MetricsParser";
-import { IMetricsModel, IMetricsParseResult } from "tsmetrics-core";
-import { MetricsModel } from "tsmetrics-core/MetricsModel";
+import { MetricsModel, IMetricsModel, MetricsParser, IMetricsParseResult } from "tsmetrics-core";
 import { LuaMetrics } from "./LuaMetrics";
 
 let connection: IConnection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
@@ -46,8 +44,8 @@ connection.onRequest(MetricsRequestType, RequestData => {
     return metrics.getMetrics(document);
 });
 class MetricsUtil {
-    private appConfig: VSCodeMetricsConfiguration;
-    constructor(appConfig: VSCodeMetricsConfiguration) {
+    private appConfig: IVSCodeMetricsConfiguration;
+    constructor(appConfig: IVSCodeMetricsConfiguration) {
         this.appConfig = appConfig;
     }
     private isLanguageDisabled(languageId: string): boolean {

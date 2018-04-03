@@ -1,6 +1,5 @@
 import { CodeLens, Range } from "vscode";
 import { IMetricsModel } from "tsmetrics-core";
-import { MetricsConfiguration } from "tsmetrics-core/MetricsConfiguration";
 import { AppConfiguration } from "../models/AppConfiguration";
 
 export class CodeMetricsCodeLens extends CodeLens {
