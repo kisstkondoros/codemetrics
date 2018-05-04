@@ -1,6 +1,36 @@
 # Code Metrics - Visual Studio Code Extension
 
-Computes complexity in TypeScript / JavaScript files.
+Computes complexity in TypeScript / JavaScript / Lua files.
+
+# Complexity calculation
+
+The steps of the calculation:
+ - create an AST from the input source file
+ - walk through each and every node of it
+ - depending on the type of the node and the configuration associated with it create a new entry about the node.
+ This entry contains everything necessary for further use
+ (e.g. a textual representation for the node, complexity increment, child nodes etc.)
+ - show the sum of complexity of child nodes for methods and the maximum of child nodes for classes
+
+Please note that it is not a standard metric, but it is a close approximation
+of [Cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity).
+
+Please also note that it is possible to balance the complexity calculation for the
+project / team / personal taste by adjusting the relevant configuration entries
+(content assist is provided for all of them for easier configuration).
+
+For example if one prefers [guard clauses](https://refactoring.com/catalog/replaceNestedConditionalWithGuardClauses.html),
+and is ok with all the branches in switch statements then the following could be applied:
+
+```json
+"codemetrics.nodeconfiguration.ReturnStatement": 0,
+"codemetrics.nodeconfiguration.CaseClause": 0,
+"codemetrics.nodeconfiguration.DefaultClause": 0
+```
+
+If You want to know the causes You can click on the code lens to list all the entries for a given method or class. (This also allows You to quickly navigate to the corresponding code)
+
+![Metric details example, showing how one might check the overall complexity for a method by clicking on the codelens](https://raw.githubusercontent.com/kisstkondoros/codemetrics/master/images/metric_details.png)
 
 ## It looks like this
 
