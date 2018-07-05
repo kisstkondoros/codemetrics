@@ -70,27 +70,27 @@ export class EditorDecoration implements vscode.Disposable {
                 });
 
                 const lowLevelDecorations = complexityAndModel
-                    .filter(p => p.complexity < settings.ComplexityLevelNormal)
+                    .filter(p => p.complexity <= settings.ComplexityLevelNormal)
                     .map(p => toDecoration(p.model));
 
                 const normalLevelDecorations = complexityAndModel
                     .filter(
                         p =>
-                            p.complexity >= settings.ComplexityLevelNormal &&
-                            p.complexity < settings.ComplexityLevelHigh
+                            p.complexity > settings.ComplexityLevelNormal &&
+                            p.complexity <= settings.ComplexityLevelHigh
                     )
                     .map(p => toDecoration(p.model));
 
                 const highLevelDecorations = complexityAndModel
                     .filter(
                         p =>
-                            p.complexity >= settings.ComplexityLevelHigh &&
-                            p.complexity < settings.ComplexityLevelExtreme
+                            p.complexity > settings.ComplexityLevelHigh &&
+                            p.complexity <= settings.ComplexityLevelExtreme
                     )
                     .map(p => toDecoration(p.model));
 
                 const extremeLevelDecorations = complexityAndModel
-                    .filter(p => p.complexity >= settings.ComplexityLevelExtreme)
+                    .filter(p => p.complexity > settings.ComplexityLevelExtreme)
                     .map(p => toDecoration(p.model));
 
                 editor.setDecorations(thisContext.low, lowLevelDecorations);
