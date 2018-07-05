@@ -12,10 +12,10 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
 
     provideCodeLenses(document: TextDocument, token: CancellationToken): Thenable<CodeLens[]> {
         if (!this.metricsUtil.appConfig.codeMetricsDisplayed) return;
-        if (!this.metricsUtil.appConfig.codeMetricsSettings.CodeLensEnabled) return;
+        if (!this.metricsUtil.appConfig.getCodeMetricsSettings(document.uri).CodeLensEnabled) return;
         return this.metricsUtil.getMetrics(document).then(metrics => {
             const result: CodeLens[] = metrics.map(
-                model => new CodeMetricsCodeLens(model, this.metricsUtil.toRange(model, document))
+                model => new CodeMetricsCodeLens(model, document.uri, this.metricsUtil.toRange(model, document))
             );
             return result;
         });

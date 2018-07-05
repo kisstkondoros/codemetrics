@@ -1,12 +1,10 @@
-import { CodeLens, Range } from "vscode";
+import { CodeLens, Range, Uri } from "vscode";
 import { IMetricsModel } from "tsmetrics-core";
 import { AppConfiguration } from "../models/AppConfiguration";
 
 export class CodeMetricsCodeLens extends CodeLens {
-    private model: IMetricsModel;
-    constructor(model: IMetricsModel, range: Range) {
+    constructor(private model: IMetricsModel, private uri: Uri, range: Range) {
         super(range);
-        this.model = model;
     }
 
     public getCollectedComplexity(): number {
@@ -14,7 +12,7 @@ export class CodeMetricsCodeLens extends CodeLens {
     }
 
     public toString(appConfig: AppConfiguration): string {
-        return this.model.toString(appConfig.codeMetricsSettings);
+        return this.model.toString(appConfig.getCodeMetricsSettings(this.uri));
     }
 
     public getExplanation(appConfig: AppConfiguration): string {

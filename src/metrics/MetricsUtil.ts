@@ -1,23 +1,9 @@
-import * as ts from "typescript";
 import * as path from "path";
-import {
-    Range,
-    TextDocument,
-    Disposable,
-    ExtensionContext,
-    workspace,
-    window,
-    ProviderResult,
-    Command,
-    Diagnostic,
-    CodeActionContext
-} from "vscode";
+import { Range, TextDocument, ExtensionContext, window, DocumentFilter } from "vscode";
 import {
     LanguageClient,
     LanguageClientOptions,
     ErrorAction,
-    CloseAction,
-    SettingMonitor,
     ServerOptions,
     TransportKind
 } from "vscode-languageclient";
@@ -44,7 +30,7 @@ export class MetricsUtil {
         };
         var output = window.createOutputChannel("CodeMetrics");
 
-        let error: (error, message, count) => ErrorAction = (error: Error, message: Message, count: number) => {
+        let error: (error, message, count) => ErrorAction = (message: Message) => {
             output.appendLine(message.jsonrpc);
             return undefined;
         };
@@ -70,29 +56,17 @@ export class MetricsUtil {
         context.subscriptions.push(disposable);
     }
 
-    get selector(): { language: string }[] {
-        var tsDocSelector = {
-            language: "typescript"
-        };
-        var jsDocSelector = {
-            language: "javascript"
-        };
-        var jsxDocSelector = {
-            language: "javascriptreact"
-        };
-        var tsxDocSelector = {
-            language: "typescriptreact"
-        };
-        var luaDocSelector = {
-            language: "lua"
-        };
-        var vueDocSelector = {
-            language: "vue"
-        };
-        var htmlDocSelector = {
-            language: "html"
-        };
-        return [
+    get selector(): DocumentFilter[] {
+        const tsDocSelector = "typescript";
+        const jsDocSelector = "javascript";
+        const jsxDocSelector = "javascriptreact";
+        const tsxDocSelector = "typescriptreact";
+        const luaDocSelector = "lua";
+        const vueDocSelector = "vue";
+        const htmlDocSelector = "html";
+
+        const supportedSchemes = ["*"];
+        const supportedLanguages = [
             tsDocSelector,
             jsDocSelector,
             jsxDocSelector,
@@ -101,12 +75,24 @@ export class MetricsUtil {
             vueDocSelector,
             htmlDocSelector
         ];
+
+        const resultingSelector = supportedLanguages
+            .map(language =>
+                supportedSchemes.map(scheme => {
+                    return {
+                        scheme: scheme,
+                        language: language
+                    };
+                })
+            )
+            .reduce((acc, cur) => acc.concat(cur), []);
+        return resultingSelector;
     }
 
     public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {
         const requestData: RequestData = {
             uri: document.uri.toString(),
-            configuration: this.appConfig.codeMetricsSettings
+            configuration: this.appConfig.getCodeMetricsSettings(document.uri)
         };
         return this.client.onReady().then(() =>
             this.client.sendRequest(MetricsRequestType, requestData).then(metrics =>
@@ -146,7 +132,6 @@ export class MetricsUtil {
     public toDecorationRange(start: number, document: TextDocument): Range {
         const pos = document.positionAt(start);
         const line = pos.line;
-        const character = pos.character;
         const documentLine = document.lineAt(line);
         const lineRange = documentLine.range;
         return new Range(lineRange.end.line, lineRange.end.character, lineRange.end.line, lineRange.end.character);
