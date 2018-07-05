@@ -65,7 +65,7 @@ export class MetricsUtil {
         const vueDocSelector = "vue";
         const htmlDocSelector = "html";
 
-        const supportedSchemes = ["*"];
+        const supportedSchemes = ["file", "untitled"];
         const supportedLanguages = [
             tsDocSelector,
             jsDocSelector,
