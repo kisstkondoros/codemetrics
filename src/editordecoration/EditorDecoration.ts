@@ -15,7 +15,6 @@ export class EditorDecoration implements vscode.Disposable {
     private didChangeTextDocument: vscode.Disposable;
     private didOpenTextDocument: vscode.Disposable;
     constructor(context: vscode.ExtensionContext, metricsUtil: MetricsUtil) {
-
         this.metricsUtil = metricsUtil;
 
         const debouncedUpdate = this.debounce(() => this.update(), 500);
@@ -23,6 +22,7 @@ export class EditorDecoration implements vscode.Disposable {
             debouncedUpdate();
         });
         this.didOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(e => {
+            this.disposeDecorators();
             this.update();
         });
         this.update();
@@ -43,7 +43,7 @@ export class EditorDecoration implements vscode.Disposable {
             return;
         }
         const document = editor.document;
-        const settings = this.metricsUtil.appConfig.codeMetricsSettings;
+        const settings = this.metricsUtil.appConfig.getCodeMetricsSettings(document.uri);
 
         const languageDisabled = this.metricsUtil.selector.filter(s => s.language == document.languageId).length == 0;
         const decorationDisabled = !(settings.DecorationModeEnabled || settings.OverviewRulerModeEnabled);
@@ -57,7 +57,7 @@ export class EditorDecoration implements vscode.Disposable {
             metrics => {
                 if (thisContext.settingsChanged(settings) || this.low == null) {
                     thisContext.clearDecorators(editor);
-                    thisContext.updateDecorators(settings);
+                    thisContext.updateDecorators(settings, document.uri);
                 }
                 const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
                     return {
@@ -126,8 +126,8 @@ export class EditorDecoration implements vscode.Disposable {
         this.disposeDecorators();
     }
 
-    private updateDecorators(settings: IVSCodeMetricsConfiguration) {
-        const size: number = vscode.workspace.getConfiguration("editor").get("fontSize");
+    private updateDecorators(settings: IVSCodeMetricsConfiguration, resource: vscode.Uri) {
+        const size: number = vscode.workspace.getConfiguration("editor", resource).get("fontSize");
 
         this.low = this.createDecorationType(
             settings.DecorationModeEnabled,

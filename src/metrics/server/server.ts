@@ -1,7 +1,6 @@
 "use strict";
 import * as ts from "typescript";
 import { Minimatch } from "minimatch";
-import { workspace } from "vscode";
 import {
     Diagnostic,
     DiagnosticSeverity,
@@ -14,12 +13,10 @@ import {
     TextDocuments,
     TextDocument
 } from "vscode-languageserver";
-import { MetricsRequestType, RequestData } from "../common/protocol";
+import { MetricsRequestType } from "../common/protocol";
 import { IVSCodeMetricsConfiguration } from "../common/VSCodeMetricsConfiguration";
 
-import { readFileSync, statSync } from "fs";
-
-import { MetricsModel, IMetricsModel, MetricsParser, IMetricsParseResult } from "tsmetrics-core";
+import { IMetricsModel, MetricsParser, IMetricsParseResult } from "tsmetrics-core";
 import { LuaMetrics } from "./LuaMetrics";
 
 let connection: IConnection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
@@ -30,7 +27,7 @@ console.error = connection.console.error.bind(connection.console);
 let documents: TextDocuments = new TextDocuments();
 documents.listen(connection);
 
-connection.onInitialize((params): InitializeResult => {
+connection.onInitialize((): InitializeResult => {
     return {
         capabilities: {
             textDocumentSync: documents.syncKind
@@ -59,13 +56,13 @@ class MetricsUtil {
         return false;
     }
 
-    private isAboveFileSizeLimit(fileName: string) {
+    private isAboveFileSizeLimit(fileContent: string) {
         if (this.appConfig.FileSizeLimitMB < 0) {
             return false;
         }
 
         try {
-            let fileSizeInBytes = statSync(fileName).size;
+            let fileSizeInBytes = fileContent.length;
             let configuredLimit = this.appConfig.FileSizeLimitMB * 1024 * 1024;
             return fileSizeInBytes > configuredLimit;
         } catch (error) {
@@ -81,15 +78,15 @@ class MetricsUtil {
     public getMetrics(document: TextDocument): IMetricsModel[] {
         const target = ts.ScriptTarget.Latest;
         const result: IMetricsModel[] = [];
+        let input = document.getText();
         let diagnostics: Diagnostic[] = [];
         if (
             !this.isExcluded(document.uri) &&
-            !this.isAboveFileSizeLimit(document.uri) &&
+            !this.isAboveFileSizeLimit(input) &&
             !this.isLanguageDisabled(document.languageId)
         ) {
             var metrics: IMetricsParseResult = undefined;
             if (this.isHTMLLike(document.languageId)) {
-                let input = document.getText();
                 input = input.replace(/<script>/gim, "<scrip*/");
                 input = input.replace(/<\/script>/gim, "/*script>");
                 input = "/*" + input.substring(2, input.length - 2) + "*/";
@@ -100,13 +97,13 @@ class MetricsUtil {
                     file: document.uri,
                     metrics: new LuaMetrics().getMetricsFromLuaSource(
                         this.appConfig.LuaStatementMetricsConfiguration,
-                        document.getText()
+                        input
                     )
                 };
             } else {
                 metrics = MetricsParser.getMetricsFromText(
                     document.uri,
-                    document.getText(),
+                    input,
                     this.appConfig,
                     <any>target
                 );
