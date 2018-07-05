@@ -78,6 +78,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+- 1.17.0
+  - Adjust codebase to new API standards of VSCode
+  - Adjust filter boundaries which are used for color decorators
 - 1.16.0
   - Update dev dependency for vscode to avoid vulnerability warning
   - Add description about complexity calculation and configuration
