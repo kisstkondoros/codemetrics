@@ -183,7 +183,7 @@
         },
         "codemetrics.basics.ComplexityColorExtreme": {
           "scope": "resource",
-          "default": "ff0000",
+          "default": "#ff0000",
           "description": "Color for the extreme complexity level",
           "type": "string"
         },
