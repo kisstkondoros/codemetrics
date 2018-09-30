@@ -1164,7 +1164,7 @@
   "devDependencies": {
     "@types/minimatch": "^2.0.29",
     "@types/node": "^7.0.0",
-    "vscode": "^1.1.17"
+    "vscode": "^1.1.21"
   },
   "dependencies": {
     "luaparse": "^0.2.1",
