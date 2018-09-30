@@ -84,6 +84,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.17.3
+    -   Update dependencies
 -   1.17.2
     -   Fix invalid default color definition
 -   1.17.1
