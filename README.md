@@ -54,7 +54,7 @@ In the workspace settings one can override the defaults
 
 ```javascript
 {
-  // highest complexity level will be set when it exeeds 15
+  // highest complexity level will be set when it exceeds 15
   "codemetrics.basics.ComplexityLevelExtreme" : 15,
 
   // Hides code lenses with complexity lesser than the given value
