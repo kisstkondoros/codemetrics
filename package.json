@@ -61,6 +61,12 @@
           "description": "A flag which indicates whether code metrics are shown as inline decoration",
           "type": "boolean"
         },
+        "codemetrics.basics.DecorationTemplate": {
+          "scope": "resource",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='{{size}}px' height='{{size}}px' viewbox='0 0 {{size}} {{size}}'><rect width='{{size}}' height='{{size}}' style='fill:{{color}};stroke-width:1;stroke:#fff'/></svg>",
+          "description": "A flag which indicates whether code metrics are shown as inline decoration",
+          "type": "string"
+        },
         "codemetrics.basics.CodeLensEnabled": {
           "scope": "resource",
           "default": true,

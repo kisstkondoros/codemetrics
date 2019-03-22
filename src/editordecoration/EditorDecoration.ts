@@ -9,6 +9,7 @@ export class EditorDecoration implements vscode.Disposable {
     private high: vscode.TextEditorDecorationType;
     private extreme: vscode.TextEditorDecorationType;
     private decorationModeEnabled: boolean = false;
+    private decorationTemplate: string;
     private overviewRulerModeEnabled: boolean = false;
 
     private metricsUtil: MetricsUtil;
@@ -113,8 +114,10 @@ export class EditorDecoration implements vscode.Disposable {
     private settingsChanged(settings: IVSCodeMetricsConfiguration): boolean {
         const changed =
             settings.DecorationModeEnabled != this.decorationModeEnabled ||
+            settings.DecorationTemplate != this.decorationTemplate ||
             settings.OverviewRulerModeEnabled != this.overviewRulerModeEnabled;
         this.decorationModeEnabled = settings.DecorationModeEnabled;
+        this.decorationTemplate = settings.DecorationTemplate;
         this.overviewRulerModeEnabled = settings.OverviewRulerModeEnabled;
         return changed;
     }
@@ -132,24 +135,28 @@ export class EditorDecoration implements vscode.Disposable {
         this.low = this.createDecorationType(
             settings.DecorationModeEnabled,
             settings.OverviewRulerModeEnabled,
+            settings.DecorationTemplate,
             settings.ComplexityColorLow,
             size
         );
         this.normal = this.createDecorationType(
             settings.DecorationModeEnabled,
             settings.OverviewRulerModeEnabled,
+            settings.DecorationTemplate,
             settings.ComplexityColorNormal,
             size
         );
         this.high = this.createDecorationType(
             settings.DecorationModeEnabled,
             settings.OverviewRulerModeEnabled,
+            settings.DecorationTemplate,
             settings.ComplexityColorHigh,
             size
         );
         this.extreme = this.createDecorationType(
             settings.DecorationModeEnabled,
             settings.OverviewRulerModeEnabled,
+            settings.DecorationTemplate,
             settings.ComplexityColorExtreme,
             size
         );
@@ -157,21 +164,15 @@ export class EditorDecoration implements vscode.Disposable {
     createDecorationType(
         decorationModeEnabled: boolean,
         overviewRulerModeEnabled: boolean,
+        decorationTemplate: string,
         color: string,
         size: number
     ) {
-        const rectangleFactory = (size, color) =>
-            vscode.Uri.parse(
-                `data:image/svg+xml,` +
-                    encodeURIComponent(
-                        `<svg xmlns='http://www.w3.org/2000/svg' width='${size}px' height='${size}px' viewbox='0 0 ${size} ${size}'><rect width='${size}' height='${size}' style='fill:${color};stroke-width:1;stroke:#fff'/></svg>`
-                    )
-            );
         const options: vscode.DecorationRenderOptions = {
             overviewRulerLane: vscode.OverviewRulerLane.Right,
             overviewRulerColor: color,
             before: {
-                contentIconPath: rectangleFactory(size, color),
+                contentIconPath: this.getContentIconPath(decorationTemplate, color, size),
                 margin: `${size / 2}px`
             }
         };
@@ -183,6 +184,19 @@ export class EditorDecoration implements vscode.Disposable {
         }
         options.rangeBehavior = vscode.DecorationRangeBehavior.ClosedClosed;
         return vscode.window.createTextEditorDecorationType(options);
+    }
+    getContentIconPath(
+        decorationTemplate: string,
+        color: string,
+        size: number
+    ): vscode.Uri {
+        const templateVariables = { color, size };
+        const decoration = decorationTemplate
+            .replace(/\{\{(.+?)\}\}/g, (match, varName) => templateVariables[varName]);
+        return vscode.Uri.parse(
+            `data:image/svg+xml,` +
+            encodeURIComponent(decoration)
+        );
     }
     disposeDecorators() {
         this.low && this.low.dispose();
