@@ -11,6 +11,7 @@ const VSCodeMetricsConfigurationDefaults = {
     EnabledForVue: true,
     EnabledForHTML: true,
     DecorationModeEnabled: true,
+    DecorationTemplate: "<svg xmlns='http://www.w3.org/2000/svg' width='{{size}}px' height='{{size}}px' viewbox='0 0 {{size}} {{size}}'><rect width='{{size}}' height='{{size}}' style='fill:{{color}};stroke-width:1;stroke:#fff'/></svg>",
     OverviewRulerModeEnabled: true,
     CodeLensEnabled: true,
     DiagnosticsEnabled: false,
