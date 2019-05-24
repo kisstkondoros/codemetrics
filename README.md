@@ -83,6 +83,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+-   1.18.1
+    -   Update dependencies
+    -   Fix rounding issues
 -   1.18.0
     -   Add DecorationTemplate configuration (contribution from [@luchsamapparat](https://github.com/luchsamapparat) )
 -   1.17.4
