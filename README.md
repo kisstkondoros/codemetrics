@@ -83,6 +83,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 ```
 
 ### Change Log
+-   1.19.0
+    -   Add support for ts based vue components
 -   1.18.1
     -   Update dependencies
     -   Fix rounding issues
