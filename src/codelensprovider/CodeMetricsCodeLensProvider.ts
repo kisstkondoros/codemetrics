@@ -1,6 +1,5 @@
-import { CodeLensProvider, TextDocument, CodeLens, CancellationToken, workspace } from "vscode";
+import { CodeLensProvider, TextDocument, CodeLens, CancellationToken } from "vscode";
 import { CodeMetricsCodeLens } from "../models/CodeMetricsCodeLens";
-import { IMetricsModel } from "tsmetrics-core";
 import { MetricsUtil } from "../metrics/MetricsUtil";
 
 export class CodeMetricsCodeLensProvider implements CodeLensProvider {

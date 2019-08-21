@@ -1,22 +1,11 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es6",
-    "outDir": "out",
-    "lib": [
-      "es6"
-    ],
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "rootDir": "."
-  },
-  "exclude": [
-    "gruntfile.js",
-    "grunt",
-    "out",
-    "node_modules",
-    ".vscode",
-    ".vscode-test"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "outDir": "out",
+        "sourceMap": true,
+        "rootDir": "src",
+        "esModuleInterop": true
+    },
+    "include": ["src/**/*.ts", "./node_modules/vscode/vscode.d.ts", "./node_modules/vscode/lib/*"]
 }

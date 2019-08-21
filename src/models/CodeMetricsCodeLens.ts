@@ -1,5 +1,5 @@
 import { CodeLens, Range, Uri } from "vscode";
-import { IMetricsModel } from "tsmetrics-core";
+import { IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 import { AppConfiguration } from "../models/AppConfiguration";
 
 export class CodeMetricsCodeLens extends CodeLens {

@@ -9,7 +9,7 @@ import {
 } from "vscode-languageclient";
 import { Message } from "vscode-jsonrpc";
 
-import { MetricsModel, IMetricsModel } from "tsmetrics-core";
+import { MetricsModel, IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 
 import { MetricsRequestType, RequestData } from "./common/protocol";
 import { CodeMetricsCodeLens } from "../models/CodeMetricsCodeLens";
@@ -20,7 +20,7 @@ export class MetricsUtil {
     private client: LanguageClient;
     constructor(appConfig: AppConfiguration, context: ExtensionContext) {
         this.appConfig = appConfig;
-        let serverModule = context.asAbsolutePath(path.join("out", "src", "metrics", "server", "server.js"));
+        let serverModule = context.asAbsolutePath(path.join("dist", "server.js"));
 
         let debugOptions = { execArgv: ["--nolazy", "--inspect=6004"] };
 
