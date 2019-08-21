@@ -49,8 +49,10 @@ If You want to know the causes You can click on the code lens to list all the en
 
 ## Customization
 
-In the workspace settings one can override the defaults
-(for a complete list check AppConfiguration.ts)
+In the workspace settings one can override the defaults.
+For a complete list please check the configuration section in the package.json.
+For the most commonly used ones, one should do a search for `codemetrics.basics`
+in the settings ui.
 
 ```javascript
 {
