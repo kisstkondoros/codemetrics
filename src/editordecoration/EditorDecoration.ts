@@ -1,28 +1,40 @@
-import * as vscode from "vscode";
+import {
+    TextEditorDecorationType,
+    Disposable,
+    ExtensionContext,
+    workspace,
+    window,
+    DecorationOptions,
+    TextEditor,
+    Uri,
+    DecorationRenderOptions,
+    OverviewRulerLane,
+    DecorationRangeBehavior
+} from "vscode"
 import { MetricsUtil } from "../metrics/MetricsUtil";
-import { IMetricsModel } from "tsmetrics-core";
+import { IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 import { IVSCodeMetricsConfiguration } from "../metrics/common/VSCodeMetricsConfiguration";
 
-export class EditorDecoration implements vscode.Disposable {
-    private low: vscode.TextEditorDecorationType;
-    private normal: vscode.TextEditorDecorationType;
-    private high: vscode.TextEditorDecorationType;
-    private extreme: vscode.TextEditorDecorationType;
+export class EditorDecoration implements Disposable {
+    private low: TextEditorDecorationType;
+    private normal: TextEditorDecorationType;
+    private high: TextEditorDecorationType;
+    private extreme: TextEditorDecorationType;
     private decorationModeEnabled: boolean = false;
     private decorationTemplate: string;
     private overviewRulerModeEnabled: boolean = false;
 
     private metricsUtil: MetricsUtil;
-    private didChangeTextDocument: vscode.Disposable;
-    private didOpenTextDocument: vscode.Disposable;
-    constructor(context: vscode.ExtensionContext, metricsUtil: MetricsUtil) {
+    private didChangeTextDocument: Disposable;
+    private didOpenTextDocument: Disposable;
+    constructor(context: ExtensionContext, metricsUtil: MetricsUtil) {
         this.metricsUtil = metricsUtil;
 
         const debouncedUpdate = this.debounce(() => this.update(), 500);
-        this.didChangeTextDocument = vscode.workspace.onDidChangeTextDocument(e => {
+        this.didChangeTextDocument = workspace.onDidChangeTextDocument(e => {
             debouncedUpdate();
         });
-        this.didOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(e => {
+        this.didOpenTextDocument = window.onDidChangeActiveTextEditor(e => {
             this.disposeDecorators();
             this.update();
         });
@@ -38,7 +50,7 @@ export class EditorDecoration implements vscode.Disposable {
     }
 
     private update() {
-        const editor = vscode.window.activeTextEditor;
+        const editor = window.activeTextEditor;
 
         if (!editor || !editor.document) {
             return;
@@ -60,7 +72,7 @@ export class EditorDecoration implements vscode.Disposable {
                     thisContext.clearDecorators(editor);
                     thisContext.updateDecorators(settings, document.uri);
                 }
-                const toDecoration = (model: IMetricsModel): vscode.DecorationOptions => {
+                const toDecoration = (model: IMetricsModel): DecorationOptions => {
                     return {
                         hoverMessage: model.toString(settings),
                         range: thisContext.metricsUtil.toDecorationRange(model.start, document)
@@ -121,7 +133,7 @@ export class EditorDecoration implements vscode.Disposable {
         this.overviewRulerModeEnabled = settings.OverviewRulerModeEnabled;
         return changed;
     }
-    private clearDecorators(editor: vscode.TextEditor) {
+    private clearDecorators(editor: TextEditor) {
         this.low && editor.setDecorations(this.low, []);
         this.normal && editor.setDecorations(this.normal, []);
         this.high && editor.setDecorations(this.high, []);
@@ -129,8 +141,8 @@ export class EditorDecoration implements vscode.Disposable {
         this.disposeDecorators();
     }
 
-    private updateDecorators(settings: IVSCodeMetricsConfiguration, resource: vscode.Uri) {
-        const size: number = vscode.workspace.getConfiguration("editor", resource).get("fontSize");
+    private updateDecorators(settings: IVSCodeMetricsConfiguration, resource: Uri) {
+        const size: number = workspace.getConfiguration("editor", resource).get("fontSize");
 
         this.low = this.createDecorationType(
             settings.DecorationModeEnabled,
@@ -168,8 +180,8 @@ export class EditorDecoration implements vscode.Disposable {
         color: string,
         size: number
     ) {
-        const options: vscode.DecorationRenderOptions = {
-            overviewRulerLane: vscode.OverviewRulerLane.Right,
+        const options: DecorationRenderOptions = {
+            overviewRulerLane: OverviewRulerLane.Right,
             overviewRulerColor: color,
             before: {
                 contentIconPath: this.getContentIconPath(decorationTemplate, color, size),
@@ -182,18 +194,18 @@ export class EditorDecoration implements vscode.Disposable {
         if (!overviewRulerModeEnabled) {
             options.overviewRulerColor = null;
         }
-        options.rangeBehavior = vscode.DecorationRangeBehavior.ClosedClosed;
-        return vscode.window.createTextEditorDecorationType(options);
+        options.rangeBehavior = DecorationRangeBehavior.ClosedClosed;
+        return window.createTextEditorDecorationType(options);
     }
     getContentIconPath(
         decorationTemplate: string,
         color: string,
         size: number
-    ): vscode.Uri {
+    ): Uri {
         const templateVariables = { color, size };
         const decoration = decorationTemplate
             .replace(/\{\{(.+?)\}\}/g, (match, varName) => templateVariables[varName]);
-        return vscode.Uri.parse(
+        return Uri.parse(
             `data:image/svg+xml,` +
             encodeURIComponent(decoration)
         );

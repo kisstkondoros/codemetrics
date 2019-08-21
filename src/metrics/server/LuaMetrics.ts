@@ -1,4 +1,4 @@
-import { MetricsModel, IMetricsModel, CollectorType } from "tsmetrics-core";
+import { MetricsModel, IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 import { ILuaStatementMetricsConfiguration } from "../common/LuaStatementMetricsConfiguration";
 import * as parser from "luaparse";
 
@@ -55,7 +55,7 @@ export class LuaMetrics {
         }
     }
     private camelToSpaced(input: string): string {
-        return input.replace(/^[a-z]|[A-Z]/g, function(v, i) {
+        return input.replace(/^[a-z]|[A-Z]/g, function (v, i) {
             return i === 0 ? v.toUpperCase() : " " + v.toLowerCase();
         });
     }

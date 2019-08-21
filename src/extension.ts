@@ -1,12 +1,15 @@
-import * as vscode from "vscode";
-import { Disposable, DocumentSelector, languages, commands } from "vscode";
+import {
+    ExtensionContext,
+    window,
+    Selection, languages, commands
+} from "vscode";
 import { CodeMetricsCodeLensProvider } from "./codelensprovider/CodeMetricsCodeLensProvider";
 import { AppConfiguration } from "./models/AppConfiguration";
 import { CodeMetricsCodeLens } from "./models/CodeMetricsCodeLens";
 import { MetricsUtil } from "./metrics/MetricsUtil";
 import { EditorDecoration } from "./editordecoration/EditorDecoration";
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
     const config: AppConfiguration = new AppConfiguration();
     const metricsUtil: MetricsUtil = new MetricsUtil(config, context);
     const disposables = [];
@@ -17,11 +20,11 @@ export function activate(context: vscode.ExtensionContext) {
     disposables.push(new EditorDecoration(context, metricsUtil));
 
     const triggerCodeLensComputation = () => {
-        if (!vscode.window.activeTextEditor) {
+        if (!window.activeTextEditor) {
             return;
         }
-        var end = vscode.window.activeTextEditor.selection.end;
-        vscode.window.activeTextEditor
+        var end = window.activeTextEditor.selection.end;
+        window.activeTextEditor
             .edit(editbuilder => {
                 editbuilder.insert(end, " ");
             })
@@ -51,14 +54,14 @@ export function activate(context: vscode.ExtensionContext) {
             var explanations = items
                 .map(item => item.toLogString("").trim() + " - " + item.description)
                 .map(item => item.replace(/[\r\n]+/g, " "));
-            vscode.window.showQuickPick(explanations).then(selected => {
+            window.showQuickPick(explanations).then(selected => {
                 if (selected) {
                     var selectedCodeLens = items[explanations.indexOf(selected)];
                     if (selectedCodeLens) {
-                        var characterPosition = vscode.window.activeTextEditor.document.positionAt(
+                        var characterPosition = window.activeTextEditor.document.positionAt(
                             selectedCodeLens.start
                         );
-                        vscode.window.activeTextEditor.selection = new vscode.Selection(
+                        window.activeTextEditor.selection = new Selection(
                             characterPosition,
                             characterPosition
                         );

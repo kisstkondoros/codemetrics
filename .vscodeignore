@@ -1,7 +1,6 @@
 .vscode/**
-.vscode-test/**
 typings/**
-out/test/**
+out/**
 test/**
 src/**
 grunt/**
@@ -11,3 +10,9 @@ gruntfile.js
 .gitignore
 tsconfig.json
 vsc-extension-quickstart.md
+testfiles
+node_modules
+.devcontainer
+webpack.config.js
+!images
+!dist

@@ -1,4 +1,4 @@
-import { IMetricsConfiguration, MetricsConfiguration } from "tsmetrics-core";
+import { IMetricsConfiguration, MetricsConfiguration } from "tsmetrics-core/lib/MetricsConfiguration";
 import { getInitialLuaStatementMetricsConfiguration } from "./LuaStatementMetricsConfiguration";
 
 const VSCodeMetricsConfigurationDefaults = {
