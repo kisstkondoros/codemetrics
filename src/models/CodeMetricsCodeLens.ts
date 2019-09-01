@@ -3,7 +3,7 @@ import { IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 import { AppConfiguration } from "../models/AppConfiguration";
 
 export class CodeMetricsCodeLens extends CodeLens {
-    constructor(private model: IMetricsModel, private uri: Uri, range: Range) {
+    constructor(public model: IMetricsModel, private uri: Uri, range: Range) {
         super(range);
     }
 

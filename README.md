@@ -86,6 +86,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.21.0
+    -   Show all items in the quick pick menu
 -   1.20.0
     -   Migrate to webpack
     -   Adjust section about configuration options

@@ -47,12 +47,24 @@ export function activate(context: ExtensionContext) {
             triggerCodeLensComputation();
         })
     );
-
+    const pad = function (input, lenghtToFit = 4) {
+        var pad = new Array(lenghtToFit).join(" ");
+        return pad.substring(0, Math.max(0, pad.length - input.length)) + input;
+    }
+    const roundComplexity = function (complexity) {
+        return Number(complexity.toFixed(2));
+    };
     disposables.push(
         commands.registerCommand("codemetrics.showCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
-            var items = codelens.getChildren().filter(item => item.getCollectedComplexity() > 0);
+            var items = [codelens.model, ...codelens.getChildren().filter(item => item.getCollectedComplexity() > 0)];
             var explanations = items
-                .map(item => item.toLogString("").trim() + " - " + item.description)
+                .map(item => {
+                    const complexityForItem = codelens.model == item ? item.complexity : item.getCollectedComplexity();
+                    var complexity = pad(roundComplexity(complexityForItem) + "", 5);
+                    var line = pad(item.line + "");
+                    var column = pad(item.column + "");
+                    return complexity + " - Ln " + line + " Col " + column + " " + item.text;
+                })
                 .map(item => item.replace(/[\r\n]+/g, " "));
             window.showQuickPick(explanations).then(selected => {
                 if (selected) {
