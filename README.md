@@ -86,6 +86,11 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.22.1
+    -   Update change log
+-   1.22.0
+    -   Update the activationEvents property (contribution from [@igorskyflyer](https://github.com/igorskyflyer) )
+    -   Add "onLanguage:vue" to the list of activation events
 -   1.21.0
     -   Show all items in the quick pick menu
 -   1.20.0
