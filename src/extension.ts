@@ -1,5 +1,6 @@
 import {
     ExtensionContext,
+    QuickPickItem,
     window,
     Selection, languages, commands
 } from "vscode";
@@ -57,15 +58,19 @@ export function activate(context: ExtensionContext) {
     disposables.push(
         commands.registerCommand("codemetrics.showCodeMetricsCodeLensInfo", (codelens: CodeMetricsCodeLens) => {
             var items = [codelens.model, ...codelens.getChildren().filter(item => item.getCollectedComplexity() > 0)];
-            var explanations = items
+            var explanations: QuickPickItem[] = items
                 .map(item => {
                     const complexityForItem = codelens.model == item ? item.complexity : item.getCollectedComplexity();
                     var complexity = pad(roundComplexity(complexityForItem) + "", 5);
                     var line = pad(item.line + "");
                     var column = pad(item.column + "");
-                    return complexity + " - Ln " + line + " Col " + column + " " + item.text;
+                    const result: QuickPickItem = ({
+                        label: (complexity + " - Ln " + line + " Col " + column + " " + item.description).replace(/[\r\n]+/g, " "),
+                        description: item.text
+                    });
+                    return result;
                 })
-                .map(item => item.replace(/[\r\n]+/g, " "));
+
             window.showQuickPick(explanations).then(selected => {
                 if (selected) {
                     var selectedCodeLens = items[explanations.indexOf(selected)];
