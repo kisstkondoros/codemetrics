@@ -86,6 +86,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.23.0
+    -   Use QuickPickItems instead of plain strings
+    -   Update tsmetrics-core to 1.2.1
 -   1.22.1
     -   Update change log
 -   1.22.0
