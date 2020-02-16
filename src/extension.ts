@@ -2,7 +2,7 @@ import {
     ExtensionContext,
     QuickPickItem,
     window,
-    Selection, languages, commands
+    Selection, Range, languages, commands
 } from "vscode";
 import { CodeMetricsCodeLensProvider } from "./codelensprovider/CodeMetricsCodeLensProvider";
 import { AppConfiguration } from "./models/AppConfiguration";
@@ -71,20 +71,23 @@ export function activate(context: ExtensionContext) {
                     return result;
                 })
 
-            window.showQuickPick(explanations).then(selected => {
+            const jumpTo = (selected) => {
                 if (selected) {
                     var selectedCodeLens = items[explanations.indexOf(selected)];
                     if (selectedCodeLens) {
-                        var characterPosition = window.activeTextEditor.document.positionAt(
+                        var start = window.activeTextEditor.document.positionAt(
                             selectedCodeLens.start
                         );
-                        window.activeTextEditor.selection = new Selection(
-                            characterPosition,
-                            characterPosition
+                        var end = window.activeTextEditor.document.positionAt(
+                            selectedCodeLens.start
                         );
+                        const range = new Range(start, start);
+                        window.activeTextEditor.revealRange(range);
+                        window.activeTextEditor.selection = new Selection(start, start);
                     }
                 }
-            });
+            }
+            window.showQuickPick(explanations, { onDidSelectItem: jumpTo }).then(jumpTo);
         })
     );
 
