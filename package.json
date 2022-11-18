@@ -1184,7 +1184,7 @@
     "ts-loader": "^6.2.1",
     "tsconfig-paths": "^3.9.0",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "luaparse": "^0.2.1",
