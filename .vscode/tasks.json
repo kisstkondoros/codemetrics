@@ -3,30 +3,18 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
-            "type": "npm",
-            "script": "webpack-dev",
-            "isBackground": true,
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "never",
-                "panel": "dedicated"
-            },
-            "problemMatcher": ["$tsc-watch"]
-        },
-        {
-            "type": "npm",
-            "script": "webpack",
-            "isBackground": false,
-            "group": "build",
-            "presentation": {
-                "reveal": "never",
-                "panel": "dedicated"
-            },
-            "problemMatcher": ["$tsc"]
-        }
+		{
+			"type": "npm",
+			"script": "watch",
+			"isBackground": true,
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"panel": "dedicated",
+				"reveal": "never"
+			}
+		}
     ]
 }
