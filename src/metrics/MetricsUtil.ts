@@ -1,13 +1,6 @@
 import * as path from "path";
 import { Range, TextDocument, ExtensionContext, window, DocumentFilter } from "vscode";
-import {
-    LanguageClient,
-    LanguageClientOptions,
-    ErrorAction,
-    ServerOptions,
-    TransportKind,
-} from "vscode-languageclient";
-import { Message } from "vscode-jsonrpc";
+import { LanguageClientOptions, ServerOptions, TransportKind, LanguageClient } from "vscode-languageclient/node";
 
 import { MetricsModel, IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 
@@ -18,6 +11,8 @@ import { AppConfiguration } from "../models/AppConfiguration";
 export class MetricsUtil {
     public appConfig: AppConfiguration;
     private client: LanguageClient;
+    private started: Promise<void>;
+
     constructor(appConfig: AppConfiguration, context: ExtensionContext) {
         this.appConfig = appConfig;
         let serverModule = context.asAbsolutePath(path.join("dist", "server.js"));
@@ -30,16 +25,14 @@ export class MetricsUtil {
         };
         var output = window.createOutputChannel("CodeMetrics");
 
-        let error: (error, message, count) => ErrorAction = (message: Message) => {
-            output.appendLine(message.jsonrpc);
-            return undefined;
-        };
-
         let clientOptions: LanguageClientOptions = {
             documentSelector: this.selector.map((p) => p.language),
             diagnosticCollectionName: "codemetrics",
             errorHandler: {
-                error: error,
+                error: (_, message) => {
+                    output.appendLine(message.jsonrpc);
+                    return { action: undefined };
+                },
 
                 closed: () => {
                     return undefined;
@@ -50,10 +43,8 @@ export class MetricsUtil {
             },
         };
 
-        this.client = new LanguageClient("CodeMetrics client", serverOptions, clientOptions);
-        let disposable = this.client.start();
-
-        context.subscriptions.push(disposable);
+        this.client = new LanguageClient("codemetrics", "CodeMetrics client", serverOptions, clientOptions);
+        this.started = this.client.start();
     }
 
     get selector(): DocumentFilter[] {
@@ -94,7 +85,7 @@ export class MetricsUtil {
             uri: document.uri.toString(),
             configuration: this.appConfig.getCodeMetricsSettings(document.uri),
         };
-        return this.client.onReady().then(() =>
+        return this.started.then(() =>
             this.client.sendRequest(MetricsRequestType, requestData).then((metrics) =>
                 metrics.map((m) => {
                     return this.convert(m);

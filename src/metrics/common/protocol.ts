@@ -7,6 +7,6 @@ export class RequestData {
     uri: string;
 }
 
-export const MetricsRequestType: RequestType<RequestData, IMetricsModel[], any, any> = new RequestType(
+export const MetricsRequestType: RequestType<RequestData, IMetricsModel[], any> = new RequestType(
     "codemetrics/metrics"
 );

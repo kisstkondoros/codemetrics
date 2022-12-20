@@ -1,13 +1,14 @@
 import { ScriptTarget } from "typescript";
 import { Minimatch } from "minimatch";
-import { Diagnostic, DiagnosticSeverity, IConnection, Range, TextDocument } from "vscode-languageserver";
+import { Connection, Diagnostic, DiagnosticSeverity, Range } from "vscode-languageserver";
 import { IVSCodeMetricsConfiguration } from "../common/VSCodeMetricsConfiguration";
 
 import { IMetricsModel, MetricsParser, IMetricsParseResult } from "tsmetrics-core";
 import { LuaMetrics } from "./LuaMetrics";
+import { TextDocument } from "vscode-languageserver-textdocument";
 
 export class MetricsParserUtil {
-    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: IConnection) {}
+    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: Connection) {}
 
     public getMetrics(document: TextDocument): IMetricsModel[] {
         const target = ScriptTarget.Latest;
