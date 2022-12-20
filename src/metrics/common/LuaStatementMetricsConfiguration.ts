@@ -38,7 +38,7 @@ const LuaStatementMetricsConfiguration = {
     Comment: 0,
 };
 
-export type ILuaStatementMetricsConfiguration = Partial<typeof LuaStatementMetricsConfiguration>;
-export const getInitialLuaStatementMetricsConfiguration = () => {
+export type ILuaStatementMetricsConfiguration = typeof LuaStatementMetricsConfiguration;
+export const getInitialLuaStatementMetricsConfiguration = (): ILuaStatementMetricsConfiguration => {
     return { ...LuaStatementMetricsConfiguration };
 };
