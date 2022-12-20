@@ -86,6 +86,9 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.25.0
+    -   Update dependencies
+    -   Make it work for vue setup scripts
 -   1.24.0
     -   Jump to selection from the quick pick menu
 -   1.23.1
