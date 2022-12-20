@@ -9,8 +9,8 @@ import {
     Uri,
     DecorationRenderOptions,
     OverviewRulerLane,
-    DecorationRangeBehavior
-} from "vscode"
+    DecorationRangeBehavior,
+} from "vscode";
 import { MetricsUtil } from "../metrics/MetricsUtil";
 import { IMetricsModel } from "tsmetrics-core/lib/MetricsModel";
 import { IVSCodeMetricsConfiguration } from "../metrics/common/VSCodeMetricsConfiguration";
@@ -31,10 +31,10 @@ export class EditorDecoration implements Disposable {
         this.metricsUtil = metricsUtil;
 
         const debouncedUpdate = this.debounce(() => this.update(), 500);
-        this.didChangeTextDocument = workspace.onDidChangeTextDocument(e => {
+        this.didChangeTextDocument = workspace.onDidChangeTextDocument((e) => {
             debouncedUpdate();
         });
-        this.didOpenTextDocument = window.onDidChangeActiveTextEditor(e => {
+        this.didOpenTextDocument = window.onDidChangeActiveTextEditor((e) => {
             this.disposeDecorators();
             this.update();
         });
@@ -58,7 +58,7 @@ export class EditorDecoration implements Disposable {
         const document = editor.document;
         const settings = this.metricsUtil.appConfig.getCodeMetricsSettings(document.uri);
 
-        const languageDisabled = this.metricsUtil.selector.filter(s => s.language == document.languageId).length == 0;
+        const languageDisabled = this.metricsUtil.selector.filter((s) => s.language == document.languageId).length == 0;
         const decorationDisabled = !(settings.DecorationModeEnabled || settings.OverviewRulerModeEnabled);
         if (decorationDisabled || languageDisabled) {
             this.clearDecorators(editor);
@@ -67,7 +67,7 @@ export class EditorDecoration implements Disposable {
         // for some reason the context is lost
         var thisContext = this;
         this.metricsUtil.getMetrics(document).then(
-            metrics => {
+            (metrics) => {
                 if (thisContext.settingsChanged(settings) || this.low == null) {
                     thisContext.clearDecorators(editor);
                     thisContext.updateDecorators(settings, document.uri);
@@ -75,43 +75,43 @@ export class EditorDecoration implements Disposable {
                 const toDecoration = (model: IMetricsModel): DecorationOptions => {
                     return {
                         hoverMessage: model.toString(settings),
-                        range: thisContext.metricsUtil.toDecorationRange(model.start, document)
+                        range: thisContext.metricsUtil.toDecorationRange(model.start, document),
                     };
                 };
-                const complexityAndModel: ComplexityToModel[] = metrics.map(p => {
+                const complexityAndModel: ComplexityToModel[] = metrics.map((p) => {
                     return { complexity: p.getCollectedComplexity(), model: p };
                 });
 
                 const lowLevelDecorations = complexityAndModel
-                    .filter(p => p.complexity <= settings.ComplexityLevelNormal)
-                    .map(p => toDecoration(p.model));
+                    .filter((p) => p.complexity <= settings.ComplexityLevelNormal)
+                    .map((p) => toDecoration(p.model));
 
                 const normalLevelDecorations = complexityAndModel
                     .filter(
-                        p =>
+                        (p) =>
                             p.complexity > settings.ComplexityLevelNormal &&
                             p.complexity <= settings.ComplexityLevelHigh
                     )
-                    .map(p => toDecoration(p.model));
+                    .map((p) => toDecoration(p.model));
 
                 const highLevelDecorations = complexityAndModel
                     .filter(
-                        p =>
+                        (p) =>
                             p.complexity > settings.ComplexityLevelHigh &&
                             p.complexity <= settings.ComplexityLevelExtreme
                     )
-                    .map(p => toDecoration(p.model));
+                    .map((p) => toDecoration(p.model));
 
                 const extremeLevelDecorations = complexityAndModel
-                    .filter(p => p.complexity > settings.ComplexityLevelExtreme)
-                    .map(p => toDecoration(p.model));
+                    .filter((p) => p.complexity > settings.ComplexityLevelExtreme)
+                    .map((p) => toDecoration(p.model));
 
                 editor.setDecorations(thisContext.low, lowLevelDecorations);
                 editor.setDecorations(thisContext.normal, normalLevelDecorations);
                 editor.setDecorations(thisContext.high, highLevelDecorations);
                 editor.setDecorations(thisContext.extreme, extremeLevelDecorations);
             },
-            e => {
+            (e) => {
                 var exmsg = "";
                 if (e.message) {
                     exmsg += e.message;
@@ -185,8 +185,8 @@ export class EditorDecoration implements Disposable {
             overviewRulerColor: color,
             before: {
                 contentIconPath: this.getContentIconPath(decorationTemplate, color, size),
-                margin: `${size / 2}px`
-            }
+                margin: `${size / 2}px`,
+            },
         };
         if (!decorationModeEnabled) {
             options.before = null;
@@ -197,18 +197,10 @@ export class EditorDecoration implements Disposable {
         options.rangeBehavior = DecorationRangeBehavior.ClosedClosed;
         return window.createTextEditorDecorationType(options);
     }
-    getContentIconPath(
-        decorationTemplate: string,
-        color: string,
-        size: number
-    ): Uri {
+    getContentIconPath(decorationTemplate: string, color: string, size: number): Uri {
         const templateVariables = { color, size };
-        const decoration = decorationTemplate
-            .replace(/\{\{(.+?)\}\}/g, (match, varName) => templateVariables[varName]);
-        return Uri.parse(
-            `data:image/svg+xml,` +
-            encodeURIComponent(decoration)
-        );
+        const decoration = decorationTemplate.replace(/\{\{(.+?)\}\}/g, (match, varName) => templateVariables[varName]);
+        return Uri.parse(`data:image/svg+xml,` + encodeURIComponent(decoration));
     }
     disposeDecorators() {
         this.low && this.low.dispose();

@@ -20,14 +20,14 @@ documents.listen(connection);
 connection.onInitialize((): InitializeResult => {
     return {
         capabilities: {
-            textDocumentSync: documents.syncKind
-        }
+            textDocumentSync: documents.syncKind,
+        },
     };
 });
 
-connection.onRequest(MetricsRequestType, RequestData => {
+connection.onRequest(MetricsRequestType, (RequestData) => {
     let document = documents.get(RequestData.uri);
-    return new MetricsParserUtil(RequestData.configuration, connection).getMetrics(document)
+    return new MetricsParserUtil(RequestData.configuration, connection).getMetrics(document);
 });
 
 connection.listen();
