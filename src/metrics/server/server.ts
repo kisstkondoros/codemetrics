@@ -27,6 +27,9 @@ connection.onInitialize((): InitializeResult => {
 
 connection.onRequest(MetricsRequestType, (RequestData) => {
     let document = documents.get(RequestData.uri);
+    if (!document) {
+        return [];
+    }
     return new MetricsParserUtil(RequestData.configuration, connection).getMetrics(document);
 });
 
