@@ -1,20 +1,13 @@
 import { ScriptTarget } from "typescript";
 import { Minimatch } from "minimatch";
-import {
-    Diagnostic,
-    DiagnosticSeverity,
-    IConnection,
-    Range,
-    TextDocument
-} from "vscode-languageserver";
+import { Diagnostic, DiagnosticSeverity, IConnection, Range, TextDocument } from "vscode-languageserver";
 import { IVSCodeMetricsConfiguration } from "../common/VSCodeMetricsConfiguration";
 
 import { IMetricsModel, MetricsParser, IMetricsParseResult } from "tsmetrics-core";
 import { LuaMetrics } from "./LuaMetrics";
 
 export class MetricsParserUtil {
-    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: IConnection) {
-    }
+    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: IConnection) {}
 
     public getMetrics(document: TextDocument): IMetricsModel[] {
         const target = ScriptTarget.Latest;
@@ -41,34 +34,29 @@ export class MetricsParserUtil {
                     metrics: new LuaMetrics().getMetricsFromLuaSource(
                         this.appConfig.LuaStatementMetricsConfiguration,
                         input
-                    )
+                    ),
                 };
             } else {
-                metrics = MetricsParser.getMetricsFromText(
-                    document.uri,
-                    input,
-                    this.appConfig,
-                    <any>target
-                );
+                metrics = MetricsParser.getMetricsFromText(document.uri, input, this.appConfig, <any>target);
             }
             var collect = (model: IMetricsModel) => {
                 if (model.visible && model.getCollectedComplexity() >= this.appConfig.CodeLensHiddenUnder) {
                     result.push(model);
                 }
-                model.children.forEach(element => {
+                model.children.forEach((element) => {
                     collect(element);
                 });
             };
             collect(metrics.metrics);
 
             if (this.appConfig.DiagnosticsEnabled) {
-                diagnostics = result.map(model => {
+                diagnostics = result.map((model) => {
                     return {
                         range: Range.create(document.positionAt(model.start), document.positionAt(model.end)),
                         message: model.toString(this.appConfig),
                         source: "codemetrics",
                         severity: DiagnosticSeverity.Hint,
-                        code: "42"
+                        code: "42",
                     };
                 });
             }
@@ -104,7 +92,7 @@ export class MetricsParserUtil {
     }
     private isExcluded(fileName: string) {
         const exclusionList = this.appConfig.Exclude || [];
-        return exclusionList.some(pattern => {
+        return exclusionList.some((pattern) => {
             return new Minimatch(pattern).match(fileName);
         });
     }

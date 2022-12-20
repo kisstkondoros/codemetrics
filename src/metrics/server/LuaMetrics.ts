@@ -8,7 +8,7 @@ export class LuaMetrics {
         try {
             const ast = parser.parse(source, { locations: true, ranges: true });
             if (Array.isArray(ast.body)) {
-                ast.body.forEach(child => this.appendNode(settings, child, root));
+                ast.body.forEach((child) => this.appendNode(settings, child, root));
             } else {
                 this.appendNode(settings, ast, root);
             }
@@ -19,7 +19,7 @@ export class LuaMetrics {
     }
     private appendNode(settings, node, parent: IMetricsModel) {
         if (Array.isArray(node)) {
-            node.forEach(child => this.appendNode(settings, child, parent));
+            node.forEach((child) => this.appendNode(settings, child, parent));
             return;
         }
 
@@ -46,7 +46,7 @@ export class LuaMetrics {
             if (node.body) {
                 this.appendNode(settings, node.body, model);
             } else if (node.clauses) {
-                node.clauses.forEach(subNode => {
+                node.clauses.forEach((subNode) => {
                     this.appendNode(settings, node.clauses, model);
                 });
             }

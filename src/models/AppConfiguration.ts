@@ -1,7 +1,7 @@
 import { workspace, Uri } from "vscode";
 import {
     getInitialVSCodeMetricsConfiguration,
-    IVSCodeMetricsConfiguration
+    IVSCodeMetricsConfiguration,
 } from "../metrics/common/VSCodeMetricsConfiguration";
 
 export class AppConfiguration {

@@ -5,7 +5,7 @@ import {
     LanguageClientOptions,
     ErrorAction,
     ServerOptions,
-    TransportKind
+    TransportKind,
 } from "vscode-languageclient";
 import { Message } from "vscode-jsonrpc";
 
@@ -26,7 +26,7 @@ export class MetricsUtil {
 
         let serverOptions: ServerOptions = {
             run: { module: serverModule, transport: TransportKind.ipc },
-            debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions }
+            debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions },
         };
         var output = window.createOutputChannel("CodeMetrics");
 
@@ -36,18 +36,18 @@ export class MetricsUtil {
         };
 
         let clientOptions: LanguageClientOptions = {
-            documentSelector: this.selector.map(p => p.language),
+            documentSelector: this.selector.map((p) => p.language),
             diagnosticCollectionName: "codemetrics",
             errorHandler: {
                 error: error,
 
                 closed: () => {
                     return undefined;
-                }
+                },
             },
             synchronize: {
-                configurationSection: "codemetrics"
-            }
+                configurationSection: "codemetrics",
+            },
         };
 
         this.client = new LanguageClient("CodeMetrics client", serverOptions, clientOptions);
@@ -73,15 +73,15 @@ export class MetricsUtil {
             tsxDocSelector,
             luaDocSelector,
             vueDocSelector,
-            htmlDocSelector
+            htmlDocSelector,
         ];
 
         const resultingSelector = supportedLanguages
-            .map(language =>
-                supportedSchemes.map(scheme => {
+            .map((language) =>
+                supportedSchemes.map((scheme) => {
                     return {
                         scheme: scheme,
-                        language: language
+                        language: language,
                     };
                 })
             )
@@ -92,11 +92,11 @@ export class MetricsUtil {
     public getMetrics(document: TextDocument): Thenable<IMetricsModel[]> {
         const requestData: RequestData = {
             uri: document.uri.toString(),
-            configuration: this.appConfig.getCodeMetricsSettings(document.uri)
+            configuration: this.appConfig.getCodeMetricsSettings(document.uri),
         };
         return this.client.onReady().then(() =>
-            this.client.sendRequest(MetricsRequestType, requestData).then(metrics =>
-                metrics.map(m => {
+            this.client.sendRequest(MetricsRequestType, requestData).then((metrics) =>
+                metrics.map((m) => {
                     return this.convert(m);
                 })
             )
@@ -115,7 +115,7 @@ export class MetricsUtil {
             m.visible,
             m.collectorType
         );
-        model.children = m.children.map(c => this.convert(c));
+        model.children = m.children.map((c) => this.convert(c));
         return model;
     }
 

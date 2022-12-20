@@ -35,7 +35,7 @@ const LuaStatementMetricsConfiguration = {
     CallExpression: 0,
     TableCallExpression: 0,
     StringCallExpression: 0,
-    Comment: 0
+    Comment: 0,
 };
 
 export type ILuaStatementMetricsConfiguration = Partial<typeof LuaStatementMetricsConfiguration>;

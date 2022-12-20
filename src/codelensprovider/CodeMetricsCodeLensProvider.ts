@@ -12,9 +12,9 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
     provideCodeLenses(document: TextDocument, token: CancellationToken): Thenable<CodeLens[]> {
         if (!this.metricsUtil.appConfig.codeMetricsDisplayed) return;
         if (!this.metricsUtil.appConfig.getCodeMetricsSettings(document.uri).CodeLensEnabled) return;
-        return this.metricsUtil.getMetrics(document).then(metrics => {
+        return this.metricsUtil.getMetrics(document).then((metrics) => {
             const result: CodeLens[] = metrics.map(
-                model => new CodeMetricsCodeLens(model, document.uri, this.metricsUtil.toRange(model, document))
+                (model) => new CodeMetricsCodeLens(model, document.uri, this.metricsUtil.toRange(model, document))
             );
             return result;
         });
@@ -25,7 +25,7 @@ export class CodeMetricsCodeLensProvider implements CodeLensProvider {
             codeLens.command = {
                 title: this.metricsUtil.format(codeLens),
                 command: "codemetrics.showCodeMetricsCodeLensInfo",
-                arguments: [codeLens]
+                arguments: [codeLens],
             };
             return codeLens;
         }
