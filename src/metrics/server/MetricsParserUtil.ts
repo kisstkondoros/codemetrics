@@ -19,7 +19,7 @@ export class MetricsParserUtil {
             !this.isAboveFileSizeLimit(input) &&
             !this.isLanguageDisabled(document.languageId)
         ) {
-            var metrics: IMetricsParseResult = undefined;
+            var metrics: IMetricsParseResult | undefined = undefined;
             if (this.isHTMLLike(document.languageId)) {
                 input = input.replace(/<script lang="js">/gim, "<script --------*/");
                 input = input.replace(/<script lang="ts">/gim, "<script --------*/");
