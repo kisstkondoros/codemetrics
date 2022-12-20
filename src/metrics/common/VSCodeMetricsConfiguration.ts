@@ -26,7 +26,7 @@ const VSCodeMetricsConfigurationDefaults = {
     LuaStatementMetricsConfiguration: getInitialLuaStatementMetricsConfiguration(),
 };
 
-export type IVSCodeMetricsConfiguration = Partial<typeof VSCodeMetricsConfigurationDefaults> & IMetricsConfiguration;
+export type IVSCodeMetricsConfiguration = typeof VSCodeMetricsConfigurationDefaults & IMetricsConfiguration;
 
 export const getInitialVSCodeMetricsConfiguration: () => IVSCodeMetricsConfiguration = () => {
     return {

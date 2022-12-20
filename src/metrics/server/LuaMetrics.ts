@@ -17,7 +17,7 @@ export class LuaMetrics {
         }
         return root;
     }
-    private appendNode(settings, node, parent: IMetricsModel) {
+    private appendNode(settings: ILuaStatementMetricsConfiguration, node, parent: IMetricsModel) {
         if (Array.isArray(node)) {
             node.forEach((child) => this.appendNode(settings, child, parent));
             return;
