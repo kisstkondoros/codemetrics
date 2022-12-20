@@ -86,6 +86,8 @@ They can be bound in the keybindings.json (File -> Preferences -> Keyboard Short
 
 ### Change Log
 
+-   1.25.2
+    -   Update tsmetrics-core to 1.3.1
 -   1.25.1
     -   Update tsmetrics-core to 1.3.0
 -   1.25.0
