@@ -43,10 +43,6 @@ export function activate(context: ExtensionContext) {
             triggerCodeLensComputation();
         })
     );
-    const pad = function (input, lenghtToFit = 4) {
-        var pad = new Array(lenghtToFit).join(" ");
-        return pad.substring(0, Math.max(0, pad.length - input.length)) + input;
-    };
     const roundComplexity = function (complexity) {
         return Number(complexity.toFixed(2));
     };
@@ -55,9 +51,9 @@ export function activate(context: ExtensionContext) {
             var items = [codelens.model, ...codelens.getChildren().filter((item) => item.getCollectedComplexity() > 0)];
             var explanations: QuickPickItem[] = items.map((item) => {
                 const complexityForItem = codelens.model == item ? item.complexity : item.getCollectedComplexity();
-                var complexity = pad(roundComplexity(complexityForItem) + "", 5);
-                var line = pad(item.line + "");
-                var column = pad(item.column + "");
+                var complexity = roundComplexity(complexityForItem);
+                var line = item.line;
+                var column = item.column;
                 const result: QuickPickItem = {
                     label: (complexity + " - Ln " + line + " Col " + column + " " + item.description).replace(
                         /[\r\n]+/g,
