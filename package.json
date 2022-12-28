@@ -774,7 +774,7 @@
         },
         "codemetrics.nodeconfiguration.IfWithElseStatement": {
           "scope": "resource",
-          "default": 2,
+          "default": 1,
           "type": "number"
         },
         "codemetrics.nodeconfiguration.IfWithElseStatementDescription": {
