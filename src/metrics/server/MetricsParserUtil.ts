@@ -8,7 +8,7 @@ import { LuaMetrics } from "./LuaMetrics";
 import { TextDocument } from "vscode-languageserver-textdocument";
 
 export class MetricsParserUtil {
-    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: Connection) {}
+    constructor(private appConfig: IVSCodeMetricsConfiguration, private connection: Connection) { }
 
     public getMetrics(document: TextDocument): IMetricsModel[] {
         const target = ScriptTarget.Latest;
@@ -22,10 +22,7 @@ export class MetricsParserUtil {
         ) {
             var metrics: IMetricsParseResult | undefined = undefined;
             if (this.isHTMLLike(document.languageId)) {
-                input = input.replace(/<script setup lang="(js|ts)">/gim, "<script --------------*/");
-                input = input.replace(/<script lang="(js|ts)" setup>/gim, "<script --------------*/");
-                input = input.replace(/<script lang="(js|ts)">/gim, "<script --------*/");
-                input = input.replace(/<script>/gim, "<scrip*/");
+                input = input.replace(/<script\s*(?:\s+(((lang|type)=["'][^"]*["'])|setup))*\s*>/gim, "<script*/");
                 input = input.replace(/<\/script>/gim, "/*cript>");
                 input = "/*" + input.substring(2, input.length - 2) + "*/";
 
