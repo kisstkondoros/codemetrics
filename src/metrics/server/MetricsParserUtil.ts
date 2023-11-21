@@ -22,10 +22,7 @@ export class MetricsParserUtil {
         ) {
             var metrics: IMetricsParseResult | undefined = undefined;
             if (this.isHTMLLike(document.languageId)) {
-                input = input.replace(/<script setup lang="(js|ts)">/gim, "<script --------------*/");
-                input = input.replace(/<script lang="(js|ts)" setup>/gim, "<script --------------*/");
-                input = input.replace(/<script lang="(js|ts)">/gim, "<script --------*/");
-                input = input.replace(/<script>/gim, "<scrip*/");
+                input = input.replace(/<(script\s*(?:\s+(((lang|type)=["'][^"]*["'])|setup))*\s*)>/gim, "$1*/");
                 input = input.replace(/<\/script>/gim, "/*cript>");
                 input = "/*" + input.substring(2, input.length - 2) + "*/";
 
